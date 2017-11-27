@@ -11,8 +11,8 @@
   <div id="page-wrapper">
 
       <div class="row">
-
-          {{-- <h1 class="box-title">Alta Gastos <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button></h1>
+          <div class="panel-body" id="formulario">
+            <h1 class="box-title"> Alta Gastos <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button></h1>
         </div>
         <div class="col-lg-6" id="formularioregistros">
             <div class="panel panel-default">
@@ -53,7 +53,7 @@
                 <!-- /.panel-body -->
             </div>
             <!-- /.panel -->
-        </div> --}}
+        </div>
 
 
 

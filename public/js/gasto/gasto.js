@@ -1,6 +1,6 @@
 function init(){
-    // limpiar();
-    // mostrarform(false);
+    limpiar();
+    mostrarform(false);
     listar();
 }
 
@@ -38,6 +38,7 @@ function cancelarform()
 
 function listar()
 {
+  console.log('hola  ');
             Table=$('#tabla_datos').DataTable({
             "aProcessing": true,//Activamos el procesamiento del datatables
             "aServerSide": true,//Paginación y filtrado realizados por el servidor
