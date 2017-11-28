@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use DB;
 use Illuminate\Http\Request;
 use App\Prueba;
+use App\Gasto;
+use App\Tipo_de_gasto;
 
 class PruebaController extends Controller
 {
@@ -12,9 +14,36 @@ class PruebaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     public function select_tipo(Request $request, $id)
+     {
+       $tipos =DB::table('gastos')
+           ->join('tipos_de_gastos', 'gastos.id', '=', 'tipos_de_gastos.id')
+           ->where('tipos_de_gastos.id','=',$id)->get();
+
+dd($tipos,'aca estoy');
+      if($request->ajax()){
+        $tipos =DB::table('gastos')
+            ->join('tipos_de_gastos', 'gastos.id', '=', 'tipos_de_gastos.id')
+            ->where('tipos_de_gastos.id','=',$id)->get();
+
+
+        // $tipos = Tipo_de_gasto::where('id','=',$id)->get();
+        return response()->json($tipos);
+
+        }
+
+     }
+
     public function index()
     {
-        return view('pruebas.prueba');
+
+
+      $gastos = Gasto::all();
+      // dd($gastos);
+      $tipos = Tipo_de_gasto::all();
+        return view('pruebas.prueba', ['tipos' => $tipos,
+                                            'gastos' => $gastos]);
+
     }
 
     /**

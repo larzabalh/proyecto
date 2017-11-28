@@ -38,8 +38,8 @@ class RegistrodeGastosController extends Controller
 
 
         $reg_gastos =DB::table('reg_gastos')
-            ->leftjoin('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
-            ->leftjoin('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
+            ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
+            ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
             ->where('importe',"LIKE",'%'.$request->input('importe_buscar').'%')
             ->where('gastos.id',"LIKE",'%'.$request->input('gasto_buscar').'%')
             ->where('tipos_de_gastos.id',"LIKE",'%'.$request->input('tipo_buscar').'%')
@@ -128,7 +128,7 @@ class RegistrodeGastosController extends Controller
      */
     public function update(Request $request, $id)
     {
-      
+
 
       $reg_gasto = Reg_Gasto::find($id);
       $reg_gasto->fecha = $request->input('fecha');

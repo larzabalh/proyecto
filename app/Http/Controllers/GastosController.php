@@ -42,9 +42,7 @@ class GastosController extends Controller
       $tipos = Tipo_de_gasto::all();
         return view('configuracion.gasto', ['tipos' => $tipos]);
 
-      return view('configuracion.gasto');
-
-
+    
     }
 
     /**

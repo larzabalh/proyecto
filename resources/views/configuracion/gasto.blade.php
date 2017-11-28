@@ -9,6 +9,10 @@
 
 
   <div id="page-wrapper">
+    <div class="alert alert-warning alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>¡Cuidado!</strong> Es muy importante que leas este mensaje de alerta.
+    </div>
 
       <div class="row">
           <div class="panel-body" id="formulario">
