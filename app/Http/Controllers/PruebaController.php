@@ -16,33 +16,42 @@ class PruebaController extends Controller
      */
      public function select_tipo(Request $request, $id)
      {
-       $tipos =DB::table('gastos')
-           ->join('tipos_de_gastos', 'gastos.id', '=', 'tipos_de_gastos.id')
-           ->where('tipos_de_gastos.id','=',$id)->get();
+       // $reg_gastos =DB::table('reg_gastos')
+       //     ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
+       //     ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
+       //     ->where('gastos.tipo_de_gasto_id','=',$id)
+       //     // ->where('importe',"LIKE",'%'.$request->input('importe_buscar').'%')
+       //     // ->where('gastos.id',"LIKE",'%'.$request->input('gasto_buscar').'%')
+       //     // ->where('tipos_de_gastos.id',"LIKE",'%'.$request->input('tipo_buscar').'%')
+       //     ->select('reg_gastos.*','gastos.gasto','tipos_de_gastos.tipo')
+       //     ->get();
+       //     dd($reg_gastos);
 
-dd($tipos,'aca estoy');
-      if($request->ajax()){
-        $tipos =DB::table('gastos')
-            ->join('tipos_de_gastos', 'gastos.id', '=', 'tipos_de_gastos.id')
-            ->where('tipos_de_gastos.id','=',$id)->get();
+           $reg_gastos =DB::table('reg_gastos')
+               ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
+               ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
+               ->where('gastos.tipo_de_gasto_id','=',$id)
+               ->select('reg_gastos.importe','gastos.gasto','gastos.tipo_de_gasto_id','tipos_de_gastos.tipo')
+               ->groupBy('gastos.gasto')
+               ->get();
+               dd($reg_gastos);
 
 
         // $tipos = Tipo_de_gasto::where('id','=',$id)->get();
-        return response()->json($tipos);
+        return response()->json($reg_gastos);
 
         }
 
-     }
+
 
     public function index()
     {
 
 
-      $gastos = Gasto::all();
+      // $gastos = Gasto::all();
       // dd($gastos);
       $tipos = Tipo_de_gasto::all();
-        return view('pruebas.prueba', ['tipos' => $tipos,
-                                            'gastos' => $gastos]);
+        return view('pruebas.prueba', ['tipos' => $tipos]);
 
     }
 

@@ -5,7 +5,7 @@
 @section('content')
 
   <!-- Trigger the modal with a button -->
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">ABRIR</button>
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
@@ -23,25 +23,27 @@
           <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token" />
             {{ csrf_field() }}
           <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-            <label>Gastos:</label><br>
-            <select class="form-control" name="gasto" id="gasto">
+            <label>TIPO de GASTOS:</label><br>
+            <select class="form-control" name="tipo" id="tipo">
               <option selected></option>
-              @foreach ($gastos as $key => $value)
-                <option value={{$value->id}}>{{$value->gasto}}</option>
+              @foreach ($tipos as $key => $value)
+                <option value={{$value->id}}>{{$value->tipo}}</option>
               @endforeach
             </select>
           </div>
           <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-            <label>TIPO:</label><br>
-            <select class="form-control" name="tipo" id="tipo">
-
+            <label>GASTOS:</label><br>
+            <select class="form-control" name="gasto" id="gasto">
             </select>
+          </div>
+          <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
+            <label>GASTOS:</label><br>
+            <span id="importe"></span>
           </div>
 
 
           <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <button type="submit"  class="btn btn-primary" id="registro"><i class="fa fa-save"></i> Guardar</button>
-            <a href="" class="btn btn-primary" id="registro"></i> Guardar</a>
           </div>
         </form>
 
@@ -71,15 +73,12 @@
             </div>
 
 
-        <div id="error" class="alert alert-danger alert-danger" role="alert" style="display:none">
-          <strong> ALGO SALIO MAL.</strong>
-        </div>
-        <div class="col-lg-6">
+        {{-- <div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     ALTA DE GENEROS
                 </div>
-                <div class="panel-body">
+                <div class="panel-body"> --}}
                     {{-- <form name="" id="" method="POST">
                       <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token" />
                         {{ csrf_field() }}
@@ -107,11 +106,11 @@
                     </form> --}}
 
 
-                </div>
+                {{-- </div>
                 <!-- /.panel-body -->
             </div>
             <!-- /.panel -->
-        </div>
+        </div> --}}
 
 
 

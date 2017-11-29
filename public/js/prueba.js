@@ -3,14 +3,15 @@
   // var gasto= document.querySelector('[name=gasto]');
   // var tipo= document.querySelector('[name=tipo]');
 
-$("#gasto").change(function(e){
+$("#tipo").change(function(e){
 
 console.log(e.target.value);
-  $.get("pruebas/select/"+e.target.value+"", function(response, tipo){
+  $.get("pruebas/select/"+e.target.value+"", function(response, gasto){
           console.log(response);
-          $("#tipo").empty();
+          $("#gasto").empty();
+          // $("#gasto").append("<option></option>");
           for (var i = 0; i < response.length; i++) {
-            $("#tipo").append("<option value='"+response[i].id+"'>"+response[i].tipo+"</option>");
+            $("#gasto").append("<option value='"+response[i].id+"'>"+response[i].gasto+"</option>");
           }
         });
 
