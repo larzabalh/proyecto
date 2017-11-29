@@ -33,7 +33,8 @@ Route::resource('/ingresos/mensual', 'IngresoMensualController');
 Route::resource('/ingresos', 'IngresosController');
   Route::post('/ingresos/ingresos', 'IngresosController@asignar')->name('ingresos.asignar');
 Route::resource('/pruebas', 'PruebaController');
-Route::get('/pruebas/select/{id}', 'PruebaController@select_tipo');
+Route::get('/pruebas/select_gasto/{id}', 'PruebaController@select_gasto');
+Route::get('/pruebas/suma_importe/{id}', 'PruebaController@suma_importe');
 
 
 

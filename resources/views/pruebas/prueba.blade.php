@@ -5,7 +5,7 @@
 @section('content')
 
   <!-- Trigger the modal with a button -->
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">ABRIR</button>
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" id="abrir">ABRIR</button>
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
@@ -19,7 +19,7 @@
       </div>
       <div class="modal-body">
 
-        <form name="" id="" method="POST">
+        <form name="" id="form" method="POST">
           <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token" />
             {{ csrf_field() }}
           <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -36,9 +36,9 @@
             <select class="form-control" name="gasto" id="gasto">
             </select>
           </div>
-          <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-            <label>GASTOS:</label><br>
-            <span id="importe"></span>
+          <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12" style="display:none" id="div_suma">
+            <label>TOTAL:</label><br>
+            <input type="text" value="" class="form-control" name="suma_importe" id="suma_importe" disabled>
           </div>
 
 
