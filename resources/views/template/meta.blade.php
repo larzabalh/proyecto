@@ -121,12 +121,35 @@
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-shopping-cart"></i>
-                <span>Ventas</span>
+                <span>Vistas</span>
                  <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="venta.php"><i class="fa fa-circle-o"></i> Ventas</a></li>
-                <li><a href="cliente.php"><i class="fa fa-circle-o"></i> Clientes</a></li>
+                <li class="treeview">
+                  <a href="#">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span>EGRESOS</span>
+                     <i class="fa fa-angle-left pull-right"></i>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="{{route ('vistas.egresos.tipo')}}"><i class="fa fa-circle-o"></i> TIPO</a></li>
+                    <li><a href="cliente.php"><i class="fa fa-circle-o"></i> GASTO</a></li>
+                    <li><a href="{{route ('vistas.egresos.tipo_gasto')}}"><i class="fa fa-circle-o"></i> TIPO-GASTO</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <ul class="treeview-menu">
+                <li class="treeview">
+                  <a href="#">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span>INGRESOS</span>
+                     <i class="fa fa-angle-left pull-right"></i>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="venta.php"><i class="fa fa-circle-o"></i> INGRESOS</a></li>
+                    <li><a href="cliente.php"><i class="fa fa-circle-o"></i> Clientes</a></li>
+                  </ul>
+                </li>
               </ul>
             </li>
             <li class="treeview">

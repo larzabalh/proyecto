@@ -1,29 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-
-// Route::get('/configuracion/bank','BankController@directory')->name('bank');
-// Route::post('/configuracion/bank','BankController@alta')->name('bank-alta-post');
-//
-// Route::get('/configuracion/bank-editar/{id}', 'BankController@editar')->name('editarbank');
-// Route::delete('/configuracion/bank-editar/{id}', 'BankController@delete')->name('borrarbank');
-// Route::post('/configuracion/bank-editar/{id}', 'BankController@editar_grabar')->name('editarbank-post');
-
-// DB::listen(function($query){
-//
-//   echo "<pre>{$query->sql}</pre>";
-// });
-
 Route::resource('/configuracion/gasto', 'GastosController');
 Route::get('/configuracion/gasto-listar', 'GastosController@listar');
 Route::resource('/configuracion/tipos_de_gastos', 'Tipo_de_gastoController');
@@ -33,8 +9,14 @@ Route::resource('/ingresos/mensual', 'IngresoMensualController');
 Route::resource('/ingresos', 'IngresosController');
   Route::post('/ingresos/ingresos', 'IngresosController@asignar')->name('ingresos.asignar');
 Route::resource('/pruebas', 'PruebaController');
-Route::get('/pruebas/select_gasto/{id}', 'PruebaController@select_gasto');
-Route::get('/pruebas/suma_importe/{id}', 'PruebaController@suma_importe');
+
+
+Route::get('/vistas/egresos/tipo_gasto', 'Vistas\Egresos\Tipo_GastoController@index')->name('vistas.egresos.tipo_gasto');
+Route::get('/vistas/egresos/tipo_gasto/select_gasto/{id}', 'Vistas\Egresos\Tipo_GastoController@select_gasto');
+Route::get('/vistas/egresos/tipo_gasto/suma_importe/{id}', 'Vistas\Egresos\Tipo_GastoController@suma_importe');
+
+
+Route::get('/vistas/egresos/tipo', 'Vistas\Egresos\TipoController@index')->name('vistas.egresos.tipo');
 
 
 
