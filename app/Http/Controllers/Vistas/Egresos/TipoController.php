@@ -4,24 +4,26 @@ namespace App\Http\Controllers\Vistas\Egresos;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use DB;
 use App\Gasto;
 use App\Tipo_de_gasto;
 
 class TipoController extends Controller
 {
-  public function select_gasto(Request $request, $id)
+  public function select_tipo(Request $request, $id, $periodo)
   {
 
-    $gastos =DB::table('reg_gastos')
+
+    $filtro =DB::table('reg_gastos')
+        ->select('reg_gastos.importe','reg_gastos.fecha','reg_gastos.id','gastos.gasto')
         ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
         ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
+        ->where('reg_gastos.fecha',"LIKE",$periodo.'%')
         ->where('gastos.tipo_de_gasto_id','=',$id)
-        ->select('gastos.gasto','gastos.id')
-        ->groupBy('gastos.gasto','gastos.id')
          ->get();
 
-     return response()->json($gastos);
+     return response()->json($filtro);
 
      }
 
@@ -35,7 +37,7 @@ class TipoController extends Controller
          ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
          ->where('gastos.id','=',$id)
          ->groupBy('gastos.gasto','gastos.id','tipos_de_gastos.tipo','tipos_de_gastos.id')
-          ->first();
+          ->get();
 
       return response()->json($suma);
 
@@ -44,11 +46,8 @@ class TipoController extends Controller
    public function index()
    {
 
-       $reg_gastos =DB::table('reg_gastos')
-           ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
-           ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
-           ->select(DB::raw('sum(reg_gastos.importe) as importe'),DB::Raw('DATE(reg_gastos.fecha) fecha'))
-           ->groupBy('reg_gastos.fecha')
+       $periodos =DB::table('periodos')
+           ->select('periodo','id')
             ->get();
 
             $tipos =DB::table('reg_gastos')
@@ -62,7 +61,7 @@ class TipoController extends Controller
 
 
 
-         return view('vistas.egresos.tipo', ['reg_gastos' => $reg_gastos,'tipos' => $tipos]);
+         return view('vistas.egresos.tipo', ['periodos' => $periodos,'tipos' => $tipos]);
 
    }
 }

@@ -1,15 +1,19 @@
 $("#tipo").change(function(e){
+var periodo = document.getElementById("periodo").value;
+console.log(periodo);
 
 console.log(e.target.value);
-  $.get("tipo_gasto/select_gasto/"+e.target.value+"", function(response){
+  $.get("tipo/select_tipo/"+e.target.value+"/"+periodo+"", function(response){
           console.log(response);
-          $("#gasto").empty();
-          $("#gasto").append("<option></option>");
-          for (var i = 0; i < response.length; i++) {
-            $("#gasto").append("<option value='"+response[i].id+"'>"+response[i].gasto+"</option>");
-          }
-        });
 
+
+        //   $("#gasto").empty();
+        //   for (var i = 0; i < response.length; i++) {
+        //     $("#gasto").append("<td>"+response[i].Importe+"</td>");
+        //     $("#gasto").append("<td>"+response[i].importe+"</td>");
+        //   }
+        // });
+});
 });
 
 $("#gasto").change(function(e){

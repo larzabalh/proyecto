@@ -21,10 +21,10 @@
                       {{ csrf_field() }}
                       <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
                         <label>FECHA:</label><br>
-                        <select class="form-control" name="periodo">
+                        <select class="form-control" name="periodo" id="periodo">
                             <option selected></option>
-                            @foreach ($reg_gastos as $value)
-                            <option value="{{date('Y-m', strtotime($value->fecha))}}">{{date('Y-m', strtotime($value->fecha))}}</option>
+                            @foreach ($periodos as $value)
+                            <option value="{{$value->periodo}}">{{$value->periodo}}</option>
                             @endforeach
                         </select>
                       </div>
@@ -37,15 +37,18 @@
                         @endforeach
                       </select>
                     </div>
-                    <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                      <label>GASTOS:</label><br>
-                      <select class="form-control" name="gasto" id="gasto">
-                      </select>
-                    </div>
-                    <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12" style="display:none" id="div_suma">
-                      <label>TOTAL:</label><br>
-                      <input type="text" value="" class="form-control" name="suma_importe" id="suma_importe" disabled>
-                    </div>
+                    <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12" style="display:none" id="gastos">
+                      <tbody>
+                      <tr>
+                         <th>Nº</th>
+                         <th>GASTO</th>
+                         <th>IMPORTE</th>
+                      </tr>
+
+
+
+                      </tbody>
+                    </table>
                     <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                       {{-- <button type="submit"  class="btn btn-primary" id="registro"><i class="fa fa-save"></i> Guardar</button> --}}
                     </div>
@@ -65,6 +68,6 @@
 @endsection
 
 @section('script')
-<script src="{{ asset('/js/vistas/egresos/tipo-gasto.js')}}"></script>
+<script src="{{ asset('/js/vistas/egresos/tipo.js')}}"></script>
 
 @endsection
