@@ -144,7 +144,7 @@ class DatabaseSeeder extends Seeder
 
         ]);
 
-        $reg_gasto = factory(Reg_Gasto::class)->times(30)->create();
+        $reg_gasto = factory(Reg_Gasto::class)->times(3000)->create();
           // $clientes = factory(Cliente::class)->times(30)->create();
 
       }

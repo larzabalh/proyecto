@@ -4,15 +4,16 @@ console.log(periodo);
 
 console.log(e.target.value);
   $.get("tipo/select_tipo/"+e.target.value+"/"+periodo+"", function(response){
+
+    var $target = $("#gastos table tbody")
           console.log(response);
 
+          $target.empty();
 
-        //   $("#gasto").empty();
-        //   for (var i = 0; i < response.length; i++) {
-        //     $("#gasto").append("<td>"+response[i].Importe+"</td>");
-        //     $("#gasto").append("<td>"+response[i].importe+"</td>");
-        //   }
-        // });
+          response.forEach(function (gasto, index) {
+            $('<tr data-index="' + index + '"><td>' + gasto.importe + '</td><td>' + gasto.gasto + '</td></tr>').appendTo($target)
+            console.log(index, gasto.importe)
+          })
 });
 });
 

@@ -13,14 +13,16 @@ class TipoController extends Controller
 {
   public function select_tipo(Request $request, $id, $periodo)
   {
-
+    $array = explode('-', $periodo);
 
     $filtro =DB::table('reg_gastos')
-        ->select('reg_gastos.importe','reg_gastos.fecha','reg_gastos.id','gastos.gasto')
+        ->select('gastos.gasto',DB::raw('sum(reg_gastos.importe) as importe'))
         ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
         ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
-        ->where('reg_gastos.fecha',"LIKE",$periodo.'%')
+        ->where(DB::raw('year(reg_gastos.fecha)'), $array[0])
+        ->where(DB::raw('month(reg_gastos.fecha)'), $array[1])
         ->where('gastos.tipo_de_gasto_id','=',$id)
+        ->groupBy('gastos.gasto')
          ->get();
 
      return response()->json($filtro);
@@ -46,9 +48,13 @@ class TipoController extends Controller
    public function index()
    {
 
-       $periodos =DB::table('periodos')
-           ->select('periodo','id')
+       $periodos =DB::table('reg_gastos')
+           ->select(DB::raw("distinct (concat(year(fecha), '-', month(fecha))) as fecha"))
             ->get();
+
+            // $periodos =DB::table('periodos')
+            //     ->select('periodo')
+            //      ->get();
 
             $tipos =DB::table('reg_gastos')
                 ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')

@@ -32,8 +32,8 @@ from reg_gastos rg
 join gastos g on rg.gasto_id = g.id
 join tipos_de_gastos tg on g.tipo_de_gasto_id = tg.id
 
--- porque esta consulta no muestra todos los registros con gasto y tipo asociados?
-SELECT reg_gastos.*,gastos.gasto,tipos_de_gastos.tipo
-from reg_gastos
-join gastos on reg_gastos.gasto_id = gastos.id
-join tipos_de_gastos on gastos.id = tipos_de_gastos.id
+
+-- filtrando de año y mes. No le puedo agregar gasto, porque Distinct trae registros unicos
+SELECT distinct (concat(year(fecha), '-', month(fecha)))
+FROM finanzas.reg_gastos
+where year (fecha) = 2017 and month(fecha)=1

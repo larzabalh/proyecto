@@ -15,7 +15,6 @@
                     <h3><CENTER>VISTA SEGUN LOS TIPOS DE GASTOS</CENTER></h3>
                 </div>
                 <div class="panel-body text-center">
-
                   <form name="" id="form" method="POST">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token" />
                       {{ csrf_field() }}
@@ -24,7 +23,7 @@
                         <select class="form-control" name="periodo" id="periodo">
                             <option selected></option>
                             @foreach ($periodos as $value)
-                            <option value="{{$value->periodo}}">{{$value->periodo}}</option>
+                            <option value="{{$value->fecha}}">{{$value->fecha}}</option>
                             @endforeach
                         </select>
                       </div>
@@ -36,27 +35,33 @@
                           <option value={{$value->id}}>{{$value->tipo}}</option>
                         @endforeach
                       </select>
+                      </form>
                     </div>
-                    <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12" style="display:none" id="gastos">
-                      <tbody>
-                      <tr>
-                         <th>Nº</th>
-                         <th>GASTO</th>
-                         <th>IMPORTE</th>
-                      </tr>
 
 
-
-                      </tbody>
-                    </table>
                     <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                       {{-- <button type="submit"  class="btn btn-primary" id="registro"><i class="fa fa-save"></i> Guardar</button> --}}
                     </div>
-                  </form>
+
                 </div>
             </div>
         </div>
 
+        <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12" id="gastos">
+          <table>
+            <thead>
+              <tr>
+                 <th>GASTO</th>
+                 <th>IMPORTE</th>
+              </tr>
+            </thead>
+            <tbody>
+
+
+
+            </tbody>
+          </table>
+        </div>
 
 
         <!-- /.col-lg-12 -->
