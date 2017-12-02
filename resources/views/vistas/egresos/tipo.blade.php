@@ -37,31 +37,27 @@
                       </select>
                       </form>
                     </div>
-
-
-                    <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                      {{-- <button type="submit"  class="btn btn-primary" id="registro"><i class="fa fa-save"></i> Guardar</button> --}}
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" style="display: none" id="gastos">
+                      <table class="table table-striped table-bordered table-condensed table-hover">
+                        <thead>
+                          <tr>
+                             <th>GASTO</th>
+                             <th>IMPORTE</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {{-- Los datos de la tabla los meto por JS --}}
+                        </tbody>
+                      </table>
                     </div>
 
+
                 </div>
+
             </div>
         </div>
 
-        <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12" id="gastos">
-          <table>
-            <thead>
-              <tr>
-                 <th>GASTO</th>
-                 <th>IMPORTE</th>
-              </tr>
-            </thead>
-            <tbody>
 
-
-
-            </tbody>
-          </table>
-        </div>
 
 
         <!-- /.col-lg-12 -->

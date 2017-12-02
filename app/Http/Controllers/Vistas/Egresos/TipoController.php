@@ -50,6 +50,7 @@ class TipoController extends Controller
 
        $periodos =DB::table('reg_gastos')
            ->select(DB::raw("distinct (concat(year(fecha), '-', month(fecha))) as fecha"))
+           ->orderby('fecha','ASC')
             ->get();
 
             // $periodos =DB::table('periodos')

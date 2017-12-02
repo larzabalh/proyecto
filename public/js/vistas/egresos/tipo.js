@@ -4,14 +4,14 @@ console.log(periodo);
 
 console.log(e.target.value);
   $.get("tipo/select_tipo/"+e.target.value+"/"+periodo+"", function(response){
-
+    $('#gastos').fadeIn();
     var $target = $("#gastos table tbody")
           console.log(response);
 
           $target.empty();
 
           response.forEach(function (gasto, index) {
-            $('<tr data-index="' + index + '"><td>' + gasto.importe + '</td><td>' + gasto.gasto + '</td></tr>').appendTo($target)
+            $('<tr data-index="' + index + '"><td>' + gasto.gasto + '</td><td>' + formatNumber.new(gasto.importe,'$') + '</td></tr>').appendTo($target)
             console.log(index, gasto.importe)
           })
 });
