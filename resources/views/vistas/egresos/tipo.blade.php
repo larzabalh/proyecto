@@ -39,7 +39,7 @@
                     </div>
                     <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" style="display: none" id="gastos">
                       <table class="table table-striped table-bordered table-condensed table-hover">
-                        <thead>
+                        <thead class="">
                           <tr>
                              <th>GASTO</th>
                              <th>IMPORTE</th>

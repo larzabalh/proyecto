@@ -10,6 +10,22 @@ use App\Tipo_de_gasto;
 
 class Tipo_GastoController extends Controller
 {
+
+  public function periodo(Request $request, $periodo)
+  {
+    $array = explode('-', $periodo);
+    $filtro =DB::table('reg_gastos')
+        ->select('gastos.gasto','tipos_de_gastos.tipo',DB::raw('format(sum(reg_gastos.importe),2) as importe'))
+        ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
+        ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
+        ->where(DB::raw('year(reg_gastos.fecha)'), $array[0])
+        ->where(DB::raw('month(reg_gastos.fecha)'), $array[1])
+        ->groupBy('gastos.gasto','tipos_de_gastos.tipo')
+         ->get();
+
+     return response()->json(["data"=> $filtro->toArray()]);
+
+     }
   public function select_gasto(Request $request, $id)
   {
 
@@ -46,6 +62,10 @@ return response()->json($suma);
 
  public function index()
  {
+   $periodos =DB::table('reg_gastos')
+       ->select(DB::raw("distinct (concat(year(fecha), '-', month(fecha))) as fecha"))
+       ->orderby('fecha','ASC')
+        ->get();
 
    $tipos =DB::table('reg_gastos')
        ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
@@ -59,7 +79,7 @@ return response()->json($suma);
 
 
 
-     return view('vistas.egresos.tipo-gasto', ['tipos' => $tipos]);
+     return view('vistas.egresos.tipo-gasto', ['periodos' => $periodos,'tipos' => $tipos]);
 
  }
 }

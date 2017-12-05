@@ -1,3 +1,45 @@
+$("#periodo").change(function(e){
+var periodo = document.getElementById("periodo").value;
+console.log(periodo);
+var url = "tipo_gasto/"+periodo+"";
+var saldo =0;
+console.log(e.target.value);
+
+
+    Table=$('#tabla_datos').DataTable({
+    'dataType': 'json',
+    "aProcessing": true,//Activamos el procesamiento del datatables
+    "aServerSide": true,//Paginación y filtrado realizados por el servidor
+    dom: 'Bfrtip',//Definimos los elementos del control de tabla
+    buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdf'
+            ],
+    "ajax":
+            {
+                url: url,
+                type : "get",
+                dataType : "json",
+                error: function(e){
+                    console.log(e.responseText);
+                }
+            },
+    success: console.log(url),
+    type : "GET",
+    columns: [
+      { data: 'gasto', name: 'gasto' },
+      { data: 'tipo', name: 'tipo' },
+      { data: 'importe', name: 'importe' }
+    ],
+    "bDestroy": true,
+    "iDisplayLength": 10,//Paginación
+    "order": [[ 0, "asc" ]]//Ordenar (columna,orden)
+    });
+    console.log(Table)
+});
+
 $("#tipo").change(function(e){
 
 console.log(e.target.value);
