@@ -35,7 +35,7 @@ var saldo =0;
     "iDisplayLength": 10,//Paginación
     "order": [[ 0, "asc" ]]//Ordenar (columna,orden)
     });
-    importe_total();
+    ajax();
 });
 
 function importe_total(){
@@ -63,27 +63,28 @@ function importe_total(){
         };
 
 function ajax(){
-        var usuarios = null
+  var periodo = document.getElementById("periodo").value;
+  var url = "tipo_gasto/"+periodo+"";
+        var totales = null
            var usuariosElement = document.querySelector('#usuarios')
-           var cargandoElemet = document.querySelector('#cargando')
+
 
        	var request = new XMLHttpRequest()
            request.onreadystatechange = function () {
                if (this.readyState == 4) {
-                   cargandoElemet.style.display = 'none'
                    if (this.status == 200) {
-                       usuarios = JSON.parse(this.response)
-                       usuarios.forEach(function (usuario) {
-                         var li = document.createElement('li')
-                         li.innerText = usuario
-                         usuariosElement.append(li)
-                       })
+                       totales = JSON.parse(this.response)
+                       console.log(totales)
+                       totales.forEach(function (total) {
+                         console.log('dentro del for');
+                         ('#gasto').innerText = total.gasto
+                         })
                    } else {
                        alert('El pedido dio error')
                    }
                }
            }
-           request.open('GET', 'api.php')
+           request.open('GET', url)
            request.send()
 };
 

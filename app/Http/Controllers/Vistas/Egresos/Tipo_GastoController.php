@@ -23,7 +23,7 @@ class Tipo_GastoController extends Controller
         ->groupBy('gastos.gasto','tipos_de_gastos.tipo')
          ->get();
 
-     return response()->json(["data"=> $filtro]);
+     return response()->json(["data"=> $filtro->toArray()]);
 
      }
   public function select_gasto(Request $request, $id)
