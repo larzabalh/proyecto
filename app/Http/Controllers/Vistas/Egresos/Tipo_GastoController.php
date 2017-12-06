@@ -15,7 +15,8 @@ class Tipo_GastoController extends Controller
   {
     $array = explode('-', $periodo);
     $filtro =DB::table('reg_gastos')
-        ->select('gastos.gasto','tipos_de_gastos.tipo',DB::raw('format(sum(reg_gastos.importe),2) as importe'))
+        ->select('gastos.gasto','tipos_de_gastos.tipo',DB::raw('sum(reg_gastos.importe) as importe'))
+        // ->select('gastos.gasto','tipos_de_gastos.tipo',DB::raw('format(sum(reg_gastos.importe),2) as importe'))
         ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
         ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
         ->where(DB::raw('year(reg_gastos.fecha)'), $array[0])

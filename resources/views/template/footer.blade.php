@@ -23,6 +23,21 @@
 <script src="/plugins/js/bootbox.min.js"></script>
 <script src="/plugins/js/bootstrap-select.min.js"></script>
 
+<!-- FORMATO DE MONEDA -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+<script type="text/javascript">
+  numeral.register('locale', 'ar', {
+      delimiters: {
+          thousands: '.',
+          decimal: ','
+      },
+      currency: {
+          symbol: '$'
+      }
+  });
+  numeral.locale('ar');
+</script>
+<!-- OTRO FORMATO DE MONEDA -->
 <script type="text/javascript">
 var formatNumber = {
  separador: ".", // separador para los miles
