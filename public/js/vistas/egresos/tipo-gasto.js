@@ -45,35 +45,34 @@ function importe_total(){
 
   $.get(url, function(response){
           console.log(response);
+          response=JSON.stringify(response)
+
 
           // for (var i = 0; i < response2.length; i++) {
           //   console.log('dentro del for');
           // }
 
-          // response.forEach(function(element, indice) {
-          //         console.log(element.gasto);
-          //     });
-          response.keys(gasto).forEach(function (key){
-    console.log(gasto[key]);
+          response.forEach(function(element, indice) {
+                  console.log(element.gasto);
+                  console.log('dentro');
+              });
+
 });
 
           console.log('afuera del for');
-        });
-
         };
 
 function ajax(){
   var periodo = document.getElementById("periodo").value;
   var url = "tipo_gasto/"+periodo+"";
-        var totales = null
-           var usuariosElement = document.querySelector('#usuarios')
+  var totales = null
 
 
        	var request = new XMLHttpRequest()
            request.onreadystatechange = function () {
                if (this.readyState == 4) {
                    if (this.status == 200) {
-                       totales = JSON.parse(this.response)
+                       totales = JSON.stringify(request)
                        console.log(totales)
                        totales.forEach(function (total) {
                          console.log('dentro del for');
