@@ -3,8 +3,9 @@
 $("#tipo").change(function(e){
 var periodo = document.getElementById("periodo").value;
 var url = "tipo/select_tipo/"+e.target.value+"/"+periodo+"";
-
+console.log(url);
 datatable(url);
+
 
 ajax(url, function (err, response) {
       if (err) return console.error(err)
@@ -21,6 +22,7 @@ ajax(url, function (err, response) {
 
 
 function datatable(url){
+
 
   Table=$('#tabla_datos').DataTable({
   'dataType': 'json',
@@ -45,8 +47,7 @@ function datatable(url){
   type : "GET",
   columns: [
     { data: 'gasto', name: 'gasto' },
-    { data: 'tipo', name: 'tipo' },
-    { data: 'importe', name: 'importe' }
+    { data: 'importe', name: 'importe',render: $.fn.dataTable.render.number( ',', '.', 2 ) }
   ],
   "bDestroy": true,
   "iDisplayLength": 10,//Paginación

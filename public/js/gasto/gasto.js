@@ -64,4 +64,23 @@ function listar()
 
 }
 
+document.getElementById("btnGuardar").addEventListener("click", function () {
+  var request = new XMLHttpRequest()
+  var url = "http://localhost:8000/configuracion/gasto"
+  request.onreadystatechange = function () {
+    if (this.readyState == 4) {
+      if (this.status == 200) {
+        // callback(null, JSON.parse(this.response))
+        ("alerta").show();
+      } else {
+        callback(Error(this.status))
+      }
+    }
+  }
+  request.open('POST', url)
+  request.send()
+
+
+  });
+
 init();

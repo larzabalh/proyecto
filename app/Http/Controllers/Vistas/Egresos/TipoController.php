@@ -25,7 +25,9 @@ class TipoController extends Controller
         ->groupBy('gastos.gasto')
          ->get();
 
-     return response()->json($filtro);
+
+
+    return response()->json(["data"=> $filtro->toArray()]);
 
      }
 

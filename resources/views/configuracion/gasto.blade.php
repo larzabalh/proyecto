@@ -9,7 +9,7 @@
 
 
   <div id="page-wrapper">
-    <div class="alert alert-warning alert-dismissable">
+    <div class="alert alert-warning alert-dismissable" id="alerta" style="display: none">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong>¡Cuidado!</strong> Es muy importante que leas este mensaje de alerta.
     </div>
