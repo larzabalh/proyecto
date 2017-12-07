@@ -42,7 +42,7 @@ class GastosController extends Controller
       $tipos = Tipo_de_gasto::all();
         return view('configuracion.gasto', ['tipos' => $tipos]);
 
-    
+
     }
 
     /**
@@ -68,7 +68,8 @@ class GastosController extends Controller
         'tipo_de_gasto_id' => $request->input('tipo')
       ]);
       $gasto->save();
-      return redirect()->route('gasto.index');
+      // return redirect()->route('gasto.index');
+      return response()->json(["data"=> $gasto->toArray()]);
     }
 
     /**
@@ -126,5 +127,16 @@ class GastosController extends Controller
       $gasto = Gasto::find($id);
       $gasto->delete();
       return redirect()->route('gasto.index');
+    }
+
+    public function crear(GastosRequest $request)
+    {
+      $gasto = new Gasto([
+        'gasto' => $request->input('gasto'),
+        'tipo_de_gasto_id' => $request->input('tipo')
+      ]);
+      $gasto->save();
+      // return redirect()->route('gasto.index');
+      return response()->json(["data"=> $gasto->toArray()]);
     }
 }

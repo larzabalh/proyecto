@@ -64,9 +64,12 @@ function listar()
 
 }
 
-document.getElementById("btnGuardar").addEventListener("click", function () {
+document.getElementById("btnGuardar").addEventListener("click", function (e) {
+  e.preventDefault();
+  console.log('estoy');
   var request = new XMLHttpRequest()
-  var url = "http://localhost:8000/configuracion/gasto"
+  var url = "http://localhost:8000/configuracion/gasto/crear"
+
   request.onreadystatechange = function () {
     if (this.readyState == 4) {
       if (this.status == 200) {

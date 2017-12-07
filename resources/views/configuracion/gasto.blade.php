@@ -106,9 +106,6 @@
               </div>
               <!-- /.col-lg-12 -->
           </div>
-
-
-
           <!-- /.col-lg-12 -->
       </div>
       <!-- /.row -->
@@ -116,73 +113,8 @@
   <!-- /#page-wrapper -->
 @endsection
 
-
-
-  {{-- <script>
-  function init(){
-    limpiar();
-      mostrarform(false);
-
-  }
-
-  //Función mostrar formulario
-  function mostrarform(flag)
-  {
-
-      if (flag)
-      {
-          $("#listadoregistros").hide();
-          $("#formularioregistros").show();
-          $("#btnGuardar").prop("disabled",false);
-          $("#btnagregar").hide();
-      }
-      else
-      {
-          $("#listadoregistros").show();
-          $("#formularioregistros").hide();
-          $("#btnagregar").show();
-      }
-  }
-
-  function limpiar()
-  {
-      $("#gasto").val("");
-
-  }
-
-  function cancelarform()
-  {
-      limpiar();
-      mostrarform(false);
-  }
-
-  init(); --}}
-
-
-
-
-
-  {{-- $(document).ready(function(){
-      $('#mitabla').DataTable(
-{
-        "aProcessing": true,//Activamos el procesamiento del datatables
-        "aServerSide": true,//Paginación y filtrado realizados por el servidor
-        dom: 'Bfrtip',//Definimos los elementos del control de tabla
-        buttons: [
-                    'copyHtml5',
-                    'excelHtml5',
-                    'csvHtml5',
-                    'pdf'
-                ],
-        "bDestroy": true,
-        "iDisplayLength": 5,//Paginación
-        "order": [[ 0, "desc" ]]//Ordenar (columna,orden)
-      }
-    );
-  });
-</script> --}}
-
 @section('script')
+
 <script src="{{ asset('/js/gasto/gasto.js')}}"></script>
 
 @endsection
