@@ -12,7 +12,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3><CENTER>VISTA TIPO - EGRESOS</CENTER></h3>
-                    <p id="gasto">sdcsdc</p>
                 </div>
                 <div class="panel-body text-center">
 
@@ -27,6 +26,10 @@
                           <option value="{{$value->fecha}}">{{$value->fecha}}</option>
                           @endforeach
                       </select>
+                    </div>
+                    <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                      <label>TOTAL DE GASTOS DEL PERIODO:</label><br>
+                      <h4 id="gasto"></h4>
                     </div>
                   </form>
                 </div>

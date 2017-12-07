@@ -35,24 +35,21 @@
                           <option value={{$value->id}}>{{$value->tipo}}</option>
                         @endforeach
                       </select>
-
+                      </form>
                     </div>
-                    <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                      <label>TOTAL DE GASTOS DEL PERIODO:</label><br>
-                      <h4 id="gasto"></h4>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" style="display: none" id="gastos">
+                      <table class="table table-striped table-bordered table-condensed table-hover">
+                        <thead class="">
+                          <tr>
+                             <th>GASTO</th>
+                             <th>IMPORTE</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {{-- Los datos de la tabla los meto por JS --}}
+                        </tbody>
+                      </table>
                     </div>
-                  </form>
-                </div>
-                <div class="panel-body" id="listadoregistros">
-                      <div class="col-lg-12">
-                          <table id="tabla_datos"  class="table table-striped table-bordered table-condensed table-hover">
-                            <thead>
-                              <th>GASTO</th>
-                              <th>IMPORTE</th>
-                            </thead>
-                          </table>
-                      </div>
-                  </div>
 
 
                 </div>

@@ -59,5 +59,59 @@ var formatNumber = {
  }
 }
 </script>
+
+<script type="text/javascript">
+
+function datatable(url){
+
+  Table=$('#tabla_datos').DataTable({
+  'dataType': 'json',
+  "aProcessing": true,//Activamos el procesamiento del datatables
+  "aServerSide": true,//Paginación y filtrado realizados por el servidor
+  dom: 'Bfrtip',//Definimos los elementos del control de tabla
+  buttons: [
+              'copyHtml5',
+              'excelHtml5',
+              'csvHtml5',
+              'pdf'
+          ],
+  "ajax":
+          {
+              url: url,
+              type : "get",
+              dataType : "json",
+              error: function(e){
+                  console.log("jQuery ajax", e.responseText);
+              }
+          },
+  type : "GET",
+  columns: [
+    { data: 'gasto', name: 'gasto' },
+    { data: 'tipo', name: 'tipo' },
+    { data: 'importe', name: 'importe' }
+  ],
+  "bDestroy": true,
+  "iDisplayLength": 10,//Paginación
+  "order": [[ 0, "asc" ]]//Ordenar (columna,orden)
+  });
+
+};
+
+function ajax (url, callback) {
+  var request = new XMLHttpRequest()
+  request.onreadystatechange = function () {
+    if (this.readyState == 4) {
+      if (this.status == 200) {
+        callback(null, JSON.parse(this.response))
+      } else {
+        callback(Error(this.status))
+      }
+    }
+  }
+  request.open('GET', url)
+  request.send()
+};
+
+</script>
 </body>
 </html>
