@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 use App\Gasto;
 use App\Tipo_de_gasto;
 use App\Http\Requests\GastosRequest;
@@ -19,20 +20,15 @@ class GastosController extends Controller
 
       // dd('estoy en listar');
 
-        $gastos = Gasto::all();
-        $tipos = Tipo_de_gasto::all();
+      $gastos =DB::table('gastos')
+          ->select('gastos.gasto','tipos_de_gastos.tipo')
+          ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
+           ->get();
 
-        return response()->json([
-          "data"=> $gastos->toArray(),
-          "tipos"=> $tipos->toArray(),
+        // $gastos = Gasto::all();
+        // $tipos = Tipo_de_gasto::all();
 
-          ]);
-        // $gastos->toArray(),
-        //         $tipos->toArray();
-        // return response()->json(
-        //   $gastos
-          // $tipos->toArray
-        // );
+        return response()->json(["data"=> $gastos->toArray()]);
 
     }
 
@@ -129,15 +125,18 @@ class GastosController extends Controller
       return redirect()->route('gasto.index');
     }
 
-    public function crear(GastosRequest $request, $gasto, $tipo)
+    public function crear(Request $request)
     {
-      //
-      $gasto = new Gasto([
-        'gasto' => $gasto,
-        'tipo_de_gasto_id' => $tipo
-      ]);
-      $gasto->save();
-      // return redirect()->route('gasto.index');
-      return response()->json(['response' => 'This is post method']);
+      if ($request->ajax()){
+        $gasto = new Gasto([
+          'gasto' => $request['gasto'],
+          'tipo_de_gasto_id' => $request['tipo']
+        ]);
+        $gasto->save();
+
+        return response()->json([
+          "mensaje" => $gasto
+          ]);
+        }
     }
 }

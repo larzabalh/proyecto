@@ -1,37 +1,34 @@
 
-@section('title','titulo')
 @extends('template.main')
-
-
-
+@section('titulo','Configuracion de Gastos')
 @section('content')
-
-
-
   <div id="page-wrapper">
-    <div class="alert alert-warning alert-dismissable" id="alerta" style="display: none">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>¡Cuidado!</strong> Es muy importante que leas este mensaje de alerta.
-    </div>
+    <div class="row">
+      {{-- Alarma de BOOTSTRAP --}}
+        <div class="row" class="center-block">
+          <div class="alert alert-success collapse col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-offset-1" id="exito">
+            <a id="linkClose" href="#" class="close">&times;</a>
+              Exito! El Gasto: "<strong><span id="gasto_exito"></span></strong>" dado de alta!!!
+          </div>
+        </div>
+        {{-- FIN!!! Alarma de BOOTSTRAP --}}
 
-      <div class="row">
-          <div class="panel-body" id="formulario">
-            <h1 class="box-title"> Altaasxasx Gastos <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button></h1>
+        <div class="panel-body" id="formulario">
+            <h1 class="box-title"> Gastos <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button></h1>
         </div>
         <div class="col-lg-6" id="formularioregistros">
             <div class="panel panel-default">
 
                 <div class="panel-body" >
                     <form name="" id="" method="POST">
-                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                      {{ csrf_field() }}
+                      <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
                       <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <label>Nombre:</label>
-                        <input type="text" class="form-control" name="gasto" maxlength="50" placeholder="Nombre del gasto">
+                        <input type="text" class="form-control" name="gasto" id="gasto"maxlength="50" placeholder="Nombre del gasto">
                       </div>
                       <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <label>Tipo de Gastos:</label><br>
-                        <select class="form-control" name="tipo">
+                        <select class="form-control" name="tipo" id="tipo">
                           <option selected></option>
                           @foreach ($tipos as $key => $value)
                             <option value={{$value->id}}>{{$value->tipo}}</option>
@@ -59,51 +56,15 @@
             </div>
             <!-- /.panel -->
         </div>
-
-
-
           <div class="panel-body" id="listadoregistros">
               <div class="col-lg-12">
                   <table id="tabla_datos"  class="table table-striped table-bordered table-condensed table-hover">
                     <thead>
-                      <th>EDITAR</th>
-                      <th>BORRAR</th>
-                      <th>BORRAR2</th>
+                      <th>GASTOS</th>
+                      <th>TIPO DE GASTOS</th>
+                      <th></th>
                     </thead>
                   </table>
-
-                    {{-- <thead>
-                      <th>EDITAR</th>
-                      <th>BORRAR</th>
-                      <th>GASTO</th>
-                      <th>TIPO DE GASTO</th>
-                      <th>CONDICION</th>
-                    </thead> --}}
-                      {{-- <tbody> --}}
-                        {{-- @foreach ($gastos as $key => $value)
-                          <tr>
-                            <td><a class="btn btn-info" href="{{ route('gasto.edit', $value->id)}}"><i class="fa fa-pencil"></i></a></td>
-                            <td><form method="POST" action =" {{route('gasto.destroy', $value->id)}}">
-                                  <input type="hidden" name="_method" value="delete" />
-                                  {{ csrf_field() }}
-                                  <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-                                </form>
-
-                            </td>
-                            <td>{{$value->gasto}}</td>
-                            <td>{{$value->tipo_de_gasto->tipo}}</td>
-                            <td>{{$value->condicion}}</td>
-                          </tr>
-                        @endforeach --}}
-                      {{-- </tbody> --}}
-                      {{-- <tfoot>
-                        <th>EDITAR</th>
-                        <th>BORRAR</th>
-                        <th>GASTO</th>
-                        <th>TIPO DE GASTO</th>
-                        <th>CONDICION</th>
-                      </tfoot> --}}
-                  {{-- </table> --}}
               </div>
               <!-- /.col-lg-12 -->
           </div>
