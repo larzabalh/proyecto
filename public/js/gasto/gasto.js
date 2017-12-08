@@ -65,10 +65,15 @@ function listar()
 }
 
 document.getElementById("btnGuardar").addEventListener("click", function (e) {
+  console.log('ACA ESTOY')
   e.preventDefault();
   console.log('estoy');
-  var request = new XMLHttpRequest()
+  var request = new XMLHttpRequest();
   var url = "http://localhost:8000/configuracion/gasto/crear"
+  var params = "gasto=Nicolas&tipo=1"
+
+  request.open('POST', url, true);
+  request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
   request.onreadystatechange = function () {
     if (this.readyState == 4) {
@@ -76,12 +81,13 @@ document.getElementById("btnGuardar").addEventListener("click", function (e) {
         // callback(null, JSON.parse(this.response))
         ("alerta").show();
       } else {
-        callback(Error(this.status))
+        console.log(Error(this.status))
       }
     }
   }
-  request.open('POST', url)
-  request.send()
+
+
+  request.send(params)
 
 
   });

@@ -129,14 +129,15 @@ class GastosController extends Controller
       return redirect()->route('gasto.index');
     }
 
-    public function crear(GastosRequest $request)
+    public function crear(GastosRequest $request, $gasto, $tipo)
     {
+      //
       $gasto = new Gasto([
-        'gasto' => $request->input('gasto'),
-        'tipo_de_gasto_id' => $request->input('tipo')
+        'gasto' => $gasto,
+        'tipo_de_gasto_id' => $tipo
       ]);
       $gasto->save();
       // return redirect()->route('gasto.index');
-      return response()->json(["data"=> $gasto->toArray()]);
+      return response()->json(['response' => 'This is post method']);
     }
 }

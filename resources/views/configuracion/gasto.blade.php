@@ -16,13 +16,14 @@
 
       <div class="row">
           <div class="panel-body" id="formulario">
-            <h1 class="box-title"> Alta Gastos <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button></h1>
+            <h1 class="box-title"> Altaasxasx Gastos <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button></h1>
         </div>
         <div class="col-lg-6" id="formularioregistros">
             <div class="panel panel-default">
 
                 <div class="panel-body" >
                     <form name="" id="" method="POST">
+                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       {{ csrf_field() }}
                       <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <label>Nombre:</label>

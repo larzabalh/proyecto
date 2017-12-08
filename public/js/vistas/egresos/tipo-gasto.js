@@ -87,6 +87,4 @@ function datatable(url){
 
 };
 
-
-
 init();
