@@ -11,14 +11,14 @@ function mostrarform(flag)
     if (flag)
     {
         $("#listadoregistros").hide();
-        $("#formularioregistros").show();
+        $("#form_edicion").hide();
         $("#btnGuardar").prop("disabled",false);
-        $("#btnagregar").hide();
+        // $("#btnagregar").hide();
     }
     else
     {
         $("#listadoregistros").show();
-        $("#formularioregistros").hide();
+        $("#form_edicion").show();
         $("#btnagregar").show();
     }
 }
@@ -55,14 +55,29 @@ function listar()
           columns: [
               { data: 'gasto'},
               { data: 'tipo'},
-              { 'defaultContent': "<button type='button' class='editar btn btn-primary'><i class='fa fa-pencil-square-o'></i></button>	<button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar' ><i class='fa fa-trash-o'></i></button>"}
+              { 'defaultContent': "<button id='editar' type='button' class='editar btn btn-primary'><i class='fa fa-pencil-square-o'></i></button>	<button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar' ><i class='fa fa-trash-o'></i></button>"}
           ],
           "bDestroy": true,
           "iDisplayLength": 10,//Paginación
           "order": [[ 0, "asc" ]]//Ordenar (columna,orden)
 
       });
+      obtener_data_id('#tabla_datos tbody',Table);
 
+}
+
+var obtener_data_id = function (tabla_datos, table){
+    $(tabla_datos).on("click", "button.editar", function (e){
+    document.getElementById("abrir_edicion").click();
+    e.preventDefault();
+    var data = table.row( $(this).parents("tr") ).data();
+    console.log(data.gasto);
+    var id=$('#id_edicion').val(data.id),
+        gasto=$('#gasto_edicion').val(data.gasto),
+        tipo=$("#tipo_edicion").val(data.tipo);
+
+
+  })
 }
 
 // document.getElementById("btnGuardar").addEventListener("click", function (e) {
@@ -123,6 +138,5 @@ function listar()
                 }
     });
   });
-
 
 init();

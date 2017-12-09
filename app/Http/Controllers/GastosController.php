@@ -21,7 +21,7 @@ class GastosController extends Controller
       // dd('estoy en listar');
 
       $gastos =DB::table('gastos')
-          ->select('gastos.gasto','tipos_de_gastos.tipo')
+          ->select('gastos.id','gastos.gasto','tipos_de_gastos.tipo')
           ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
            ->get();
 
