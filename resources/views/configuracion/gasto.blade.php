@@ -1,5 +1,5 @@
-
 @extends('template.main')
+@extends('template.nav')
 @section('titulo','Configuracion de Gastos')
 @section('content')
   <div id="page-wrapper">

@@ -1,6 +1,6 @@
 @extends('template.main')
-
-@section('title','titulo')
+@extends('template.nav')
+@section('title','Tipos de Gastos')
 
 @section('content')
 

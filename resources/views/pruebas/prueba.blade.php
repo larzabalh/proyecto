@@ -1,5 +1,5 @@
 @extends('template.main')
-
+@extends('template.nav')
 @section('title','titulo')
 
 @section('content')
