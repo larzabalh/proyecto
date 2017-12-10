@@ -21,7 +21,7 @@ class GastosController extends Controller
       // dd('estoy en listar');
 
       $gastos =DB::table('gastos')
-          ->select('gastos.id','gastos.gasto','tipos_de_gastos.tipo')
+          ->select('gastos.id','gastos.gasto','tipos_de_gastos.tipo','tipos_de_gastos.id as id_tipo')
           ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
            ->get();
 
@@ -112,6 +112,19 @@ class GastosController extends Controller
         return redirect()->route('gasto.index');
     }
 
+    public function editar(Request $request, $id)
+    {
+      $gasto = Gasto::find($id);
+      $gasto->gasto =  $request['gasto'];
+      $gasto->tipo_de_gasto_id = $request['tipo'];
+
+      $gasto->save();
+
+      return response()->json([
+        "mensaje" => $gasto
+        ]);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -123,6 +136,13 @@ class GastosController extends Controller
       $gasto = Gasto::find($id);
       $gasto->delete();
       return redirect()->route('gasto.index');
+    }
+
+    public function eliminar($id)
+    {
+      $gasto = Gasto::find($id);
+      $gasto->delete();
+      return response()->json(["mensaje" => $gasto]);
     }
 
     public function crear(Request $request)
