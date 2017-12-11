@@ -27,8 +27,10 @@ class GastosController extends Controller
       // dd('estoy en listar');
 
       $gastos =DB::table('gastos')
-          ->select('gastos.id','gastos.gasto','tipos_de_gastos.tipo','tipos_de_gastos.id as id_tipo')
+          ->select('gastos.id','gastos.gasto','tipos_de_gastos.tipo','tipos_de_gastos.id as id_tipo','users.name')
           ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
+          ->join('users', 'gastos.user_id', '=', 'users.id')
+          ->where(DB::raw('users.id'),auth()->user()->id )
            ->get();
 
         // $gastos = Gasto::all();
@@ -40,10 +42,6 @@ class GastosController extends Controller
 
     public function index()
     {
-      // $gastos = Gasto::all();
-      $tipos = Tipo_de_gasto::all();
-        return view('configuracion.gasto', ['tipos' => $tipos]);
-
 
     }
 
@@ -67,7 +65,8 @@ class GastosController extends Controller
     {
       $gasto = new Gasto([
         'gasto' => $request->input('gasto'),
-        'tipo_de_gasto_id' => $request->input('tipo')
+        'tipo_de_gasto_id' => $request->input('tipo'),
+        'user_id' => auth()->user()->id,
       ]);
       $gasto->save();
       // return redirect()->route('gasto.index');
@@ -156,7 +155,8 @@ class GastosController extends Controller
       if ($request->ajax()){
         $gasto = new Gasto([
           'gasto' => $request['gasto'],
-          'tipo_de_gasto_id' => $request['tipo']
+          'tipo_de_gasto_id' => $request['tipo'],
+          'user_id' => auth()->user()->id,
         ]);
         $gasto->save();
 

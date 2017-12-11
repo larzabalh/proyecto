@@ -16,6 +16,11 @@ class DatabaseSeeder extends Seeder
         // $tipos_de_gastos = factory(Tipo_de_gasto::class)->times(5)->create();
            // $gastos = factory(Gasto::class)->times(20)->create();
 
+           DB::table('users')->insert([
+             ['id' => '1', 'name' => 'hernan','email' => 'larzabalh@hotmail.com','rol' => 'admin','password' => '123123','created_at' => new DateTime, 'updated_at' => new DateTime],
+
+           ]);
+
          DB::table('periodos')->insert([
            ['id' => '1', 'periodo' => '2017-01','created_at' => new DateTime, 'updated_at' => new DateTime],
            ['id' => '2', 'periodo' => '2017-02','created_at' => new DateTime, 'updated_at' => new DateTime],
@@ -42,34 +47,28 @@ class DatabaseSeeder extends Seeder
          ]);
 
          DB::table('gastos')->insert([
-          ['id' => '1', 'gasto' => 'Florencia','tipo_de_gasto_id' => 3,'created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '2', 'gasto' => 'Agustina','tipo_de_gasto_id' => 3,'created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '3', 'gasto' => 'Jose Luis','tipo_de_gasto_id' => 3,'created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '4', 'gasto' => 'Graciela','tipo_de_gasto_id' => 3,'created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '5', 'gasto' => 'Bety','tipo_de_gasto_id' => 3,'created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '6', 'gasto' => 'Alquiler Ramon Falcon','tipo_de_gasto_id' => 3,'created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '7', 'gasto' => 'Amvitium','tipo_de_gasto_id' => 3,'created_at' => new DateTime, 'updated_at' => new DateTime],
-
-          ['id' => '8', 'gasto' => 'Lidia','tipo_de_gasto_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '9', 'gasto' => 'Las Nieves Pedro','tipo_de_gasto_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '10', 'gasto' => 'Las Nieves Ana','tipo_de_gasto_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '11', 'gasto' => 'Diario Clarin','tipo_de_gasto_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '12', 'gasto' => 'OSDE','tipo_de_gasto_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '13', 'gasto' => 'ATM XR 300','tipo_de_gasto_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '14', 'gasto' => 'Monotributo','tipo_de_gasto_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
-
-
-          ['id' => '15', 'gasto' => 'TELEFONO','tipo_de_gasto_id' => 2,'created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '16', 'gasto' => 'LUZ','tipo_de_gasto_id' => 2,'created_at' => new DateTime, 'updated_at' => new DateTime],
-
-          ['id' => '17', 'gasto' => 'NUSKIN','tipo_de_gasto_id' => 4,'created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '18', 'gasto' => 'VIAJE A EEUU','tipo_de_gasto_id' => 4,'created_at' => new DateTime, 'updated_at' => new DateTime],
-
-          ['id' => '19', 'gasto' => 'ACA','tipo_de_gasto_id' => 5,'created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '20', 'gasto' => 'UBER','tipo_de_gasto_id' => 5,'created_at' => new DateTime, 'updated_at' => new DateTime],
-
-          ['id' => '21', 'gasto' => 'VIAJE A PERU','tipo_de_gasto_id' => 6,'created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '22', 'gasto' => 'TV','tipo_de_gasto_id' => 6,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '1', 'gasto' => 'Florencia','tipo_de_gasto_id' => 3,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '2', 'gasto' => 'Agustina','tipo_de_gasto_id' => 3,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '3', 'gasto' => 'Jose Luis','tipo_de_gasto_id' => 3,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '4', 'gasto' => 'Graciela','tipo_de_gasto_id' => 3,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '5', 'gasto' => 'Bety','tipo_de_gasto_id' => 3,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '6', 'gasto' => 'Alquiler Ramon Falcon','tipo_de_gasto_id' => 3,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '7', 'gasto' => 'Amvitium','tipo_de_gasto_id' => 3,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '8', 'gasto' => 'Lidia','tipo_de_gasto_id' => 1,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '9', 'gasto' => 'Las Nieves Pedro','tipo_de_gasto_id' => 1,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '10', 'gasto' => 'Las Nieves Ana','tipo_de_gasto_id' => 1,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '11', 'gasto' => 'Diario Clarin','tipo_de_gasto_id' => 1,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '12', 'gasto' => 'OSDE','tipo_de_gasto_id' => 1,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '13', 'gasto' => 'ATM XR 300','tipo_de_gasto_id' => 1,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '14', 'gasto' => 'Monotributo','tipo_de_gasto_id' => 1,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '15', 'gasto' => 'TELEFONO','tipo_de_gasto_id' => 2,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '16', 'gasto' => 'LUZ','tipo_de_gasto_id' => 2,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '17', 'gasto' => 'NUSKIN','tipo_de_gasto_id' => 4,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '18', 'gasto' => 'VIAJE A EEUU','tipo_de_gasto_id' => 4,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '19', 'gasto' => 'ACA','tipo_de_gasto_id' => 5,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '20', 'gasto' => 'UBER','tipo_de_gasto_id' => 5,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '21', 'gasto' => 'VIAJE A PERU','tipo_de_gasto_id' => 6,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '22', 'gasto' => 'TV','tipo_de_gasto_id' => 6,'user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
 
 
         ]);

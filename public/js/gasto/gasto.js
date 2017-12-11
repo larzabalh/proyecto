@@ -41,7 +41,7 @@ document.getElementById("btnGuardar").addEventListener("click",function(e){
 
   var data = {
             'gasto':$('#gasto').val(),
-            'tipo': $('#tipo').val()
+            'tipo': $('#tipo').val(),
               }
   var url = "http://localhost:8000/configuracion/gasto/crear"
   var token = $('#token').val();
