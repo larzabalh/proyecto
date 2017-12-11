@@ -11,6 +11,10 @@ use App\Tipo_de_gasto;
 class Tipo_GastoController extends Controller
 {
 
+function __construct()
+{
+    $this->middleware('auth');
+}
 
   public function periodo(Request $request, $periodo)
   {

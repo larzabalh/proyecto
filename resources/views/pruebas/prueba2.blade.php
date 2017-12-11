@@ -1,5 +1,6 @@
-@extends('layouts.plantilla') {{-- Meta y NAV --}}
-@section('title','PRUEBA')
+@extends('template.main')
+@extends('template.nav')
+@section('title','titulo')
 
 @section('content')
 

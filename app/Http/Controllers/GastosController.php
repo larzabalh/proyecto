@@ -10,6 +10,12 @@ use App\Http\Requests\GastosRequest;
 
 class GastosController extends Controller
 {
+
+  function __construct()
+  {
+      $this->middleware('auth');
+  }
+
     /**
      * Display a listing of the resource.
      *

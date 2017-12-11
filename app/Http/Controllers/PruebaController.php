@@ -9,6 +9,11 @@ use App\Tipo_de_gasto;
 
 class PruebaController extends Controller
 {
+
+          function __construct()
+          {
+              $this->middleware('auth');
+          }
     /**
      * Display a listing of the resource.
      *

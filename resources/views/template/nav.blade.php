@@ -4,7 +4,7 @@
     <header class="main-header">
 
       <!-- Logo -->
-      <a href="index2.html" class="logo">
+      <a href="{{ route('home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>IT</b>Ventas</span>
         <!-- logo for regular state and mobile devices -->
@@ -20,34 +20,35 @@
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
+            @guest
+                <li><a href="{{ route('login') }}">Login</a></li>
+                <li><a href="{{ route('register') }}">Register</a></li>
+            @else
             <!-- Messages: style can be found in dropdown.less-->
 
             <!-- User Account: style can be found in dropdown.less -->
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <img src="/plugins/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                <span class="hidden-xs">EQUIPO DE FINANZAS</span>
+                <span class="hidden-xs">Usuario: {{ auth()->user()->name}}</span>
               </a>
               <ul class="dropdown-menu">
                 <!-- User image -->
-                <li class="user-header">
-                  <img src="/plugins/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                  <p>
-                    www.finanzas.com - Desarrollando Software
-                    <small>www.finanzas.com</small>
-                  </p>
-                </li>
-
-                <!-- Menu Footer-->
-                <li class="user-footer">
-
-                  <div class="pull-right">
-                    <a href="#" class="btn btn-default btn-flat">Cerrar</a>
-                  </div>
-                </li>
+                <div class="pull-right">
+                  <li class="">
+                    {{-- <img src="/plugins/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> --}}
+                    <a href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                        CERRAR SESION
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
+                  </li>
+                </div>
               </ul>
             </li>
-
           </ul>
         </div>
 
@@ -61,7 +62,7 @@
         <ul class="sidebar-menu">
           <li class="header"></li>
           <li>
-            <a href="#">
+            <a href="{{ route('home')}}">
               <i class="fa fa-tasks"></i> <span>Escritorio</span>
             </a>
           </li>
@@ -169,3 +170,4 @@
       </section>
       <!-- /.sidebar -->
     </aside>
+  @endguest

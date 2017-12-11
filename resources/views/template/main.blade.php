@@ -7,4 +7,5 @@
 </div><!-- /.content-wrapper -->
 
 @include('template.footer')
+
 @yield('script')

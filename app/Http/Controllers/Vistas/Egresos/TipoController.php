@@ -11,6 +11,11 @@ use App\Tipo_de_gasto;
 
 class TipoController extends Controller
 {
+        function __construct()
+        {
+            $this->middleware('auth');
+        }
+
   public function select_tipo(Request $request, $id, $periodo)
   {
     $array = explode('-', $periodo);

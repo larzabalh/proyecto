@@ -1,4 +1,15 @@
 <?php
+Route::get('/test', function(){
+
+$user =new App\User;
+$user->name='hernan';
+$user->email='larzabalh@hotmail.com';
+$user->rol='admin';
+$user->password=bcrypt('123123');
+$user->save();
+return $user;
+});
+
 Route::post('/configuracion/gasto/crear', 'GastosController@crear');
 Route::post('/configuracion/gasto/editar/{id}', 'GastosController@editar');
 Route::post('/configuracion/gasto/eliminar/{id}', 'GastosController@eliminar');
@@ -28,6 +39,10 @@ Route::get('/vistas/egresos/tipo/select_tipo/{id}/{periodo}', 'Vistas\Egresos\Ti
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
