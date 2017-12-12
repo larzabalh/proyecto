@@ -43,6 +43,9 @@ class GastosController extends Controller
     public function index()
     {
 
+      $tipos = Tipo_de_gasto::all();
+        return view('configuracion.egresos.gasto')
+        ->with('tipos', $tipos);
     }
 
     /**

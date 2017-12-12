@@ -73,6 +73,7 @@ document.getElementById("btnGuardar").addEventListener("click",function(e){
 
 // Funciones de Eliminar
 var eliminar_data_id = function (tabla_datos, table){
+  console.log('eliminar')
     $(tabla_datos).on("click", "button.eliminar", function (e){
     e.preventDefault();
     var data = table.row( $(this).parents("tr") ).data();
