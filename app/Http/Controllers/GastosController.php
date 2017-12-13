@@ -27,7 +27,7 @@ class GastosController extends Controller
       // dd('estoy en listar');
 
       $gastos =DB::table('gastos')
-          ->select('gastos.id','gastos.gasto','tipos_de_gastos.tipo','tipos_de_gastos.id as id_tipo','users.name')
+          ->select('gastos.id','gastos.gasto','gastos.condicion','tipos_de_gastos.tipo','tipos_de_gastos.id as id_tipo','users.name')
           ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
           ->join('users', 'gastos.user_id', '=', 'users.id')
           ->where(DB::raw('users.id'),auth()->user()->id )

@@ -16,10 +16,10 @@ class DatabaseSeeder extends Seeder
         // $tipos_de_gastos = factory(Tipo_de_gasto::class)->times(5)->create();
            // $gastos = factory(Gasto::class)->times(20)->create();
 
-           DB::table('users')->insert([
-             ['id' => '1', 'name' => 'hernan','email' => 'larzabalh@hotmail.com','rol' => 'admin','password' => '123123','created_at' => new DateTime, 'updated_at' => new DateTime],
-
-           ]);
+          //  DB::table('users')->insert([
+          //    ['id' => '1', 'name' => 'hernan','email' => 'larzabalh@hotmail.com','rol' => 'admin','password' => '123123','created_at' => new DateTime, 'updated_at' => new DateTime],
+           //
+          //  ]);
 
          DB::table('periodos')->insert([
            ['id' => '1', 'periodo' => '2017-01','created_at' => new DateTime, 'updated_at' => new DateTime],

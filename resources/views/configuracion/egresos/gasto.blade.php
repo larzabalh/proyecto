@@ -197,6 +197,7 @@
                       <th>GASTOS</th>
                       <th>TIPO DE GASTOS</th>
                       <th>OPCIONES</th>
+                      <th>CONDICION</th>
                     </thead>
                   </table>
               </div>

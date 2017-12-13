@@ -19,14 +19,29 @@ function listar()
                         'copyHtml5',
                         'excelHtml5',
                         'csvHtml5',
-                        'pdf'
+                        'pdf',
                     ],
           ajax: 'http://localhost:8000/configuracion/gasto-listar',
           type : "get",
           columns: [
               { data: 'gasto'},
               { data: 'tipo'},
-              { 'defaultContent': "<button id='editar' type='button' class='editar btn btn-primary' data-toggle='modal' data-target='#modalEditar'><i class='fa fa-pencil-square-o'></i></button>	<button id='eliminar' type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar' ><i class='fa fa-trash-o'></i></button>"}
+              { 'defaultContent': "<button id='editar' type='button' class='editar btn btn-primary' data-toggle='modal' data-target='#modalEditar'><i class='fa fa-pencil-square-o'></i></button>	<button id='eliminar' type='button'class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar' ><i class='fa fa-trash-o'></i></button>"},
+              {
+                data:   "condicion",
+                // render: function ( data, type, row ) {
+                //     if ( type === 'display' ) {
+                //         return '<input type="checkbox" class="editor-active">';
+                //     }
+                //     return data;
+                          render: function(data, type, row) {
+                      if (type === 'display') {
+                          return '<input type="checkbox" class="watchlist-checkbox">';
+                      }
+                      return data;
+                },
+                className: "dt-body-center"
+            }
           ],
           "bDestroy": true,
           "iDisplayLength": 10,//Paginación
@@ -71,9 +86,18 @@ document.getElementById("btnGuardar").addEventListener("click",function(e){
   });
 });
 
+// checkbox
+var chek = function (tabla_datos, table){
+    $(tabla_datos).on("click", "button.eliminar", function (e){
+    e.preventDefault();
+    var data = table.row( $(this).parents("tr") ).data();
+    document.getElementById('gasto_eliminar').innerText =data.gasto+" que es del tipo "+data.tipo;
+    var id=$('#id_eliminar').val(data.id);
+  })
+}
+
 // Funciones de Eliminar
 var eliminar_data_id = function (tabla_datos, table){
-  console.log('eliminar')
     $(tabla_datos).on("click", "button.eliminar", function (e){
     e.preventDefault();
     var data = table.row( $(this).parents("tr") ).data();
