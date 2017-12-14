@@ -23,33 +23,105 @@ function listar()
                     ],
           ajax: 'http://localhost:8000/configuracion/gasto-listar',
           type : "get",
-          columns: [
-              { data: 'gasto'},
-              { data: 'tipo'},
-              { 'defaultContent': "<button id='editar' type='button' class='editar btn btn-primary' data-toggle='modal' data-target='#modalEditar'><i class='fa fa-pencil-square-o'></i></button>	<button id='eliminar' type='button'class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar' ><i class='fa fa-trash-o'></i></button>"},
+          columnDefs: [
+              { data: 'gasto',"targets": 0 },
+              { data: 'tipo',"targets": 1},
+              { 'defaultContent': "<button id='editar' type='button' class='editar btn btn-primary' data-toggle='modal' data-target='#modalEditar'><i class='fa fa-pencil-square-o'></i></button>	<button id='eliminar' type='button'class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar' ><i class='fa fa-trash-o'></i></button>","targets": 2},
+            //   {
+            //     data:   null,"targets": 3,
+            //     render: function ( data, type, row ) {
+            //         if ( type === 'display' ) {
+            //             return '<input type="checkbox" name="id[]">';
+            //         }
+            //         return data;
+            //     },
+            //     className: "dt-body-center"
+            // }
               {
-                data:   "condicion",
-                // render: function ( data, type, row ) {
-                //     if ( type === 'display' ) {
-                //         return '<input type="checkbox" class="editor-active">';
-                //     }
-                //     return data;
-                          render: function(data, type, row) {
-                      if (type === 'display') {
-                          return '<input type="checkbox" class="watchlist-checkbox">';
-                      }
-                      return data;
-                },
-                className: "dt-body-center"
+                'targets': 3,
+         'searchable': false,
+         'orderable': false,
+         'className': 'dt-body-center',
+         'render': function (data, type, full, meta){
+             return '<input type="checkbox" name="id[]" value="' + $('<div/>').text(data).html() + '">';
+              }
             }
-          ],
+        ],
+        select: {
+            style: 'os',
+            selector: 'td:not(:last-child)' // no row selection on last column
+        },
           "bDestroy": true,
           "iDisplayLength": 10,//Paginación
           "order": [[ 0, "asc" ]]//Ordenar (columna,orden)
       });
       editar_data_id('#tabla_datos tbody',Table);
       eliminar_data_id('#tabla_datos tbody',Table);
+
+      // Handle click on "Select all" control
+         $('#example-select-all').on('click', function(){
+            // Get all rows with search applied
+            var rows = Table.rows({ 'search': 'applied' }).nodes();
+            // Check/uncheck checkboxes for all rows in the table
+            $('input[type="checkbox"]', rows).prop('checked', this.checked);
+
+
+         });
+
+         // Handle click on checkbox to set state of "Select all" control
+            $('#tabla_datos tbody').on('change', 'input[type="checkbox"]', function(){
+               // If checkbox is not checked
+               if(!this.checked){
+                  var el = $('#example-select-all').get(0);
+                  // If "Select all" control is checked and has 'indeterminate' property
+                  if(el && el.checked && ('indeterminate' in el)){
+                     // Set visual state of "Select all" control
+                     // as 'indeterminate'
+                     el.indeterminate = true;
+                  }
+               }
+            });
+
+            // Handle form submission event
+            $('#frm-example').on('submit', function(e){
+              e.preventDefault();
+              var form = this;
+
+              console.log(Table.$('input[type="checkbox"]'));
+                  // Iterate over all checkboxes in the table
+                  Table.$('input[type="checkbox"]').each(function(index){
+                        // If checkbox is checked
+                        if(this.checked){
+                           console.log(index, this.value)
+                           $(form).append(
+                              $('<input>')
+                                 .attr('type', 'hidden')
+                                 .attr('id', this.id)
+                                 .val(this.value)
+            );
+         }
+
+   });
+ });
 }
+
+
+
+
+
+
+// checkbox
+var chek = function (tabla_datos, table){
+    $(tabla_datos).on("click", ":checkbox", function (e){
+    var data = table.row( $(this).parents("tr") ).data();
+    console.log(data)
+    // document.getElementById('gasto_eliminar').innerText =data.gasto+" que es del tipo "+data.tipo;
+    // var id=$('#id_eliminar').val(data.id);
+  })
+}
+
+
+
 
 document.getElementById("btnGuardar").addEventListener("click",function(e){
   e.preventDefault();
@@ -86,15 +158,7 @@ document.getElementById("btnGuardar").addEventListener("click",function(e){
   });
 });
 
-// checkbox
-var chek = function (tabla_datos, table){
-    $(tabla_datos).on("click", "button.eliminar", function (e){
-    e.preventDefault();
-    var data = table.row( $(this).parents("tr") ).data();
-    document.getElementById('gasto_eliminar').innerText =data.gasto+" que es del tipo "+data.tipo;
-    var id=$('#id_eliminar').val(data.id);
-  })
-}
+
 
 // Funciones de Eliminar
 var eliminar_data_id = function (tabla_datos, table){

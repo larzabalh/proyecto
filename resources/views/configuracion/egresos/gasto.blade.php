@@ -190,6 +190,7 @@
 {{-- FIN EDICION DE REGISTROS --}}
 
 {{-- DATATABLE --}}
+<form id="frm-example" action="{{ asset('/js/gasto/gasto.js')}}" method="POST">
           <div class="panel-body" id="listadoregistros">
               <div class="col-lg-12">
                   <table id="tabla_datos"  class="table table-striped table-bordered table-condensed table-hover">
@@ -197,11 +198,19 @@
                       <th>GASTOS</th>
                       <th>TIPO DE GASTOS</th>
                       <th>OPCIONES</th>
-                      <th>CONDICION</th>
+                      <th><input type="checkbox" name="select_all" value="1" id="example-select-all"></th>
                     </thead>
                   </table>
               </div>
               <!-- /.col-lg-12 -->
+              <p>Press <b>Submit</b> and check console for URL-encoded form data that would be submitted.</p>
+
+              <p><button>Submit</button></p>
+
+              <b>Data submitted to the server:</b><br>
+              <pre id="example-console">
+              </pre>
+              </form>
           </div>
           <!-- /.col-lg-12 -->
       </div>
