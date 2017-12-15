@@ -1,6 +1,11 @@
+var Table
+
+// document.forms['edit'].gasto.value
+
 function init(){
     limpiar();
-    listar();
+    crearDataTable();
+    suscribirEventos();
 }
 
 function limpiar()
@@ -9,9 +14,83 @@ function limpiar()
     $("#tipo").val("");
 }
 
-function listar()
+function suscribirEventos () {
+  editar_data_id('#tabla_datos tbody',Table);
+  eliminar_data_id('#tabla_datos tbody',Table);
+
+  // Handle click on "Select all" control
+     $('#example-select-all').on('click', function(){
+        // Get all rows with search applied
+        var rows = Table.rows({ 'search': 'applied' }).nodes();
+        // Check/uncheck checkboxes for all rows in the table
+        $('input[type="checkbox"]', rows).prop('checked', this.checked);
+
+
+     });
+
+     // Handle click on checkbox to set state of "Select all" control
+        $('#tabla_datos tbody').on('change', 'input[type="checkbox"]', function(){
+           // If checkbox is not checked
+           if(!this.checked){
+              var el = $('#example-select-all').get(0);
+              // If "Select all" control is checked and has 'indeterminate' property
+              if(el && el.checked && ('indeterminate' in el)){
+                 // Set visual state of "Select all" control
+                 // as 'indeterminate'
+                 el.indeterminate = true;
+              }
+           }
+        });
+
+        // Handle form submission event
+        $('#frm-example').on('submit', function(e){
+          e.preventDefault();
+          var form = this;
+
+
+          var checkeados = [];
+          document.querySelectorAll('#tabla_datos tbody input[type=checkbox]').forEach(function (el) {
+            if (el.checked) checkeados.push(el.value)
+          });
+
+          var url = "http://localhost:8000/configuracion/gasto/eliminar_masivos"+checkeados+""
+          var token = $('#token_eliminar_masivos').val();
+          var data = {
+            gastos: checkeados
+          }
+          console.log(checkeados)
+
+          $.ajax({
+            url: url,
+            headers: {
+              'X-CSRF-TOKEN': token
+            },
+            type: 'POST',
+            processData: true,
+            dataType: 'json',
+            data: data,
+            success:function(response){
+              $("#exito").show('fade')
+              document.getElementById('gasto_exito').innerText =response.mensaje.gasto;
+              setTimeout(function(){
+                $("#exito").hide('fade');
+                Table.ajax.reload();
+              },1500);
+            },
+            error: function(response) {
+              $('#error').modal('show');
+              setTimeout(function(){
+                $('#error').modal('hide');
+              },1500);
+            }
+          })
+
+});
+}
+
+function crearDataTable()
 {
-            Table=$('#tabla_datos').DataTable({
+  Table = $('#tabla_datos').DataTable({
             "aProcessing": true,//Activamos el procesamiento del datatables
             "aServerSide": true,//Paginación y filtrado realizados por el servidor
             dom: 'Bfrtip',//Definimos los elementos del control de tabla
@@ -26,24 +105,15 @@ function listar()
           columnDefs: [
               { data: 'gasto',"targets": 0 },
               { data: 'tipo',"targets": 1},
-              { 'defaultContent': "<button id='editar' type='button' class='editar btn btn-primary' data-toggle='modal' data-target='#modalEditar'><i class='fa fa-pencil-square-o'></i></button>	<button id='eliminar' type='button'class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar' ><i class='fa fa-trash-o'></i></button>","targets": 2},
-            //   {
-            //     data:   null,"targets": 3,
-            //     render: function ( data, type, row ) {
-            //         if ( type === 'display' ) {
-            //             return '<input type="checkbox" name="id[]">';
-            //         }
-            //         return data;
-            //     },
-            //     className: "dt-body-center"
-            // }
+              { 'defaultContent': "<button id='editar' type='button' class='editar btn btn-primary' data-target='#modalEditar'><i class='fa fa-pencil-square-o'></i></button>	<button id='eliminar' type='button'class='eliminar btn btn-danger' data-target='#modalEliminar' ><i class='fa fa-trash-o'></i></button>","targets": 2},
               {
                 'targets': 3,
          'searchable': false,
          'orderable': false,
          'className': 'dt-body-center',
          'render': function (data, type, full, meta){
-             return '<input type="checkbox" name="id[]" value="' + $('<div/>').text(data).html() + '">';
+
+             return '<input type="checkbox" ' + (full.condicion ? 'checked="checked"' : '') + ' name="id[]" value="' + full.id  + '">';
               }
             }
         ],
@@ -55,69 +125,7 @@ function listar()
           "iDisplayLength": 10,//Paginación
           "order": [[ 0, "asc" ]]//Ordenar (columna,orden)
       });
-      editar_data_id('#tabla_datos tbody',Table);
-      eliminar_data_id('#tabla_datos tbody',Table);
 
-      // Handle click on "Select all" control
-         $('#example-select-all').on('click', function(){
-            // Get all rows with search applied
-            var rows = Table.rows({ 'search': 'applied' }).nodes();
-            // Check/uncheck checkboxes for all rows in the table
-            $('input[type="checkbox"]', rows).prop('checked', this.checked);
-
-
-         });
-
-         // Handle click on checkbox to set state of "Select all" control
-            $('#tabla_datos tbody').on('change', 'input[type="checkbox"]', function(){
-               // If checkbox is not checked
-               if(!this.checked){
-                  var el = $('#example-select-all').get(0);
-                  // If "Select all" control is checked and has 'indeterminate' property
-                  if(el && el.checked && ('indeterminate' in el)){
-                     // Set visual state of "Select all" control
-                     // as 'indeterminate'
-                     el.indeterminate = true;
-                  }
-               }
-            });
-
-            // Handle form submission event
-            $('#frm-example').on('submit', function(e){
-              e.preventDefault();
-              var form = this;
-
-              console.log(Table.$('input[type="checkbox"]'));
-                  // Iterate over all checkboxes in the table
-                  Table.$('input[type="checkbox"]').each(function(index){
-                        // If checkbox is checked
-                        if(this.checked){
-                           console.log(index, this.value)
-                           $(form).append(
-                              $('<input>')
-                                 .attr('type', 'hidden')
-                                 .attr('id', this.id)
-                                 .val(this.value)
-            );
-         }
-
-   });
- });
-}
-
-
-
-
-
-
-// checkbox
-var chek = function (tabla_datos, table){
-    $(tabla_datos).on("click", ":checkbox", function (e){
-    var data = table.row( $(this).parents("tr") ).data();
-    console.log(data)
-    // document.getElementById('gasto_eliminar').innerText =data.gasto+" que es del tipo "+data.tipo;
-    // var id=$('#id_eliminar').val(data.id);
-  })
 }
 
 
@@ -141,12 +149,11 @@ document.getElementById("btnGuardar").addEventListener("click",function(e){
     dataType: 'json',
     data: data,
     success:function(response){
-      limpiar();
       $("#exito").show('fade')
       document.getElementById('gasto_exito').innerText =response.mensaje.gasto;
       setTimeout(function(){
         $("#exito").hide('fade');
-        init();
+        Table.ajax.reload();
       },1500);
     },
     error: function(response) {
@@ -164,13 +171,14 @@ document.getElementById("btnGuardar").addEventListener("click",function(e){
 var eliminar_data_id = function (tabla_datos, table){
     $(tabla_datos).on("click", "button.eliminar", function (e){
     e.preventDefault();
+        $('#modalEliminar').modal('show')
     var data = table.row( $(this).parents("tr") ).data();
     document.getElementById('gasto_eliminar').innerText =data.gasto+" que es del tipo "+data.tipo;
     var id=$('#id_eliminar').val(data.id);
   })
 }
 
-document.getElementById("eliminar").addEventListener("click",function(e){
+document.getElementById("form_eliminar").addEventListener("submit",function(e){
   e.preventDefault();
   $('#modalEliminar').modal('hide');
   var data = {'id':$('#id_eliminar').val()};
@@ -190,7 +198,7 @@ document.getElementById("eliminar").addEventListener("click",function(e){
         document.getElementById('gasto_exito_eliminar').innerText =response.mensaje.gasto;
         setTimeout(function(){
           $('#exito_eliminar').modal('hide');
-          init();
+          Table.ajax.reload();
         },1500);
       },
     error: function(response) {
@@ -203,17 +211,20 @@ document.getElementById("eliminar").addEventListener("click",function(e){
 });
 
 // Funciones de Editar
-var editar_data_id = function (tabla_datos, table){
-    $(tabla_datos).on("click", "button.editar", function (e){
+var editar_data_id = function (tabla_datos) {
+  $(tabla_datos).on("click", "button.editar", function (e){
+    console.log('click')
+    $('#modalEditar').modal('show')
     e.preventDefault();
-    var data = table.row( $(this).parents("tr") ).data();
-    var id=$('#id_edicion').val(data.id),
-        gasto=$('#gasto_edicion').val(data.gasto),
-        tipo=$("#tipo_edicion").val(data.id_tipo);
+    var data = Table.row( $(this).parents("tr") ).data();
+    $('#id_edicion').val(data.id);
+    $('#gasto_edicion').val(data.gasto);
+    $("#tipo_edicion").val(data.id_tipo);
   })
 }
 
-  document.getElementById("editar").addEventListener("click",function(e){
+
+  document.getElementById("form_edit").addEventListener("submit",function(e){
     e.preventDefault();
     var data = {
               'id':$('#id_edicion').val(),
@@ -233,10 +244,11 @@ var editar_data_id = function (tabla_datos, table){
       success:function(response){
                     $("#abrir").hide();
                     limpiar();
+                    $('#modalEditar').modal('hide')
                     $("#exito_editar").show('fade')
                     document.getElementById('gasto_exito_editar').innerText =response.mensaje.gasto;
                     setTimeout(function(){
-                        init();
+                        Table.ajax.reload();
                         $("#exito_editar").hide('fade');
                         $("#abrir").show();
                       },1500);

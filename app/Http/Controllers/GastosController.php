@@ -153,6 +153,18 @@ class GastosController extends Controller
       return response()->json(["mensaje" => $gasto]);
     }
 
+    public function eliminar_masivos($ids)
+
+
+    {
+
+        foreach ($ids as $id) {
+          $gasto = Gasto::find($id);
+          $gasto->delete();
+      }
+        return response()->json(["mensaje" => 'borrados']);
+    }
+
     public function crear(Request $request)
     {
       if ($request->ajax()){

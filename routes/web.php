@@ -12,6 +12,7 @@ return $user;
 
 Route::post('/configuracion/gasto/crear', 'GastosController@crear');
 Route::post('/configuracion/gasto/editar/{id}', 'GastosController@editar');
+Route::post('/configuracion/gasto/eliminar_masivos/{id}','GastosController@eliminar_masivos')->name('gastos.eliminar_masivos');
 Route::post('/configuracion/gasto/eliminar/{id}', 'GastosController@eliminar');
 Route::resource('/configuracion/gasto', 'GastosController');
 Route::get('/configuracion/gasto-listar', 'GastosController@listar');

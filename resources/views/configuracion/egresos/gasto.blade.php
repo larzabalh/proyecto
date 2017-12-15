@@ -51,7 +51,7 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
                             <div >
                               <label>Nombre:</label>
-                              <input type="text" class="form-control" name="gasto" id="gasto"maxlength="50" placeholder="Nombre del gasto">
+                              <input type="text" class="form-control" name="gasto" id="gasto" maxlength="50" placeholder="Nombre del gasto">
                             </div>
                             <div>
                               <label>Tipo de Gastos:</label><br>
@@ -108,7 +108,7 @@
   </div>
   {{-- FIN!!! Alarma de BOOTSTRAP --}}
 <div>
-  <form id="frmEliminarUsuario" action="" method="POST">
+  <form id="form_eliminar" action="" method="POST">
     <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_eliminar">
     <input type="hidden" id="id_eliminar" name="id_eliminar" value="">
     <!-- Modal -->
@@ -123,7 +123,7 @@
             ¿Está seguro de eliminar:" <strong id="gasto_eliminar"></strong> "?
           </div>
           <div class="modal-footer">
-            <button type="button" id="eliminar" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+            <button type="submit" id="eliminar" class="btn btn-primary">Aceptar</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
           </div>
         </div>
@@ -141,7 +141,7 @@
         Exito! El Gasto: "<strong><span id="gasto_exito_editar"></span></strong>" ha sido Actualizado Correctamente!!!
   </div>
     {{-- FIN!!! Alarma de BOOTSTRAP --}}
-  <form id="" action="" method="POST">
+  <form id="form_edit" name="edit" action="" method="POST">
     <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_editar">
     <input type="hidden" id="id_editar" name="id_eliminar" value="">
     <!-- Modal -->
@@ -170,7 +170,7 @@
                 </select>
               </div>
               <div class="modal-footer">
-                <button type="button" id="editar" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+                <button type="submit" id="editar" class="btn btn-primary">Aceptar</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
               </div>
               </div>
@@ -191,6 +191,7 @@
 
 {{-- DATATABLE --}}
 <form id="frm-example" action="{{ asset('/js/gasto/gasto.js')}}" method="POST">
+  <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_eliminar_masivos">
           <div class="panel-body" id="listadoregistros">
               <div class="col-lg-12">
                   <table id="tabla_datos"  class="table table-striped table-bordered table-condensed table-hover">
