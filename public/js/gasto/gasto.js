@@ -43,28 +43,27 @@ function suscribirEventos () {
         });
 
         // Handle form submission event
-        $('#frm-example').on('submit', function(e){
+        $('#form_eliminar_masivos').on('submit', function(e){
           e.preventDefault();
-          var form = this;
-
 
           var checkeados = [];
-          document.querySelectorAll('#tabla_datos tbody input[type=checkbox]').forEach(function (el) {
-            if (el.checked) checkeados.push(el.value)
-          });
 
-          var url = "http://localhost:8000/configuracion/gasto/eliminar_masivos"+checkeados+""
+          document.querySelectorAll('#tabla_datos tbody input[type=checkbox]').forEach(function (el,index) {
+            if (el.checked) checkeados.push(el.value)
+
+          });
+          console.log(checkeados,checkeados.length)
+
+          var url = "http://localhost:8000/configuracion/gasto/eliminar_masivos/"+checkeados+""
           var token = $('#token_eliminar_masivos').val();
-          var data = {
-            gastos: checkeados
-          }
-          console.log(checkeados)
+
+          var data = {checkeados}
+          console.log(data)
+
 
           $.ajax({
             url: url,
-            headers: {
-              'X-CSRF-TOKEN': token
-            },
+            headers: {'X-CSRF-TOKEN':token},
             type: 'POST',
             processData: true,
             dataType: 'json',
@@ -77,11 +76,12 @@ function suscribirEventos () {
                 Table.ajax.reload();
               },1500);
             },
-            error: function(response) {
-              $('#error').modal('show');
-              setTimeout(function(){
-                $('#error').modal('hide');
-              },1500);
+            error:
+            function(response) {
+              // $('#error').modal('show');
+              // setTimeout(function(){
+              //   $('#error').modal('hide');
+              // },1500);
             }
           })
 

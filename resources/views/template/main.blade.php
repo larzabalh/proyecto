@@ -1,4 +1,5 @@
 @include('template.meta')
+@include('template.nav')
 
 
 <div class="content-wrapper">

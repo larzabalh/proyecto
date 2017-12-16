@@ -157,8 +157,12 @@ class GastosController extends Controller
 
 
     {
+      //Force array
+      // $ids = is_array($ids) ? $ids : array($ids);
+
 
         foreach ($ids as $id) {
+          // dd($key);
           $gasto = Gasto::find($id);
           $gasto->delete();
       }

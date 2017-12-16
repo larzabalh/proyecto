@@ -1,6 +1,7 @@
 @extends('template.main')
-@extends('template.nav')
 @section('titulo','Configuracion de Gastos')
+
+
 @section('content')
   <div id="page-wrapper">
     <div class="row">
@@ -190,8 +191,11 @@
 {{-- FIN EDICION DE REGISTROS --}}
 
 {{-- DATATABLE --}}
-<form id="frm-example" action="{{ asset('/js/gasto/gasto.js')}}" method="POST">
+<form id="form_eliminar_masivos" action="" method="POST">
   <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_eliminar_masivos">
+  <button type="submit" class="btn btn-primary">ELIMINAR MASIVOS</button>
+</form>
+
           <div class="panel-body" id="listadoregistros">
               <div class="col-lg-12">
                   <table id="tabla_datos"  class="table table-striped table-bordered table-condensed table-hover">
@@ -204,14 +208,6 @@
                   </table>
               </div>
               <!-- /.col-lg-12 -->
-              <p>Press <b>Submit</b> and check console for URL-encoded form data that would be submitted.</p>
-
-              <p><button>Submit</button></p>
-
-              <b>Data submitted to the server:</b><br>
-              <pre id="example-console">
-              </pre>
-              </form>
           </div>
           <!-- /.col-lg-12 -->
       </div>
