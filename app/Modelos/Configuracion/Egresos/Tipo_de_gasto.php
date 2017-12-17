@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Tipo_de_gasto extends Model
 {
   protected $table = 'tipos_de_gastos';
-  protected $guarded = [];
+  protected $fillable = ['tipo','user_id'];
+
 
 
   // Relación

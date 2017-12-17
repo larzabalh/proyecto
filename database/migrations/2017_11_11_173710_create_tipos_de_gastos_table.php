@@ -17,6 +17,7 @@ class CreateTiposDeGastosTable extends Migration
           $table->increments('id');
           $table->string('tipo');
           $table->string('condicion')->default(1);
+          $table->integer('user_id')->unsigned();
           $table->timestamps();
         });
     }

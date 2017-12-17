@@ -38,12 +38,12 @@ class DatabaseSeeder extends Seeder
          ]);
 
          DB::table('tipos_de_gastos')->insert([
-           ['id' => '1', 'tipo' => 'FIJO','created_at' => new DateTime, 'updated_at' => new DateTime],
-           ['id' => '2', 'tipo' => 'VARIABLE','created_at' => new DateTime, 'updated_at' => new DateTime],
-           ['id' => '3', 'tipo' => 'OFICINA','created_at' => new DateTime, 'updated_at' => new DateTime],
-           ['id' => '4', 'tipo' => 'GISELA','created_at' => new DateTime, 'updated_at' => new DateTime],
-           ['id' => '5', 'tipo' => 'LIA','created_at' => new DateTime, 'updated_at' => new DateTime],
-           ['id' => '6', 'tipo' => 'PADRES','created_at' => new DateTime, 'updated_at' => new DateTime],
+           ['id' => '1', 'tipo' => 'FIJO','user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+           ['id' => '2', 'tipo' => 'VARIABLE','user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+           ['id' => '3', 'tipo' => 'OFICINA','user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+           ['id' => '4', 'tipo' => 'GISELA','user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+           ['id' => '5', 'tipo' => 'LIA','user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
+           ['id' => '6', 'tipo' => 'PADRES','user_id' => 1,'created_at' => new DateTime, 'updated_at' => new DateTime],
          ]);
 
          DB::table('gastos')->insert([

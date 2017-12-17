@@ -10,13 +10,20 @@ $user->save();
 return $user;
 });
 
-Route::post('/configuracion/gasto/crear', 'GastosController@crear');
-Route::post('/configuracion/gasto/editar/{id}', 'GastosController@editar');
-Route::post('/configuracion/gasto/eliminar_masivos/{id}','GastosController@eliminar_masivos')->name('gastos.eliminar_masivos');
-Route::post('/configuracion/gasto/eliminar/{id}', 'GastosController@eliminar');
-Route::resource('/configuracion/gasto', 'GastosController');
 Route::get('/configuracion/gasto-listar', 'GastosController@listar');
+Route::post('/configuracion/gasto/editar/{id}', 'GastosController@editar');
+Route::post('/configuracion/gasto/eliminar/{id}', 'GastosController@eliminar');
+Route::post('/configuracion/gasto/eliminar_masivos/{id}','GastosController@eliminar_masivos')->name('gastos.eliminar_masivos');
+Route::resource('/configuracion/gasto', 'GastosController');
+
+
+Route::get('/configuracion/tipos_de_gastos/listar', 'Tipo_de_gastoController@listar');
+Route::post('/configuracion/tipos_de_gastos/editar/{id}', 'Tipo_de_gastoController@editar');
+Route::post('/configuracion/tipos_de_gastos/eliminar/{id}', 'Tipo_de_gastoController@eliminar');
 Route::resource('/configuracion/tipos_de_gastos', 'Tipo_de_gastoController');
+
+
+
 Route::resource('/registros/registrodegastos', 'RegistrodeGastosController');
 Route::resource('/clientes', 'ClienteController');
 Route::resource('/ingresos/mensual', 'IngresoMensualController');
