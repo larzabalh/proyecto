@@ -19,57 +19,27 @@ class PruebaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function select_gasto(Request $request, $id)
-     {
 
-       $gastos =DB::table('reg_gastos')
-           ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
-           ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
-           ->where('gastos.tipo_de_gasto_id','=',$id)
-           ->select('gastos.gasto','gastos.id')
-           ->groupBy('gastos.gasto','gastos.id')
-            ->get();
+public function listar()
+    {
 
-        return response()->json($gastos);
+      $gastos =DB::table('gastos')
+          ->select('gastos.id','gastos.gasto','gastos.condicion','tipos_de_gastos.tipo','tipos_de_gastos.id as id_tipo','users.name')
+          ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
+          ->join('users', 'gastos.user_id', '=', 'users.id')
+          ->where(DB::raw('users.id'),auth()->user()->id )
+           ->get();
 
-        }
-
-
-public function suma_importe(Request $request, $id)
-{
-
-  $suma =DB::table('reg_gastos')
-      ->select(DB::raw('sum(reg_gastos.importe) as importe'),'gastos.gasto','gastos.id','tipos_de_gastos.tipo','tipos_de_gastos.id')
-      ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
-      ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
-      ->where('gastos.id','=',$id)
-      ->groupBy('gastos.gasto','gastos.id','tipos_de_gastos.tipo','tipos_de_gastos.id')
-       ->first();
-
-   return response()->json($suma);
-
-}
-
+        return response()->json(["data"=> $gastos->toArray()]);
+    }
 
 
 
     public function index()
     {
-
-      $tipos =DB::table('reg_gastos')
-          ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
-          ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
-          ->select('tipos_de_gastos.tipo','tipos_de_gastos.id')
-          ->groupBy('tipos_de_gastos.tipo','tipos_de_gastos.id')
-           ->get();
-
-      // $gastos = Gasto::all();
-      // dd($gastos);
-
-
-
-        return view('pruebas.prueba', ['tipos' => $tipos]);
-
+       $tipos = Tipo_de_gasto::all();
+        
+        return view('pruebas.prueba')->with('tipos', $tipos);;
     }
 
     /**
@@ -90,25 +60,15 @@ public function suma_importe(Request $request, $id)
      */
     public function store(Request $request)
     {
-      if ($request->ajax()){
-
-        Prueba::create($request->all());
-
-        return response()->json([
-          "mensaje" => "creado"
-          ]);
-        }
-
+      $gasto = new Gasto([
+        'gasto' => $request->input('gasto'),
+        'tipo_de_gasto_id' => $request->input('tipo'),
+        'user_id' => auth()->user()->id,
+      ]);
+      $gasto->save();
+      // return redirect()->route('gasto.index');
+      return response()->json(["data"=> $gasto->toArray()]);
       }
-
-
-
-
-
-
-
-
-
 
     /**
      * Display the specified resource.

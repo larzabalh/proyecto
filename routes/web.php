@@ -22,7 +22,11 @@ Route::resource('/clientes', 'ClienteController');
 Route::resource('/ingresos/mensual', 'IngresoMensualController');
 Route::resource('/ingresos', 'IngresosController');
   Route::post('/ingresos/ingresos', 'IngresosController@asignar')->name('ingresos.asignar');
+
+
+Route::get('/pruebas/listar', 'PruebaController@listar');
 Route::resource('/pruebas', 'PruebaController');
+
 
 
 Route::get('/vistas/egresos/tipo_gasto', 'Vistas\Egresos\Tipo_GastoController@index')->name('vistas.egresos.tipo_gasto');

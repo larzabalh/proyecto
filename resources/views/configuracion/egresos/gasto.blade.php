@@ -174,9 +174,9 @@
                 <button type="submit" id="editar" class="btn btn-primary">Aceptar</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
               </div>
-              </div>
             </form>
           </div>
+        </div>
           @if (count($errors)>0)
             <div class="alert alert-danger">
               <ul>
@@ -186,8 +186,8 @@
               </ul>
             </div>
           @endif
-        </div>
       </div>
+    </div>
 {{-- FIN EDICION DE REGISTROS --}}
 
 {{-- DATATABLE --}}

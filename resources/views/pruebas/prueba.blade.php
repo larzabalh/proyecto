@@ -1,137 +1,153 @@
-@extends('layouts.plantilla') {{-- Meta y NAV --}}
-@section('title','PRUEBA')
+@extends('template.main')
+@section('titulo','Configuracion de Gastos')
+
 
 @section('content')
 
-  <!-- Trigger the modal with a button -->
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" id="abrir">ABRIR</button>
-
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">ALTA DE GENEROS</h4>
-      </div>
-      <div class="modal-body">
-
-        <form name="" id="form" method="POST">
-          <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token" />
-            {{ csrf_field() }}
-          <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-            <label>TIPO de GASTOS:</label><br>
-            <select class="form-control" name="tipo" id="tipo">
-              <option selected></option>
-              @foreach ($tipos as $key => $value)
-                <option value={{$value->id}}>{{$value->tipo}}</option>
-              @endforeach
-            </select>
+{{-- ELIMINACION DE REGISTROS --}}
+    {{-- Alarma de ELIMINACION BOOTSTRAP --}}
+<div class="modal fade" id="exito_eliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">ELIMINACION DE REGISTROS</h4>
+        </div>
+        <div class="modal-body" id="">
+          <div class="alert alert-success">
+            Exito! El Gasto: "<strong><span id="gasto_exito_eliminar"></span></strong>" ha sido eliminado!!!
           </div>
-          <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-            <label>GASTOS:</label><br>
-            <select class="form-control" name="gasto" id="gasto">
-            </select>
-          </div>
-          <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12" style="display:none" id="div_suma">
-            <label>TOTAL:</label><br>
-            <input type="text" value="" class="form-control" name="suma_importe" id="suma_importe" disabled>
-          </div>
-
-
-          <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <button type="submit"  class="btn btn-primary" id="registro"><i class="fa fa-save"></i> Guardar</button>
-          </div>
-        </form>
-
-
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
+</div>
+<div>
+  <form id="form_eliminar" action="" method="POST">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_eliminar">
+    <input type="hidden" id="id_eliminar" name="id_eliminar" value="">
+    <!-- Modal -->
+    <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="modalEliminarLabel">Eliminar</h4>
+          </div>
+          <div class="modal-body">
+            ¿Está seguro de eliminar:" <strong id="gasto_eliminar"></strong> "?
+          </div>
+          <div class="modal-footer">
+            <button type="submit" id="eliminar" class="btn btn-primary">Aceptar</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+  </form>
+</div>
+{{-- FIN ELIMINACION DE REGISTROS --}}
 
+
+{{-- EDICION DE REGISTROS --}}
+   {{-- Alarma de ELIMINACION BOOTSTRAP --}}
+    <div class="modal fade" id="modal_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">ELIMINACION DE REGISTROS</h4>
+          </div>
+          <div class="modal-body" id="">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  {{-- FIN!!! Alarma de BOOTSTRAP --}}
+    <!-- Modal -->
+    <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div id="message_edit"></div>
+            <h4 class="modal-title" id="modalEliminarLabel">Edicion</h4>
+          </div>
+          <div class="modal-body">
+            <form id="form_edit" name="edit" action="" method="POST">
+              <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_edit">
+              <input type="hidden" name="id" id="id_edicion">
+              <div >
+                <label>Nombre:</label>
+                <input type="text" class="form-control" name="gasto" id="gasto_edicion"maxlength="50" placeholder="Nombre del gasto">
+              </div>
+              <div>
+                <label>Tipo de Gastos:</label><br>
+                <select class="form-control" name="tipo" id="tipo_edicion">
+                  <option selected></option>
+                  @foreach ($tipos as $key => $value)
+                    <option value={{$value->id}}>{{$value->tipo}}</option>
+                  @endforeach
+                </select>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" id="editar" class="btn btn-primary">Aceptar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+          @if (count($errors)>0)
+            <div class="alert alert-danger">
+              <ul>
+                @foreach ($errors->all() as $error)
+                  <li>{{$error}}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endif
+      </div>
+    </div>
+{{-- FIN EDICION DE REGISTROS --}}
+
+
+
+<form action="prueba_submit" method="get" accept-charset="utf-8">
+ <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+
+<div class="container box">
+   <h1 align="center">GASTOS Y TIPO DE GASTOS</h1>
+   <br />
+   <div class="table-responsive">
+   <br />
+    <div align="left">
+     <button type="button" name="add" id="add" class="btn btn-info">AGREGAR</button>
+    </div>
+    <br />
+    <div id="alert_message"></div>
+    <table id="tabla_datos" class="table table-bordered table-striped">
+     <thead>
+      <tr>
+         <th>Gasto</th>
+         <th>Tipo</th>
+         <th></th>
+       </tr>
+     </thead>
+    </table>
   </div>
 </div>
-
-  <div id="page-wrapper">
-      <div class="row"><br>
-        <div id="exito" class="alert alert-success alert-dismissible" role="alert" style="display:none">
-          <strong> AGREGADO CORRECTAMENTE.</strong>
-        </div>
+</form>
 
 
-            <div class="col-lg-8">
-              <div class="alert alert-warning alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>¡Cuidado!</strong> Es muy importante que leas este mensaje de alerta.
-              </div>
-            </div>
-
-
-        {{-- <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    ALTA DE GENEROS
-                </div>
-                <div class="panel-body"> --}}
-                    {{-- <form name="" id="" method="POST">
-                      <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token" />
-                        {{ csrf_field() }}
-                      <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                        <label>Gastos:</label><br>
-                        <select class="form-control" name="gasto" id="gasto">
-                          <option selected></option>
-                          @foreach ($gastos as $key => $value)
-                            <option value={{$value->id}}>{{$value->gasto}}</option>
-                          @endforeach
-                        </select>
-                      </div>
-                      <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                        <label>TIPO:</label><br>
-                        <select class="form-control" name="tipo" id="tipo">
-
-                        </select>
-                      </div>
-
-
-                      <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <button type="submit"  class="btn btn-primary" id="registro"><i class="fa fa-save"></i> Guardar</button>
-                        <a href="" class="btn btn-primary" id="registro"></i> Guardar</a>
-                      </div>
-                    </form> --}}
-
-
-                {{-- </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
-        </div> --}}
-
-
-
-          <div class="panel-body">
-              <div class="col-lg-12">
-                  <table id="tabla" class="table table-striped table-bordered table-condensed table-hover">
-
-                  </table>
-              </div>
-              <!-- /.col-lg-12 -->
-          </div>
-
-
-
-          <!-- /.col-lg-12 -->
-      </div>
-      <!-- /.row -->
-  </div>
-  <!-- /#page-wrapper -->
 @endsection
 
 @section('script')
+
 <script src="{{ asset('/js/prueba.js')}}"></script>
 
 @endsection

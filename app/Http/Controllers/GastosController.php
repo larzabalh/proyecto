@@ -129,7 +129,7 @@ class GastosController extends Controller
       $gasto->save();
 
       return response()->json([
-        "mensaje" => $gasto
+        "data" => $gasto
         ]);
     }
 
@@ -150,7 +150,7 @@ class GastosController extends Controller
     {
       $gasto = Gasto::find($id);
       $gasto->delete();
-      return response()->json(["mensaje" => $gasto]);
+      return response()->json(["data" => $gasto]);
     }
 
     public function eliminar_masivos($ids)

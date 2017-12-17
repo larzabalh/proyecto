@@ -1,92 +1,180 @@
 
+var dataTable
+var token = $('#token').val();
 
-  // var gasto= document.querySelector('[name=gasto]');
-  // var tipo= document.querySelector('[name=tipo]');
+	function init(){
 
+	    crearDataTable();
+	    
+	}
 
+  function crearDataTable()
+  {  	
+  		var url = 'http://localhost:8000/configuracion/gasto-listar'
+		dataTable = $('#tabla_datos').DataTable({
+		    "aProcessing": true,//Activamos el procesamiento del datatables
+            "aServerSide": true,//Paginación y filtrado realizados por el servidor
+            dom: 'Bfrtip',//Definimos los elementos del control de tabla
+            buttons: [
+                        'copyHtml5',
+                        'excelHtml5',
+                        'csvHtml5',
+                        'pdf',
+                    ],
+          ajax: url,
+          type : "get",
+          columnDefs: [
+              { data: 'gasto',"targets": 0 },
+              { data: 'tipo',"targets": 1},
+              { 'defaultContent': "<button id='editar' type='button' class='editar btn btn-primary' data-target='#modalEditar'><i class='fa fa-pencil-square-o'></i></button>	<button id='eliminar' type='button'class='eliminar btn btn-danger' data-target='#modalEliminar' ><i class='fa fa-trash-o'></i></button>","targets": 2},
+        				],
+        select: {
+            style: 'os',
+            selector: 'td:not(:last-child)' // no row selection on last column
+        },
+          "bDestroy": true,
+          "iDisplayLength": 10,//Paginación
+          "order": [[ 0, "asc" ]]//Ordenar (columna,orden)
+      });
 
-$("#tipo").change(function(e){
+}
 
-console.log(e.target.value);
-  $.get("pruebas/select_gasto/"+e.target.value+"", function(response){
-          console.log(response);
-          $("#gasto").empty();
-          $("#gasto").append("<option></option>");
-          for (var i = 0; i < response.length; i++) {
-            $("#gasto").append("<option value='"+response[i].id+"'>"+response[i].gasto+"</option>");
-          }
-        });
-
+/*ALTA DE REGISTROS!!!*/
+/*1- Inserto una fila para que pueda registrar*/
+$('#add').click(function(){
+	var html = '<tr>';
+	html += '<td contenteditable id="data1"></td>';
+	html += '<td contenteditable id="data2"></td>';
+	html += '<td><button type="button" name="insert" id="insert" class="btn btn-success btn-xs">INSERTAR</button> <button type="button" name="cancelar" id="cancelar" class="btn btn-primary btn-xs">CANCELAR</button></td>';
+	html += '</tr>';
+	$('#tabla_datos tbody').prepend(html);
 });
 
-$("#gasto").change(function(e){
+/*2- Aprieto el boton INSERTAR*/
+  $(document).on('click', '#insert', function(){
+	var url = "http://localhost:8000/pruebas"//con esta ruta entro en el STORE, si es por POST!
+	var gasto = $('#data1').text();
+	var tipo = $('#data2').text();
+	if(gasto != '' && tipo != '')
+	{
+		$.ajax({
+				url:url,
+				headers: {'X-CSRF-TOKEN':token},
+				method:"POST",
+				data:{gasto:gasto, tipo:tipo},
+				success:function(data)
+				{
+					$('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>'+data.data.gasto+'</strong</div>');
+					$('#tabla_datos').DataTable().ajax.reload();
+				}
+				});
+		setInterval(function(){
+		$('#alert_message').html('');
+		}, 5000);
+	}
+   else
+   {
+		$('#alert_message').html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Faltan Campos Obligatorios!!!</strong></div>');
+   }
+  });
 
-console.log(e.target.value);
-  $.get("pruebas/suma_importe/"+e.target.value+"", function(response){
-        console.log('suma_importe', response);
-         $('#div_suma').fadeIn();
+  $(document).on('click', '#cancelar', function(){
+	$('#tabla_datos').DataTable().ajax.reload();			
+  });
 
-           //$('#suma_importe').value = response[0].importe;
-           document.getElementById("suma_importe").value = formatNumber.new(response.importe, '$');
-        });
+	/*ELIMINACION!!!*/
+$(tabla_datos).on("click", "button.eliminar", function (e){
+    e.preventDefault();
+        $('#modalEliminar').modal('show')
+    var data = dataTable.row( $(this).parents("tr") ).data();
+    document.getElementById('gasto_eliminar').innerText =data.gasto+" que es del tipo "+data.tipo;
+    $('#id_eliminar').val(data.id);
+  })
 
-});
-
-
-var boton = document.getElementById("abrir");
-
-boton.addEventListener("click", function(){
-
-  document.getElementById("form").reset();
-
-});
-
-
-// document.getElementById('form').onsubmit=function(e){
-// e.preventDefault();
-//
-// if (document.getElementById('usuario').value == "" ) {
-//   var mensaje_usuario = document.createElement("DIV");
-//   mensaje_usuario.innerText = "EL CAMPO ES REQUERIDO";
-//   document.getElementById('usuario').parentNode.append(mensaje_usuario);
-// }
-//
-//
-// if (document.getElementById('clave').value == "" ) {
-//   var clave = document.querySelector('[name=clave]');
-//   var mensaje_clave = document.createElement("DIV");
-//   mensaje_clave.innerText = "EL CAMPO ES REQUERIDO";
-//   clave.parentNode.append(mensaje_clave);
-// }
-//
-// }
-
-
-$(document).ready(function(){
-
-    $('#exito').hide();
-});
-
-$('#registro').click(function(e){
+document.getElementById("form_eliminar").addEventListener("submit",function(e){
   e.preventDefault();
-
-  var dato = $('#genero').val();
-  var route = 'http://localhost:8000/pruebas';
-  var token = $('#token').val();
-
+  $('#modalEliminar').modal('hide');
+  var data = {'id':$('#id_eliminar').val()};
+  var url = "http://localhost:8000/configuracion/gasto/eliminar/"+$('#id_eliminar').val()+""
 
   $.ajax({
-    url: route,
+    url: url,
     headers: {'X-CSRF-TOKEN':token},
     type: 'POST',
     processData: true,
     dataType: 'json',
-    data: {genero: dato},
-    success:function(response){
-      $('#exito').fadeIn();
-    },
-    error: function() {
-                  $('#error').fadeIn();
-              }
+    data: data,
+    success:function(data){
+        $('#exito_eliminar').modal('show');
+        document.getElementById('gasto_exito_eliminar').innerText =data.data.gasto;
+        setTimeout(function(){
+	        $('#exito_eliminar').modal('hide');
+	        $('#tabla_datos').DataTable().ajax.reload();
+        },1500);
+        $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>El Gasto: '+data.data.gasto+' fue Eliminado!</strong></div>');
+      },
+    error: function(response) {
+        $('#error').modal('show');
+          setTimeout(function(){
+            $('#error').modal('hide');
+              },1500);
+        }
   });
 });
+
+		/*EDICION!!!*/
+/*1- Abro el formulario modal para editar*/
+$(tabla_datos).on("click", "button.editar", function (e){
+	$('#modalEditar').modal('show')
+	e.preventDefault();
+	var data = dataTable.row( $(this).parents("tr") ).data();
+	$('#id_edicion').val(data.id);
+	$('#gasto_edicion').val(data.gasto);
+	$("#tipo_edicion").val(data.id_tipo);
+});
+
+/*2- Aprieto el boton editar del formulario modal de editar*/
+document.getElementById("form_edit").addEventListener("submit",function(e){
+    e.preventDefault();
+    var id = $('#id_edicion').val();
+    var gasto = $('#gasto_edicion').val();
+    var tipo = $("#tipo_edicion").val();
+    if(gasto != '' && tipo != '')
+		update_data(id, gasto, tipo);
+	else
+   {	
+		$('#message_edit').html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Faltan Campos Obligatorios!!!</strong></div>');
+   		setTimeout(function(){
+	        $('#message_edit').hide()
+        },1500);
+   }
+
+  });
+
+/*3- AJAX para editar */
+function update_data(id, gasto, tipo)
+  {
+  	var url = "http://localhost:8000/configuracion/gasto/editar/"+id+""
+
+   $.ajax({
+    url: url,
+    method:"POST",
+    data:{id:id, gasto:gasto, tipo:tipo},
+    headers: {'X-CSRF-TOKEN':token},
+    success:function(data)
+    {
+		console.log(data)
+	    $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>El Gasto: '+data.data.gasto+' fue Editado correctamente!!!</strong></div>');
+	    $('#tabla_datos').DataTable().ajax.reload();
+	    $('#modalEditar').modal('hide')
+    },
+   });
+		setInterval(function(){
+		$('#alert_message').html('');
+		}, 5000);
+
+  } /*FIN EDICION!!!!*/
+
+  init();
+
+
