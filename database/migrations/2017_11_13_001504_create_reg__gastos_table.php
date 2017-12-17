@@ -15,11 +15,10 @@ class CreateRegGastosTable extends Migration
     {
         Schema::create('reg_gastos', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned();
             $table->timestamp('fecha');
             $table->integer('gasto_id')->unsigned();
             $table->foreign('gasto_id')->references('id')->on('gastos')->onDelete('cascade');
-            // $table->integer('tipo_de_gasto_id')->unsigned();
-            // $table->foreign('tipo_de_gasto_id')->references('id')->on('tipos_de_gastos');
             $table->float('importe');
             $table->string('comentario')->nullable();
             $table->timestamps();

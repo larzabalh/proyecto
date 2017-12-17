@@ -15,6 +15,7 @@ class CreateIngresosMensualesTable extends Migration
     {
         Schema::create('ingresos_mensuales', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned();
             $table->integer('periodo_id')->unsigned();
             $table->foreign('periodo_id')->references('id')->on('periodos');
             $table->integer('cliente_id')->unsigned();

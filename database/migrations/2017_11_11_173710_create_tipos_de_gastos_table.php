@@ -15,9 +15,9 @@ class CreateTiposDeGastosTable extends Migration
     {
         Schema::create('tipos_de_gastos', function (Blueprint $table) {
           $table->increments('id');
+          $table->integer('user_id')->unsigned();
           $table->string('tipo');
           $table->string('condicion')->default(1);
-          $table->integer('user_id')->unsigned();
           $table->timestamps();
         });
     }

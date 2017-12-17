@@ -15,6 +15,7 @@ class CreateFacturadoresTable extends Migration
     {
         Schema::create('facturadores', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned();
             $table->string('facturador')->unique();
             $table->string('comentario')->nullable();
             $table->string('condicion')->default(1);

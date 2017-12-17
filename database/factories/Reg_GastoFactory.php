@@ -9,6 +9,7 @@ $factory->define(Reg_Gasto::class, function (Faker $faker) {
 
 
     return [
+    	'user_id'=> 1,
       'fecha'=> $faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now', $timezone = date_default_timezone_get()),
       'gasto_id'=> App\Gasto::all()->random()->id,
       // 'tipo_de_gasto_id'=> App\Tipo_de_gasto::all()->random()->id,

@@ -14,10 +14,12 @@ class CreateFormaPagosTable extends Migration
     public function up()
     {
         Schema::create('forma_pagos', function (Blueprint $table) {
+            //Caja Oficina, VISA,Amex,Mastercard
             $table->increments('id');
-            $table->string('forma_pago');
+            $table->integer('user_id')->unsigned();
+            $table->string('nombre');
             $table->integer('disponibilidad_id')->unsigned()->nullable();
-            $table->foreign('disponibilidad_id')->references('id')->on('disponibilidades');
+            $table->foreign('disponibilidad_id')->references('id')->on('disponibilidades')->onDelete('cascade');
             $table->timestamps();
         });
     }
