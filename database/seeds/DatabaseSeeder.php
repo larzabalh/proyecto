@@ -93,6 +93,8 @@ class DatabaseSeeder extends Seeder
           ['id' => '6','user_id' => 1, 'nombre' => 'Cuenta del CIUDAD','medio_id' => 6,'created_at' => new DateTime, 'updated_at' => new DateTime],
           ['id' => '7','user_id' => 1, 'nombre' => 'Cuenta del FRANCES','medio_id' => 7,'created_at' => new DateTime, 'updated_at' => new DateTime],
           ['id' => '8','user_id' => 1, 'nombre' => 'Cuenta del NACION','medio_id' => 8,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '9','user_id' => 1, 'nombre' => 'Cuenta Omar Larzabal','medio_id' => 4,'created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '10','user_id' => 1, 'nombre' => 'Cuenta In TIme SRL','medio_id' => 4,'created_at' => new DateTime, 'updated_at' => new DateTime],
         ]);
 
         DB::table('forma_pagos')->insert([

@@ -50,15 +50,15 @@ $('#add').click(function(){
 document.getElementById("btnGuardar").addEventListener("click",function(e){
   e.preventDefault();
 	var url = "http://localhost:8000/configuracion/forma_pagos"//con esta ruta entro en el STORE, si es por POST!
-	var nombre = $('#forma_alta').val();
-	var medio_id = $('#tipo_alta').val();
-	if(nombre != '' && medio_id != '')
+	var disponibilidad_id = $('#selectCuentas').val();
+  var nombre = $('#forma_alta').val();
+	if(disponibilidad_id != '' && nombre != '')
 	{
 		$.ajax({
 				url:url,
 				headers: {'X-CSRF-TOKEN':token},
 				method:"POST",
-				data:{nombre:nombre, medio_id:medio_id},
+				data:{nombre:nombre, disponibilidad_id:disponibilidad_id},
 				success:function(data)
 				{
           $('#altaModal').modal('hide') 

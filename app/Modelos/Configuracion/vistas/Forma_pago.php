@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Forma_pago extends Model
 {
-	protected $table = 'fora_pagos';
+	protected $table = 'forma_pagos';
 	protected $fillable = ['user_id','nombre','disponibilidad_id'];
 
 	//Relacion
