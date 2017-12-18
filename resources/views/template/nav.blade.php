@@ -76,6 +76,9 @@
               <li><a href="{{ route('tipos_de_gastos.index')}}"><i class="fa fa-circle-o"></i> Tipos de Gastos</a></li>
               <li><a href="{{ route('gasto.index')}}"><i class="fa fa-circle-o"></i> Gastos</a></li>
               <li><a href="{{route ('clientes.index')}}"><i class="fa fa-circle-o"></i> Clientes</a></li>
+              <li><a href="{{route ('medios.index')}}"><i class="fa fa-circle-o"></i> Medios</a></li>
+              <li><a href="{{route ('disponibilidades.index')}}"><i class="fa fa-circle-o"></i> Disponibilidades</a></li>
+              <li><a href="{{route ('forma_pagos.index')}}"><i class="fa fa-circle-o"></i> Formas de Pagos</a></li>
             </ul>
           </li>
 

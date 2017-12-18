@@ -30,7 +30,7 @@
       <button type="button" class="btn btn-default btn-lg col-lg-offset-5" data-toggle="modal" data-target="#myModal" id="abrir"><i class="fa fa-plus" aria-hidden="true"></i> AGREGAR GASTO</button>
       <!-- Modal -->
       <div id="myModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
+        <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
@@ -45,8 +45,7 @@
               </div>
               {{-- FIN!!! Alarma de BOOTSTRAP --}}
               <div id="formularioregistros">
-                  <div class="panel panel-default">
-
+                    <div class="panel panel-default">
                       <div class="panel-body" >
                           <form name="" id="" method="POST">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
@@ -77,11 +76,11 @@
                                 </ul>
                               </div>
                             @endif
-                            </div>
                           </form>
                         </div>
+                    </div>
                       <!-- /.panel-body -->
-                  </div>
+                </div>
                   <!-- /.panel -->
               </div>
           </div>

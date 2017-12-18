@@ -34,7 +34,7 @@
                               <select class="form-control" name="tipo" id="tipo_alta">
                                 <option selected></option>
                                 @foreach ($tipos as $key => $value)
-                                  <option value={{$value->id}}>{{$value->tipo}}</option>
+                                  <option value={{$value->id}}>{{$value->nombre}}</option>
                                 @endforeach
                               </select>
                             </div>
@@ -151,7 +151,7 @@
                 <select class="form-control" name="tipo" id="tipo_edicion">
                   <option selected></option>
                   @foreach ($tipos as $key => $value)
-                    <option value={{$value->id}}>{{$value->tipo}}</option>
+                    <option value={{$value->id}}>{{$value->nombre}}</option>
                   @endforeach
                 </select>
               </div>
@@ -181,7 +181,7 @@
  <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
 
 <div class="container box">
-   <h1 align="center">GASTOS Y TIPO DE GASTOS</h1>
+   <h1 align="center">CUENTAS Y BANCOS</h1>
    <br />
    <div class="table-responsive">
    <br />
@@ -193,8 +193,8 @@
     <table id="tabla_datos" class="table table-bordered table-striped">
      <thead>
       <tr>
-         <th>Gasto</th>
-         <th>Tipo</th>
+         <th>CUENTA</th>
+         <th>BANCO</th>
          <th></th>
        </tr>
      </thead>
@@ -208,6 +208,6 @@
 
 @section('script')
 
-<script src="{{ asset('/js/configuracion/egresos/gastos.js')}}"></script>
+<script src="{{ asset('/js/configuracion/vistas/disponibilidades.js')}}"></script>
 
 @endsection

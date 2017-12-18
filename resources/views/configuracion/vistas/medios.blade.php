@@ -4,66 +4,6 @@
 
 @section('content')
 
-{{-- ALTA DE REGISTROS--}}
-<!-- Modal -->
-      <div id="altaModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">ALTA DE GASTOS</h4>
-          </div>
-          <div class="modal-body">
-            {{-- Alarma de BOOTSTRAP --}}
-                <div class="alert alert-success collapse" id="exito_alta">
-                  <a id="linkClose" href="#" class="close">&times;</a>
-                     <strong>Registro con Exito!</strong>
-              </div>
-              {{-- FIN!!! Alarma de BOOTSTRAP --}}
-              <div id="formularioregistros">
-                    <div class="panel panel-default">
-                      <div class="panel-body" >
-                          <form name="" id="" method="POST">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
-                            <div >
-                              <label>Nombre:</label>
-                              <input type="text" class="form-control" name="gasto" id="gasto_alta" maxlength="50" placeholder="Nombre del gasto">
-                            </div>
-                            <div>
-                              <label>Tipo de Gastos:</label><br>
-                              <select class="form-control" name="tipo" id="tipo_alta">
-                                <option selected></option>
-                                @foreach ($tipos as $key => $value)
-                                  <option value={{$value->id}}>{{$value->tipo}}</option>
-                                @endforeach
-                              </select>
-                            </div>
-
-                            <div class="modal-footer">
-                              <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
-                              <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-arrow-circle-left"></i> VOLVER</button>
-                            </div>
-                            @if (count($errors)>0)
-                              <div class="alert alert-danger">
-                                <ul>
-                                  @foreach ($errors->all() as $error)
-                                    <li>{{$error}}</li>
-                                  @endforeach
-                                </ul>
-                              </div>
-                            @endif
-                          </form>
-                        </div>
-                    </div>
-                      <!-- /.panel-body -->
-                </div>
-                  <!-- /.panel -->
-              </div>
-          </div>
-        </div>
-      </div>
-
-
 {{-- ELIMINACION DE REGISTROS --}}
     {{-- Alarma de ELIMINACION BOOTSTRAP --}}
 <div class="modal fade" id="exito_eliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -77,7 +17,7 @@
         </div>
         <div class="modal-body" id="">
           <div class="alert alert-success">
-            Exito! El Gasto: "<strong><span id="gasto_exito_eliminar"></span></strong>" ha sido eliminado!!!
+            Exito! El Registro: "<strong><span id="gasto_exito_eliminar"></span></strong>" ha sido eliminado!!!
           </div>
         </div>
       </div>
@@ -144,16 +84,7 @@
               <input type="hidden" name="id" id="id_edicion">
               <div >
                 <label>Nombre:</label>
-                <input type="text" class="form-control" name="gasto" id="gasto_edicion"maxlength="50" placeholder="Nombre del gasto">
-              </div>
-              <div>
-                <label>Tipo de Gastos:</label><br>
-                <select class="form-control" name="tipo" id="tipo_edicion">
-                  <option selected></option>
-                  @foreach ($tipos as $key => $value)
-                    <option value={{$value->id}}>{{$value->tipo}}</option>
-                  @endforeach
-                </select>
+                <input type="text" class="form-control" name="gasto" id="tipo_edicion"maxlength="50" placeholder="Nombre del gasto">
               </div>
               <div class="modal-footer">
                 <button type="submit" id="editar" class="btn btn-primary">Aceptar</button>
@@ -181,7 +112,7 @@
  <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
 
 <div class="container box">
-   <h1 align="center">GASTOS Y TIPO DE GASTOS</h1>
+   <h1 align="center">ENTIDADES DE PAGO Y COBRANZAS</h1>
    <br />
    <div class="table-responsive">
    <br />
@@ -193,7 +124,6 @@
     <table id="tabla_datos" class="table table-bordered table-striped">
      <thead>
       <tr>
-         <th>Gasto</th>
          <th>Tipo</th>
          <th></th>
        </tr>
@@ -208,6 +138,6 @@
 
 @section('script')
 
-<script src="{{ asset('/js/configuracion/egresos/gastos.js')}}"></script>
+<script src="{{ asset('/js/configuracion/vistas/medios.js')}}"></script>
 
 @endsection

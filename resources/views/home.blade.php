@@ -1,6 +1,5 @@
 @extends('template.main')
-@extends('template.nav')
-@section('titulo','Configuracion de Gastos')
+@section('titulo','HOME')
 @section('content')
 
   BIENVENIDO: {{ auth()->user()->name}}

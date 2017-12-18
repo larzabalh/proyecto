@@ -23,6 +23,23 @@ Route::post('/configuracion/tipos_de_gastos/eliminar/{id}', 'Tipo_de_gastoContro
 Route::resource('/configuracion/tipos_de_gastos', 'Tipo_de_gastoController');
 
 
+Route::get('/configuracion/medios/listar', 'MediosController@listar');
+Route::post('/configuracion/medios/editar/{id}', 'MediosController@editar');
+Route::post('/configuracion/medios/eliminar/{id}', 'MediosController@eliminar');
+Route::resource('/configuracion/medios', 'MediosController');
+
+Route::get('/configuracion/disponibilidades/listar', 'DisponibilidadesController@listar');
+Route::post('/configuracion/disponibilidades/editar/{id}', 'DisponibilidadesController@editar');
+Route::post('/configuracion/disponibilidades/eliminar/{id}', 'DisponibilidadesController@eliminar');
+Route::resource('/configuracion/disponibilidades', 'DisponibilidadesController');
+
+Route::get('/configuracion/forma_pagos/select/{id}', 'Forma_PagoController@selectCuentas');//Busca el select de cuentas, dependiendo el banco
+Route::get('/configuracion/forma_pagos/listar', 'Forma_PagoController@listar');
+Route::post('/configuracion/forma_pagos/editar/{id}', 'Forma_PagoController@editar');
+Route::post('/configuracion/forma_pagos/eliminar/{id}', 'Forma_PagoController@eliminar');
+Route::resource('/configuracion/forma_pagos', 'Forma_PagoController');
+
+
 
 Route::resource('/registros/registrodegastos', 'RegistrodeGastosController');
 Route::resource('/clientes', 'ClienteController');

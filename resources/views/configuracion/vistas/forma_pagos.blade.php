@@ -11,7 +11,7 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">ALTA DE GASTOS</h4>
+            <h4 class="modal-title">ALTA DE REGISTROS</h4>
           </div>
           <div class="modal-body">
             {{-- Alarma de BOOTSTRAP --}}
@@ -25,18 +25,23 @@
                       <div class="panel-body" >
                           <form name="" id="" method="POST">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
-                            <div >
-                              <label>Nombre:</label>
-                              <input type="text" class="form-control" name="gasto" id="gasto_alta" maxlength="50" placeholder="Nombre del gasto">
-                            </div>
                             <div>
-                              <label>Tipo de Gastos:</label><br>
-                              <select class="form-control" name="tipo" id="tipo_alta">
+                              <label>BANCOS:</label><br>
+                              <select class="form-control" name="tipo" id="selectBancos">
                                 <option selected></option>
-                                @foreach ($tipos as $key => $value)
-                                  <option value={{$value->id}}>{{$value->tipo}}</option>
+                                @foreach ($bancos as $key => $value)
+                                  <option value={{$value->id}}>{{$value->nombre}}</option>
                                 @endforeach
                               </select>
+                            </div>
+                            <div>
+                              <label>CUENTA:</label><br>
+                              <select class="form-control" name="tipo" id="selectCuentas" disabled="">
+                              </select>
+                            </div>
+                            <div >
+                              <label>FORMA DE PAGO:</label>
+                              <input type="text" class="form-control" name="gasto" id="forma_alta" maxlength="50" placeholder="Nombre del gasto">
                             </div>
 
                             <div class="modal-footer">
@@ -150,8 +155,8 @@
                 <label>Tipo de Gastos:</label><br>
                 <select class="form-control" name="tipo" id="tipo_edicion">
                   <option selected></option>
-                  @foreach ($tipos as $key => $value)
-                    <option value={{$value->id}}>{{$value->tipo}}</option>
+                  @foreach ($disponibilidades as $key => $value)
+                    <option value={{$value->id}}>{{$value->nombre}}</option>
                   @endforeach
                 </select>
               </div>
@@ -181,7 +186,7 @@
  <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
 
 <div class="container box">
-   <h1 align="center">GASTOS Y TIPO DE GASTOS</h1>
+   <h1 align="center">FORMAS DE PAGOS</h1>
    <br />
    <div class="table-responsive">
    <br />
@@ -193,8 +198,9 @@
     <table id="tabla_datos" class="table table-bordered table-striped">
      <thead>
       <tr>
-         <th>Gasto</th>
-         <th>Tipo</th>
+         <th>BANCO</th>
+         <th>CUENTA</th>
+         <th>FORMA DE PAGO</th>
          <th></th>
        </tr>
      </thead>
@@ -208,6 +214,6 @@
 
 @section('script')
 
-<script src="{{ asset('/js/configuracion/egresos/gastos.js')}}"></script>
+<script src="{{ asset('/js/configuracion/vistas/forma_pagos.js')}}"></script>
 
 @endsection
