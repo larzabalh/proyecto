@@ -24,7 +24,7 @@
                     <div class="panel panel-default">
                       <div class="panel-body" >
                           <form name="" id="" method="POST">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+                            <input type="hidden" id="token" value="{{ csrf_token() }}">
                             <div>
                               <label>BANCOS:</label><br>
                               <select class="form-control" name="tipo" id="selectBancos">
@@ -48,15 +48,6 @@
                               <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
                               <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-arrow-circle-left"></i> VOLVER</button>
                             </div>
-                            @if (count($errors)>0)
-                              <div class="alert alert-danger">
-                                <ul>
-                                  @foreach ($errors->all() as $error)
-                                    <li>{{$error}}</li>
-                                  @endforeach
-                                </ul>
-                              </div>
-                            @endif
                           </form>
                         </div>
                     </div>
@@ -167,15 +158,6 @@
             </form>
           </div>
         </div>
-          @if (count($errors)>0)
-            <div class="alert alert-danger">
-              <ul>
-                @foreach ($errors->all() as $error)
-                  <li>{{$error}}</li>
-                @endforeach
-              </ul>
-            </div>
-          @endif
       </div>
     </div>
 {{-- FIN EDICION DE REGISTROS --}}
@@ -183,7 +165,7 @@
 
 
 <form action="prueba_submit" method="get" accept-charset="utf-8">
- <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+ <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_datatable">
 
 <div class="container box">
    <h1 align="center">FORMAS DE PAGOS</h1>

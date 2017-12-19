@@ -179,11 +179,9 @@ function update_data(id, nombre, medio_id)
   $.get("forma_pagos/select/"+e.target.value+"", function(response){
           document.getElementById("selectCuentas").disabled = false;
           $("#selectCuentas").empty();
-
           $("#selectCuentas").append("<option></option>");
           $.each(response, function(i, value) {
             for (var i = 0; i < value.length; i++) {
-                console.log([i].nombre);
                 $("#selectCuentas").append("<option value='"+value[i].id+"'>"+value[i].nombre+"</option>");
               };
           });

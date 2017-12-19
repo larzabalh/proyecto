@@ -44,13 +44,15 @@ class Forma_PagoController extends Controller
 
     public function store(Request $request)
     {
-      $forma_pagos = new Forma_pago([
+     /* $forma_pagos = new Forma_pago([
         'nombre' => $request->input('nombre'),
         'disponibilidad_id' => $request->input('disponibilidad_id'),
         'user_id' => auth()->user()->id,
       ]);
-      $forma_pagos->save();
-      // return redirect()->route('Disponibilidad.index');
+      $forma_pagos->save();*/
+
+      $forma_pagos ='ok';
+
       return response()->json(["data"=> $forma_pagos->toArray()]);
     }
 
