@@ -16,8 +16,8 @@ class Reg_Gasto extends Model
         return $this->belongsTo(Gasto::class); // Le indicamos que se va relacionar con el atributo id
     }
 
-  public function tipo_de_gasto() {
-        return $this->belongsTo(Tipo_de_gasto::class); // Le indicamos que se va relacionar con el atributo id
+  public function forma_de_pagos() {
+        return $this->belongsTo(Forma_de_Pagos::class); // Le indicamos que se va relacionar con el atributo id
     }
 
 public function scopeGasto($query,$gasto){

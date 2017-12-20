@@ -25,7 +25,7 @@ var token = $('#token').val();
           type : "get",
           columnDefs: [
               { data: 'medio_id',"targets": 0 },
-              { data: 'disponibilidad_id',"targets": 1},
+              { data: 'disponibilidad_nombre',"targets": 1},
               { data: 'nombre',"targets": 2},
               { 'defaultContent': "<button id='editar' type='button' class='editar btn btn-primary' data-target='#modalEditar'><i class='fa fa-pencil-square-o'></i></button>	<button id='eliminar' type='button'class='eliminar btn btn-danger' data-target='#modalEliminar' ><i class='fa fa-trash-o'></i></button>","targets": 3},
         				],
@@ -126,9 +126,10 @@ $(tabla_datos).on("click", "button.editar", function (e){
 	$('#modalEditar').modal('show')
 	e.preventDefault();
 	var data = dataTable.row( $(this).parents("tr") ).data();
+  console.log(data)
 	$('#id_edicion').val(data.id);
 	$('#gasto_edicion').val(data.nombre);
-	$("#tipo_edicion").val(data.medio_id);
+	$("#tipo_edicion").val(data.disponibilidad_id);
 });
 
 /*2- Aprieto el boton editar del formulario modal de editar*/

@@ -25,8 +25,8 @@ class CreateClientesTable extends Migration
             $table->foreign('liquidador_id')->references('id')->on('liquidadores');
             $table->integer('cobrador_id')->unsigned();
             $table->foreign('cobrador_id')->references('id')->on('cobradores');
-            $table->integer('forma_pago_id')->unsigned();
-            $table->foreign('forma_pago_id')->references('id')->on('forma_pagos');
+            $table->integer('forma_de_pagos_id')->unsigned();
+            $table->foreign('forma_de_pagos_id')->references('id')->on('forma_de_pagos');
             $table->string('contacto')->nullable();
             $table->string('comentario')->nullable();
             $table->string('condicion')->default(1);

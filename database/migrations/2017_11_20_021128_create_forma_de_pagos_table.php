@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRegGastosTable extends Migration
+class CreateFormaDePagosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateRegGastosTable extends Migration
      */
     public function up()
     {
-        Schema::create('reg_gastos', function (Blueprint $table) {
+        Schema::create('forma_de_pagos', function (Blueprint $table) {
+            //Caja Oficina, VISA,Amex,Mastercard
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->timestamp('fecha');
-            $table->integer('gasto_id')->unsigned();
-            $table->foreign('gasto_id')->references('id')->on('gastos')->onDelete('cascade');
-            $table->float('importe');
-            $table->string('comentario')->nullable();
+            $table->string('nombre');
+            $table->integer('disponibilidad_id')->unsigned()->nullable();
+            $table->foreign('disponibilidad_id')->references('id')->on('disponibilidades')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateRegGastosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reg_gastos');
+        Schema::dropIfExists('forma_de_pagos');
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use App\Forma_pago;
+use App\Forma_de_Pagos;
 use App\Disponibilidad;
 use App\Medios;
 
@@ -30,9 +30,9 @@ class Forma_PagoController extends Controller
     }
 
     public function listar(){
-      $forma_pagos =DB::table('forma_pagos')
-          ->select('forma_pagos.id','forma_pagos.nombre','disponibilidades.nombre as disponibilidad_id','medios.nombre as medio_id','users.name')
-          ->join('disponibilidades', 'forma_pagos.disponibilidad_id', '=', 'disponibilidades.id')
+      $forma_pagos =DB::table('forma_de_pagos')
+          ->select('forma_de_pagos.id','forma_de_pagos.nombre','disponibilidades.id as disponibilidad_id','disponibilidades.nombre as disponibilidad_nombre','medios.nombre as medio_id','users.name')
+          ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
           ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
           ->join('users', 'disponibilidades.user_id', '=', 'users.id')
           ->where(DB::raw('users.id'),auth()->user()->id )
@@ -44,21 +44,21 @@ class Forma_PagoController extends Controller
 
     public function store(Request $request)
     {
-     /* $forma_pagos = new Forma_pago([
+      $forma_pagos = new Forma_de_Pagos([
         'nombre' => $request->input('nombre'),
         'disponibilidad_id' => $request->input('disponibilidad_id'),
         'user_id' => auth()->user()->id,
       ]);
-      $forma_pagos->save();*/
+      $forma_pagos->save();
 
-      $forma_pagos ='ok';
+    /*  $forma_pagos ='ok';*/
 
       return response()->json(["data"=> $forma_pagos->toArray()]);
     }
 
     public function editar(Request $request, $id)
     {
-      $Disponibilidad = Forma_pago::find($id);
+      $Disponibilidad = Forma_de_Pagos::find($id);
       $Disponibilidad->nombre =  $request['nombre'];
       $Disponibilidad->medio_id = $request['medio_id'];
 
@@ -69,7 +69,7 @@ class Forma_PagoController extends Controller
 
     public function eliminar($id)
     {
-      $Disponibilidad = Forma_pago::find($id);
+      $Disponibilidad = Forma_de_Pagos::find($id);
       $Disponibilidad->delete();
       return response()->json(["data" => $Disponibilidad]);
     }
@@ -82,7 +82,7 @@ class Forma_PagoController extends Controller
 
         foreach ($ids as $id) {
           // dd($key);
-          $Disponibilidad = Forma_pago::find($id);
+          $Disponibilidad = Forma_de_Pagos::find($id);
           $Disponibilidad->delete();
       }
         return response()->json(["data" => 'borrados']);
