@@ -28,37 +28,31 @@ class RegistrodeGastosController extends Controller
 
 
         // $reg_gastos =Reg_Gasto::comentario($request->get('fecha'))->get();
-        $periodos = Reg_Gasto::periodos()
+/*        $periodos = Reg_Gasto::periodos()
                     ->select('fecha','gasto_id')
                     ->get()
                     ->groupBy(function($val) {
                       return Carbon::parse($val->fecha)->format('Y-m');
-                    });
+                    });*/
 
-        //
-        // $reg_gastos =Reg_Gasto::whereDate('fecha', 'like','%'.$request->periodo.'%')
-        //             ->gasto($request->get('gasto_buscar'))
-        //             ->tipo($request->get('tipo_buscar'))
-        //             ->importe($request->get('importe_buscar'))
-        //             ->get();
-
+            /*->where('importe',"LIKE",'%'.$request->input('importe_buscar').'%')
+            ->where('gastos.id',"LIKE",'%'.$request->input('gasto_buscar').'%')
+            ->where('tipos_de_gastos.id',"LIKE",'%'.$request->input('tipo_buscar').'%')*/
 
         $reg_gastos =DB::table('reg_gastos')
-            ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
-            ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
-            ->where('importe',"LIKE",'%'.$request->input('importe_buscar').'%')
-            ->where('gastos.id',"LIKE",'%'.$request->input('gasto_buscar').'%')
-            ->where('tipos_de_gastos.id',"LIKE",'%'.$request->input('tipo_buscar').'%')
-            ->select('reg_gastos.*','gastos.gasto','tipos_de_gastos.tipo')
-            ->get();
+          ->select(
+            DB::raw("concat(tipos_de_gastos.tipo,'-',gastos.gasto)as concepto"),
+            DB::raw("concat(medios.nombre,'-',disponibilidades.nombre,'-',forma_de_pagos.nombre)as caja"),
+            'reg_gastos.id','reg_gastos.fecha','reg_gastos.gasto_id','reg_gastos.forma_de_pagos_id','reg_gastos.importe','reg_gastos.comentario')
+          ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
+          ->join('forma_de_pagos', 'reg_gastos.forma_de_pagos_id', '=', 'forma_de_pagos.id')
+          ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
+          ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
+          ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
+          ->get();
 
+          
 
-
-              // dd($reg_gastos,$request->input('tipo_buscar'));
-
-        $gastos = Gasto::orderBy('gasto','ASC')->get();
-
-        $tipos = Tipo_de_gasto::orderBy('tipo','ASC')->get();
 
 
         return view('registros.gastos')

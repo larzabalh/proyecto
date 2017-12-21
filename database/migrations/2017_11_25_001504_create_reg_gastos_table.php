@@ -16,7 +16,7 @@ class CreateRegGastosTable extends Migration
         Schema::create('reg_gastos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->timestamp('fecha');
+            $table->timestamp('fecha')->nullable();
             $table->integer('gasto_id')->unsigned();
             $table->foreign('gasto_id')->references('id')->on('gastos')->onDelete('cascade');
             $table->integer('forma_de_pagos_id')->unsigned();

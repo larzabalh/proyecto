@@ -60,7 +60,7 @@ class Forma_PagoController extends Controller
     {
       $Disponibilidad = Forma_de_Pagos::find($id);
       $Disponibilidad->nombre =  $request['nombre'];
-      $Disponibilidad->medio_id = $request['medio_id'];
+      $Disponibilidad->disponibilidad_id = $request['disponibilidad_id'];
 
       $Disponibilidad->save();
 

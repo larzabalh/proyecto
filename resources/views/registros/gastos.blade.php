@@ -1,227 +1,402 @@
 @extends('template.main')
-@extends('template.nav')
-@section('title','titulo')
+@section('titulo','Configuracion de Gastos')
+
 
 @section('content')
-  <div id="page-wrapper">
-    <div class="row">
-        <!-- /.ACA COMIENZA EL FORMULARIO DE ALTA!!!!!! -->
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    ALTA DE GASTOS
-                </div>
-                <div class="panel-body">
-                    <form name="" id="" method="POST">
-                      {{ csrf_field() }}
-                      <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                        <label>FECHA:</label>
-                        <input type="date" class="form-control" name="fecha">
-                      </div>
-                      <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                        <label>Gastos:</label><br>
-                        <select class="form-control" name="gasto">
-                          <option selected></option>
-                          @foreach ($gastos as $key => $value)
-                            <option value={{$value->id}}>{{$value->gasto}}</option>
-                          @endforeach
-                        </select>
-                      </div>
-                      <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                        <label>IMPORTE:</label>
-                        <input type="decimal" class="form-control" name="importe" maxlength="50" placeholder="999.99">
-                      </div>
-                      <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <label>COMENTARIO</label>
-                        <input type="text" class="form-control" name="comentario" placeholder="Ingresa un comentario">
-                      </div>
 
+{{-- ALTA DE REGISTROS--}}
+<!-- Modal -->
+      <div id="altaModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">ALTA DE REGISTROS</h4>
+          </div>
+          <div class="modal-body">
+            {{-- Alarma de BOOTSTRAP --}}
+                <div class="alert alert-success collapse" id="exito_alta">
+                  <a id="linkClose" href="#" class="close">&times;</a>
+                     <strong>Registro con Exito!</strong>
+              </div>
+              {{-- FIN!!! Alarma de BOOTSTRAP --}}
+              <div id="formularioregistros">
+                    <div class="panel panel-default">
+                      <div class="panel-body" >
+                          <form name="" id="" method="POST">
+                            <input type="hidden" id="token" value="{{ csrf_token() }}">
+                            <div>
+                              <label>BANCOS:</label><br>
+                              <select class="form-control" name="tipo" id="selectBancos">
+                                <option selected></option>
+                                @foreach ($bancos as $key => $value)
+                                  <option value={{$value->id}}>{{$value->nombre}}</option>
+                                @endforeach
+                              </select>
+                            </div>
+                            <div>
+                              <label>CUENTA:</label><br>
+                              <select class="form-control" name="tipo" id="selectCuentas" disabled="">
+                              </select>
+                            </div>
+                            <div >
+                              <label>FORMA DE PAGO:</label>
+                              <input type="text" class="form-control" name="gasto" id="forma_alta" maxlength="50" placeholder="Nombre del gasto">
+                            </div>
 
-                      <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Guardar</button>
-                      </div>
-                    </form>
-                    @if (count($errors)>0)
-                      <div class="alert alert-danger">
-                        <ul>
-                          @foreach ($errors->all() as $error)
-                            <li>{{$error}}</li>
-                          @endforeach
-                        </ul>
-                      </div>
-
-                    @endif
-                  </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
-        </div>
-<!-- /.ACA ARRANCAN LOS FILTROS DE BUSQUEDAS -->
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    FILTROS
-                </div>
-                <div class="panel-body">
-                  <div class="form-group col-lg-12 col-md-3 col-sm-3 col-xs-12">
-                    <form name="" id="" method="get">
-                      {{ csrf_field() }}
-
-
-                        <div class="form-group col-lg-12 col-md-3 col-sm-3 col-xs-12">
-                          <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                          <label>MESES:</label>
-                          <select class="form-control" name="periodo">
-                            <option selected></option>
-
-                          @foreach ($periodos as $clave=>$value)
-
-                            <option value={{$clave}}>{{$clave}}</option>
-                          @endforeach
-                          </select>
-                          </div>
-
-                          <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                            <label>Gastos:</label><br>
-                            <select class="form-control" name="gasto_buscar">
-                              <option selected></option>
-                              @foreach ($gastos as $key => $value)
-                                <option value={{$value->id}}>{{$value->gasto}}</option>
-                              @endforeach
-                            </select>
-                          </div>
-                          <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                            <label>TIPOS DE GASTOS:</label><br>
-                            <select class="form-control" name="tipo_buscar">
-                              <option selected></option>
-                              @foreach ($tipos as $key => $value)
-                                <option value={{$value->id}}>{{$value->tipo}}</option>
-                              @endforeach
-                            </select>
-                          </div>
-                          <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                            <label>IMPORTE:</label><br>
-                            <input type="decimal" class="form-control" name="importe_buscar" maxlength="50" placeholder="999.99">
-                          </div>
+                            <div class="modal-footer">
+                              <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
+                              <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-arrow-circle-left"></i> VOLVER</button>
+                            </div>
+                          </form>
                         </div>
-                      <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-                        <button class="btn btn-primary" type="submit"><i class="fa fa-filter"></i> FILTRAR</button>
-                        <a href="{{route('registrodegastos.index')}}" class="btn btn-success">SIN FILTROS</a>
-                      </div>
-                    </form>
-                  </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
+                    </div>
+                      <!-- /.panel-body -->
+                </div>
+                  <!-- /.panel -->
+              </div>
+          </div>
         </div>
       </div>
 
-  <!-- /.ACA COMIENZA EL CALCULO DEL GASTO!!!!!! -->
-      @php
-        $saldo=0
-      @endphp
-            @foreach ($reg_gastos as $value)
 
-      @php
-        $saldo += $value->importe
-      @endphp
-            @endforeach
-      <div class="col-lg-12">
-          <div class="panel panel-default">
-              <div class="panel-heading">
-                  TOTAL DE GASTO:
-              </div>
-              <div class="panel-body text-center">
-                  <h3>$ {{number_format($saldo,2)}}</h3>
-              </div>
+{{-- ELIMINACION DE REGISTROS --}}
+    {{-- Alarma de ELIMINACION BOOTSTRAP --}}
+<div class="modal fade" id="exito_eliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">ELIMINACION DE REGISTROS</h4>
+        </div>
+        <div class="modal-body" id="">
+          <div class="alert alert-success">
+            Exito! El Gasto: "<strong><span id="gasto_exito_eliminar"></span></strong>" ha sido eliminado!!!
           </div>
+        </div>
       </div>
-
-  <!-- /.ACA COMIENZA LA TABLA!!!!!! -->
-          <div class="panel-body">
-              <div class="col-lg-12">
-                  <table id="mitabla" class="table table-striped table-bordered table-condensed table-hover">
-                    <thead>
-                      <th>EDITAR</th>
-                      <th>BORRAR</th>
-                      <th>FECHA</th>
-                      <th>GASTO</th>
-                      <th>TIPO DE GASTO</th>
-                      <th>IMPORTE</th>
-                      <th>COMENTARIO</th>
-                    </thead>
-                      <tbody>
-                        @foreach ($reg_gastos as $value)
-                          <tr>
-                            <td><a class="btn btn-info" href="{{ route('registrodegastos.edit', $value->id)}}"><i class="fa fa-pencil"></i></a></td>
-                            <td><form method="POST" action =" {{route('registrodegastos.destroy', $value->id)}}">
-                                  <input type="hidden" name="_method" value="delete" />
-                                  {{ csrf_field() }}
-                                  <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-                                </form>
-                            </td>
-                            <td>{{date('Y-m', strtotime($value->fecha))}}</td>
-
-                            <td>{{$value->gasto}}</td>
-                            <td>{{$value->tipo}}</td>
-                            <td>$ {{number_format($value->importe,2)}}</td>
-                            <td>{{$value->comentario}}</td>
-                          </tr>
-                        @endforeach
-                      </tbody>
-                      <tfoot>
-                        <th>EDITAR</th>
-                        <th>BORRAR</th>
-                        <th>FECHA</th>
-                        <th>GASTO</th>
-                        <th>TIPO DE GASTO</th>
-                        <th>IMPORTE</th>
-                        <th>COMENTARIO</th>
-                      </tfoot>
-                  </table>
-              </div>
-              <!-- /.col-lg-12 -->
-          </div>
-
-
-
-          <!-- /.col-lg-12 -->
-      </div>
-      <!-- /.row -->
-  </div>
-  <!-- /#page-wrapper -->
-
+    </div>
 </div>
+<div>
+  <form id="form_eliminar" action="" method="POST">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_eliminar">
+    <input type="hidden" id="id_eliminar" name="id_eliminar" value="">
+    <!-- Modal -->
+    <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="modalEliminarLabel">Eliminar</h4>
+          </div>
+          <div class="modal-body">
+            ¿Está seguro de eliminar:" <strong id="gasto_eliminar"></strong> "?
+          </div>
+          <div class="modal-footer">
+            <button type="submit" id="eliminar" class="btn btn-primary">Aceptar</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+  </form>
+</div>
+{{-- FIN ELIMINACION DE REGISTROS --}}
+
+
+{{-- EDICION DE REGISTROS --}}
+   {{-- Alarma de ELIMINACION BOOTSTRAP --}}
+    <div class="modal fade" id="modal_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">ELIMINACION DE REGISTROS</h4>
+          </div>
+          <div class="modal-body" id="">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  {{-- FIN!!! Alarma de BOOTSTRAP --}}
+    <!-- Modal -->
+    <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div id="message_edit"></div>
+            <h4 class="modal-title" id="modalEliminarLabel">Edicion</h4>
+          </div>
+          <div class="modal-body">
+            <form id="form_edit" name="edit" action="" method="POST">
+              <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_edit">
+              <input type="hidden" name="id" id="id_edicion">
+              <div >
+                <label>Nombre:</label>
+                <input type="text" class="form-control" name="gasto" id="gasto_edicion"maxlength="50" placeholder="Nombre del gasto">
+              </div>
+              <div>
+                <label>Tipo de Gastos:</label><br>
+                <select class="form-control" name="tipo" id="tipo_edicion">
+                  <option selected></option>
+                  @foreach ($disponibilidades as $key => $value)
+                    <option value={{$value->id}}>{{$value->nombre}}</option>
+                  @endforeach
+                </select>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" id="editar" class="btn btn-primary">Aceptar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+{{-- FIN EDICION DE REGISTROS --}}
+
+
+
+<form action="prueba_submit" method="get" accept-charset="utf-8">
+ <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_datatable">
+
+<div class="container box">
+   <h1 align="center">FORMAS DE PAGOS</h1>
+   <br />
+   <div class="table-responsive">
+   <br />
+    <div align="left">
+     <button type="button" name="add" id="add" class="btn btn-info">AGREGAR</button>
+    </div>
+    <br />
+    <div id="alert_message"></div>
+    <table id="tabla_datos" class="table table-bordered table-striped">
+     <thead>
+      <tr>
+         <th>BANCO</th>
+         <th>CUENTA</th>
+         <th>FORMA DE PAGO</th>
+         <th></th>
+       </tr>
+     </thead>
+    </table>
+  </div>
+</div>
+</form>
+
+
 @endsection
 
+@section('script')
 
-@section('java')
+<script src="{{ asset('/js/configuracion/vistas/forma_pagos.js')}}"></script>
 
-{{-- <script>
-  $(document).ready(function(){
-      $('#mitabla').DataTable()
-    });
-</script> --}}
+@endsection
+@extends('template.main')
+@section('titulo','Configuracion de Gastos')
 
-  <script>
-  $(document).ready(function(){
-      $('#mitabla').DataTable(
-{
-        "aProcessing": true,//Activamos el procesamiento del datatables
-        "aServerSide": true,//Paginación y filtrado realizados por el servidor
-        dom: 'Bfrtip',//Definimos los elementos del control de tabla
-        buttons: [
-                    'copyHtml5',
-                    'excelHtml5',
-                    'csvHtml5',
-                    'pdf'
-                ],
-        "bDestroy": true,
-        "iDisplayLength": 5,//Paginación
-        "order": [[ 0, "desc" ]]//Ordenar (columna,orden)
-      }
-    );
-  });
-</script>
+
+@section('content')
+
+{{-- ALTA DE REGISTROS--}}
+<!-- Modal -->
+      <div id="altaModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">ALTA DE REGISTROS</h4>
+          </div>
+          <div class="modal-body">
+            {{-- Alarma de BOOTSTRAP --}}
+                <div class="alert alert-success collapse" id="exito_alta">
+                  <a id="linkClose" href="#" class="close">&times;</a>
+                     <strong>Registro con Exito!</strong>
+              </div>
+              {{-- FIN!!! Alarma de BOOTSTRAP --}}
+              <div id="formularioregistros">
+                    <div class="panel panel-default">
+                      <div class="panel-body" >
+                          <form name="" id="" method="POST">
+                            <input type="hidden" id="token" value="{{ csrf_token() }}">
+                            <div>
+                              <label>BANCOS:</label><br>
+                              <select class="form-control" name="tipo" id="selectBancos">
+                                <option selected></option>
+                                @foreach ($bancos as $key => $value)
+                                  <option value={{$value->id}}>{{$value->nombre}}</option>
+                                @endforeach
+                              </select>
+                            </div>
+                            <div>
+                              <label>CUENTA:</label><br>
+                              <select class="form-control" name="tipo" id="selectCuentas" disabled="">
+                              </select>
+                            </div>
+                            <div >
+                              <label>FORMA DE PAGO:</label>
+                              <input type="text" class="form-control" name="gasto" id="forma_alta" maxlength="50" placeholder="Nombre del gasto">
+                            </div>
+
+                            <div class="modal-footer">
+                              <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
+                              <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-arrow-circle-left"></i> VOLVER</button>
+                            </div>
+                          </form>
+                        </div>
+                    </div>
+                      <!-- /.panel-body -->
+                </div>
+                  <!-- /.panel -->
+              </div>
+          </div>
+        </div>
+      </div>
+
+
+{{-- ELIMINACION DE REGISTROS --}}
+    {{-- Alarma de ELIMINACION BOOTSTRAP --}}
+<div class="modal fade" id="exito_eliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">ELIMINACION DE REGISTROS</h4>
+        </div>
+        <div class="modal-body" id="">
+          <div class="alert alert-success">
+            Exito! El Gasto: "<strong><span id="gasto_exito_eliminar"></span></strong>" ha sido eliminado!!!
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div>
+  <form id="form_eliminar" action="" method="POST">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_eliminar">
+    <input type="hidden" id="id_eliminar" name="id_eliminar" value="">
+    <!-- Modal -->
+    <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="modalEliminarLabel">Eliminar</h4>
+          </div>
+          <div class="modal-body">
+            ¿Está seguro de eliminar:" <strong id="gasto_eliminar"></strong> "?
+          </div>
+          <div class="modal-footer">
+            <button type="submit" id="eliminar" class="btn btn-primary">Aceptar</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+  </form>
+</div>
+{{-- FIN ELIMINACION DE REGISTROS --}}
+
+
+{{-- EDICION DE REGISTROS --}}
+   {{-- Alarma de ELIMINACION BOOTSTRAP --}}
+    <div class="modal fade" id="modal_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">ELIMINACION DE REGISTROS</h4>
+          </div>
+          <div class="modal-body" id="">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  {{-- FIN!!! Alarma de BOOTSTRAP --}}
+    <!-- Modal -->
+    <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div id="message_edit"></div>
+            <h4 class="modal-title" id="modalEliminarLabel">Edicion</h4>
+          </div>
+          <div class="modal-body">
+            <form id="form_edit" name="edit" action="" method="POST">
+              <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_edit">
+              <input type="hidden" name="id" id="id_edicion">
+              <div >
+                <label>Nombre:</label>
+                <input type="text" class="form-control" name="gasto" id="gasto_edicion"maxlength="50" placeholder="Nombre del gasto">
+              </div>
+              <div>
+                <label>Tipo de Gastos:</label><br>
+                <select class="form-control" name="tipo" id="tipo_edicion">
+                  <option selected></option>
+                  @foreach ($disponibilidades as $key => $value)
+                    <option value={{$value->id}}>{{$value->nombre}}</option>
+                  @endforeach
+                </select>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" id="editar" class="btn btn-primary">Aceptar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+{{-- FIN EDICION DE REGISTROS --}}
+
+
+
+<form action="prueba_submit" method="get" accept-charset="utf-8">
+ <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_datatable">
+
+<div class="container box">
+   <h1 align="center">FORMAS DE PAGOS</h1>
+   <br />
+   <div class="table-responsive">
+   <br />
+    <div align="left">
+     <button type="button" name="add" id="add" class="btn btn-info">AGREGAR</button>
+    </div>
+    <br />
+    <div id="alert_message"></div>
+    <table id="tabla_datos" class="table table-bordered table-striped">
+     <thead>
+      <tr>
+         <th>BANCO</th>
+         <th>CUENTA</th>
+         <th>FORMA DE PAGO</th>
+         <th></th>
+       </tr>
+     </thead>
+    </table>
+  </div>
+</div>
+</form>
+
+
+@endsection
+
+@section('script')
+
+<script src="{{ asset('/js/registros/egresos/egresos.js')}}"></script>
+
 @endsection

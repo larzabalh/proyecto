@@ -14,7 +14,7 @@ var token = $('#token').val();
 		dataTable = $('#tabla_datos').DataTable({
 		    "aProcessing": true,//Activamos el procesamiento del datatables
             "aServerSide": true,//Paginación y filtrado realizados por el servidor
-            dom: 'lBrtip',//Definimos los elementos del control de tabla
+            dom: 'Bfrtip',//Definimos los elementos del control de tabla
             buttons: [
                         'copyHtml5',
                         'excelHtml5',
@@ -34,7 +34,7 @@ var token = $('#token').val();
             selector: 'td:not(:last-child)' // no row selection on last column
         },
           "bDestroy": true,
-          "iDisplayLength": 10,//Paginación
+          "iDisplayLength": 20,//Paginación
           "order": [[ 0, "asc" ]]//Ordenar (columna,orden)
       });
 
@@ -137,9 +137,9 @@ document.getElementById("form_edit").addEventListener("submit",function(e){
     e.preventDefault();
     var id = $('#id_edicion').val();
     var nombre = $('#gasto_edicion').val();
-    var medio_id = $("#tipo_edicion").val();
-    if(nombre != '' && medio_id != '')
-		update_data(id, nombre, medio_id);
+    var disponibilidad_id = $("#tipo_edicion").val();
+    if(nombre != '' && disponibilidad_id != '')
+		update_data(id, nombre, disponibilidad_id);
 	else
    {	
 		$('#message_edit').html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Faltan Campos Obligatorios!!!</strong></div>');
@@ -151,14 +151,14 @@ document.getElementById("form_edit").addEventListener("submit",function(e){
   });
 
 /*3- AJAX para editar */
-function update_data(id, nombre, medio_id)
+function update_data(id, nombre, disponibilidad_id)
   {
   	var url = "http://localhost:8000/configuracion/forma_pagos/editar/"+id+""
 
    $.ajax({
     url: url,
     method:"POST",
-    data:{id:id, nombre:nombre, medio_id:medio_id},
+    data:{id:id, nombre:nombre, disponibilidad_id:disponibilidad_id},
     headers: {'X-CSRF-TOKEN':token},
     success:function(data)
     {
