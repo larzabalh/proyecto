@@ -23,6 +23,12 @@
 <script src="/plugins/js/bootbox.min.js"></script>
 <script src="/plugins/js/bootstrap-select.min.js"></script>
 
+<!-- SELECT2 -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+
+
 <!-- FORMATO DE MONEDA -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 <script type="text/javascript">

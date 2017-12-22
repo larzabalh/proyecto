@@ -10,6 +10,12 @@ $user->save();
 return $user;
 });
 
+
+/*DB::listen(function($query){
+
+  echo "<pre>{$query->sql}</pre>";
+});*/
+
 Route::get('/configuracion/gasto-listar', 'GastosController@listar');
 Route::post('/configuracion/gasto/editar/{id}', 'GastosController@editar');
 Route::post('/configuracion/gasto/eliminar/{id}', 'GastosController@eliminar');
@@ -40,6 +46,11 @@ Route::post('/configuracion/forma_pagos/eliminar/{id}', 'Forma_PagoController@el
 Route::resource('/configuracion/forma_pagos', 'Forma_PagoController');
 
 
+
+Route::get('/registros/registrodegastos/listar', 'RegistrodeGastosController@listar');
+Route::post('/registros/registrodegastos/editar/{id}', 'RegistrodeGastosController@editar');
+Route::post('/registros/registrodegastos/eliminar/{id}', 'RegistrodeGastosController@eliminar');
+Route::resource('/registros/registrodegastos', 'RegistrodeGastosController');
 
 Route::resource('/registros/registrodegastos', 'RegistrodeGastosController');
 Route::resource('/clientes', 'ClienteController');

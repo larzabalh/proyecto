@@ -25,6 +25,5 @@
 
     <link rel="stylesheet" type="text/css" href="/plugins/css/bootstrap-select.min.css">
 
-
   </head>
   <?php // NOTE: hold-transition skin-blue-light sidebar-mini ?>
