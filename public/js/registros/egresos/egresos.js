@@ -12,6 +12,8 @@ var token = $('#token').val();
 
   function crearDataTable()
   {   
+      $.fn.dataTable.moment( 'HH:mm MMM D, YY' );
+
       var url = 'http://localhost:8000/registros/registrodegastos/listar'
     dataTable = $('#tabla_datos').DataTable({
         "aProcessing": true,//Activamos el procesamiento del datatables
@@ -26,10 +28,12 @@ var token = $('#token').val();
           ajax: url,
           type : "get",
           columnDefs: [
-              { data: 'concepto',"targets": 0 },
-              { data: 'caja',"targets": 1},
-              { data: 'importe',render: $.fn.dataTable.render.number( ',', '.', 2 ),"targets": 2},
-              { 'defaultContent': "<button id='editar' type='button' class='editar btn btn-primary' data-target='#modalEditar'><i class='fa fa-pencil-square-o'></i></button> <button id='eliminar' type='button'class='eliminar btn btn-danger' data-target='#modalEliminar' ><i class='fa fa-trash-o'></i></button>","targets": 3},
+              { data: 'fecha',"targets": 0 },
+              { data: 'concepto',"targets": 1 },
+              { data: 'caja',"targets": 2},
+              { data: 'comentario',"targets": 3 },
+              { data: 'importe',render: $.fn.dataTable.render.number( ',', '.', 2 ),"targets": 4},
+              { 'defaultContent': "<button id='editar' type='button' class='editar btn btn-primary' data-target='#modalEditar'><i class='fa fa-pencil-square-o'></i></button> <button id='eliminar' type='button'class='eliminar btn btn-danger' data-target='#modalEliminar' ><i class='fa fa-trash-o'></i></button>","targets": 5},
                 ],
         select: {
             style: 'os',

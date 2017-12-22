@@ -48,7 +48,7 @@
                             </div>
                             <div >
                               <label>IMPORTE:</label>
-                              <input type="text" class="form-control" name="gasto" id="forma_alta" maxlength="50" placeholder="Nombre del gasto">
+                              <input type="text" class="form-control" name="gasto" id="forma_alta" maxlength="50" placeholder="1000">
                             </div>
 
                             <div class="modal-footer">
@@ -185,10 +185,12 @@
     <table id="tabla_datos" class="table table-bordered table-striped">
      <thead>
       <tr>
-         <th>BANCO</th>
-         <th>CUENTA</th>
-         <th>FORMA DE PAGO</th>
-         <th></th>
+        <th>FECHA</th>
+        <th>BANCO</th>
+        <th>CUENTA</th>
+        <th>COMENTARIO</th>
+        <th>FORMA DE PAGO</th>
+        <th></th>
        </tr>
      </thead>
     </table>
