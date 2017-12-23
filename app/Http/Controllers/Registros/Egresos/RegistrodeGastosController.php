@@ -23,6 +23,11 @@ class RegistrodeGastosController extends Controller
     public function index()
     {
 
+      $periodos =DB::table('reg_gastos')
+       ->select(DB::raw("distinct (concat(year(fecha), '-', month(fecha))) as fecha"))
+       ->orderby('fecha','ASC')
+        ->get();
+
       $gasto =DB::table('reg_gastos')
           ->select(DB::raw("distinct(concat(tipos_de_gastos.tipo,'-',gastos.gasto))as gasto"),'reg_gastos.gasto_id as id')
           ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
@@ -45,22 +50,27 @@ class RegistrodeGastosController extends Controller
 
         return view('registros.gastos')
         ->with('gasto', $gasto)
+        ->with('periodos',$periodos)
         ->with('forma_pagos', $forma_pagos);
+
     }
 
-    public function listar()
+    public function listar($periodo)
     {
-
+      $array = explode('-', $periodo);
       $reg_gastos =DB::table('reg_gastos')
           ->select(
             DB::raw("concat(tipos_de_gastos.tipo,'-',gastos.gasto)as concepto"),
             DB::raw("concat(medios.nombre,'-',disponibilidades.nombre,'-',forma_de_pagos.nombre)as caja"),
-            'reg_gastos.id','reg_gastos.fecha','reg_gastos.gasto_id','reg_gastos.forma_de_pagos_id','reg_gastos.importe','reg_gastos.comentario')
+            DB::raw("concat(year(fecha), '-', month(fecha)) as fecha"),
+            'reg_gastos.id','reg_gastos.gasto_id','reg_gastos.forma_de_pagos_id','reg_gastos.importe','reg_gastos.comentario')
           ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
           ->join('forma_de_pagos', 'reg_gastos.forma_de_pagos_id', '=', 'forma_de_pagos.id')
           ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
           ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
           ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
+          ->where(DB::raw('year(reg_gastos.fecha)'), $array[0])
+          ->where(DB::raw('month(reg_gastos.fecha)'), $array[1])
           ->get();
 
         return response()->json(["data"=>$reg_gastos->toArray()]);

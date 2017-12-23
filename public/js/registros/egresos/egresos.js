@@ -4,17 +4,29 @@ var token = $('#token').val();
 
   function init(){
 
-    
+   /*   LE PONGO AL SELECT DE PERIODO EL PERIODO ACTUAL!!!*/
+        // Return today's date and time
+        var currentTime = new Date()
+        // returns the month (from 0 to 11)
+        var month = currentTime.getMonth() + 1
+        // returns the day of the month (from 1 to 31)
+        var day = currentTime.getDate()
+        // returns the year (four digits)
+        var year = currentTime.getFullYear()
+        var periodo = year+"-"+month
+        $("#periodo").append("<option selected value='"+periodo+"'>"+periodo+"</option>");
 
-    crearDataTable();
+    crearDataTable(periodo);
       
   }
 
-  function crearDataTable()
+  function crearDataTable(periodo)
   {   
-      $.fn.dataTable.moment( 'HH:mm MMM D, YY' );
 
-      var url = 'http://localhost:8000/registros/registrodegastos/listar'
+    console.log
+      var url = 'http://localhost:8000/registros/registrodegastos/listar/'+periodo+''
+
+
     dataTable = $('#tabla_datos').DataTable({
         "aProcessing": true,//Activamos el procesamiento del datatables
             "aServerSide": true,//Paginación y filtrado realizados por el servidor
@@ -43,6 +55,15 @@ var token = $('#token').val();
           "iDisplayLength": 20,//Paginación
           "order": [[ 0, "asc" ]]//Ordenar (columna,orden)
       });
+
+        ajax(url, function (err, response) {
+          if (err) return console.error(err)
+          console.log("response", response)
+          var saldo = response.data.reduce(function (accum, current) {
+            return accum + current.importe
+          }, 0)
+          document.getElementById('gasto').innerText = numeral(saldo).format('$0,0.00')
+        });
 
 }
 
@@ -195,6 +216,16 @@ function update_data(id, nombre, disponibilidad_id)
         });
 });
 
+  $("#periodo").change(function(e){
+    var periodo = document.getElementById("periodo").value;
+    var url = 'http://localhost:8000/registros/registrodegastos/listar/'+periodo+''
+
+    dataTable.destroy()
+
+    crearDataTable(periodo);
+
+  
+});
+
   init();
 
-$(document).ready(function(){$('#selectBancos, #selectCuentas').select2({ width: '100%' });});

@@ -167,20 +167,36 @@
     </div>
 {{-- FIN EDICION DE REGISTROS --}}
 
-
-
 <form action="prueba_submit" method="get" accept-charset="utf-8">
  <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_datatable">
-
 <div class="container box">
    <h1 align="center">REGISTRACION DE GASTOS</h1>
    <br />
-   <div class="table-responsive">
-   <br />
-    <div align="left">
-     <button type="button" name="add" id="add" class="btn btn-info">AGREGAR</button>
-    </div>
-    <br />
+   <div class="table-responsive"><br/>
+      <div class="row">
+        <div class="col-lg-12">
+          <form name="" id="form" method="POST">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token" />
+              {{ csrf_field() }}
+            <div class="form-group col-lg-1 col-md-3 col-sm-3 col-xs-12">
+              <button type="button" name="add" id="add" class="btn btn-info">AGREGAR</button>
+            </div>
+            <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
+              <label>FECHA:</label><br>
+              <select class="form-control" name="periodo" id="periodo">
+                  <option selected></option>
+                  @foreach ($periodos as $value)
+                  <option value="{{$value->fecha}}">{{$value->fecha}}</option>
+                  @endforeach
+              </select>
+            </div>
+            <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
+              <label>TOTAL DE GASTOS DEL PERIODO:</label><br>
+              <h4 id="gasto"></h4>
+            </div>
+          </form>
+        </div>
+      </div>
     <div id="alert_message"></div>
     <table id="tabla_datos" class="table table-bordered table-striped">
      <thead>
