@@ -23,10 +23,14 @@
 <script src="/plugins/js/bootbox.min.js"></script>
 <script src="/plugins/js/bootstrap-select.min.js"></script>
 
-
-
-
-
+<!-- LO HAGO PARA DEFINIR LA FECHA ACTUAL A TODOS LOS INPUT DEL TIPO DATE -->
+<script type="text/javascript">
+Date.prototype.toDateInputValue = (function() {
+    var local = new Date(this);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local.toJSON().slice(0,10);
+});
+</script>
 
 <!-- SELECT2 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />

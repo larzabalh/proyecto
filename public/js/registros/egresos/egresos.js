@@ -2,28 +2,27 @@
 var dataTable
 var token = $('#token').val();
 
+document.getElementById('fecha_alta').value = new Date().toDateInputValue();
+
+/*   LE PONGO AL SELECT DE PERIODO EL PERIODO ACTUAL!!!*/
+      // Return today's date and time
+      var currentTime = new Date()
+      // returns the month (from 0 to 11)
+      var month = currentTime.getMonth() + 1
+      // returns the day of the month (from 1 to 31)
+      var day = currentTime.getDate()
+      // returns the year (four digits)
+      var year = currentTime.getFullYear()
+      var periodo = year+"-"+month
+      $("#periodo").append("<option selected value='"+periodo+"'>"+periodo+"</option>");
+
   function init(){
-
-   /*   LE PONGO AL SELECT DE PERIODO EL PERIODO ACTUAL!!!*/
-        // Return today's date and time
-        var currentTime = new Date()
-        // returns the month (from 0 to 11)
-        var month = currentTime.getMonth() + 1
-        // returns the day of the month (from 1 to 31)
-        var day = currentTime.getDate()
-        // returns the year (four digits)
-        var year = currentTime.getFullYear()
-        var periodo = year+"-"+month
-        $("#periodo").append("<option selected value='"+periodo+"'>"+periodo+"</option>");
-
-    crearDataTable(periodo);
-      
+    crearDataTable(periodo);      
   }
 
   function crearDataTable(periodo)
   {   
 
-    console.log
       var url = 'http://localhost:8000/registros/registrodegastos/listar/'+periodo+''
 
 
@@ -76,21 +75,27 @@ $('#add').click(function(){
 /*2- Aprieto el boton GUARDAR del modal*/
 document.getElementById("btnGuardar").addEventListener("click",function(e){
   e.preventDefault();
-  var url = "http://localhost:8000/configuracion/forma_pagos"//con esta ruta entro en el STORE, si es por POST!
-  var disponibilidad_id = $('#selectCuentas').val();
-  var nombre = $('#forma_alta').val();
-  if(disponibilidad_id != '' && nombre != '')
+  var url = "http://localhost:8000/registros/registrodegastos"//con esta ruta entro en el STORE, si es por POST!
+  var fecha = $('#fecha_alta').val();
+  var gasto_id = $('#selectGasto').val();
+  var forma_de_pagos_id = $('#selectBanco').val();
+  var importe = $('#importe_alta').val();
+  var comentario = $('#comentario_alta').val();
+  if(fecha != '' && gasto_id != '' && forma_de_pagos_id != '' && importe != '' && comentario != '')
   {
     $.ajax({
         url:url,
         headers: {'X-CSRF-TOKEN':token},
         method:"POST",
-        data:{nombre:nombre, disponibilidad_id:disponibilidad_id},
+        data:{fecha:fecha, gasto_id:gasto_id,forma_de_pagos_id:forma_de_pagos_id,importe:importe,comentario:comentario},
         success:function(data)
         {
           $('#altaModal').modal('hide') 
           $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registro: '+data.data.nombre+' Correctamente</strong</div>');
-          $('#tabla_datos').DataTable().ajax.reload();
+          /*$('#tabla_datos').DataTable().ajax.reload();*/
+          dataTable.destroy()
+          crearDataTable(periodo);
+
         }
         });
     setInterval(function(){
@@ -105,6 +110,8 @@ document.getElementById("btnGuardar").addEventListener("click",function(e){
 
   $(document).on('click', '#cancelar', function(){
   $('#tabla_datos').DataTable().ajax.reload();      
+    
+
   });
 
   /*ELIMINACION!!!*/
@@ -221,7 +228,6 @@ function update_data(id, nombre, disponibilidad_id)
     var url = 'http://localhost:8000/registros/registrodegastos/listar/'+periodo+''
 
     dataTable.destroy()
-
     crearDataTable(periodo);
 
   

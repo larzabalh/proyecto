@@ -78,9 +78,12 @@ class RegistrodeGastosController extends Controller
 
     public function store(Request $request)
     {
-      $forma_pagos = new Forma_de_Pagos([
-        'nombre' => $request->input('nombre'),
-        'disponibilidad_id' => $request->input('disponibilidad_id'),
+      $forma_pagos = new Reg_Gasto([
+        'fecha' => $request->input('fecha'),
+        'gasto_id' => $request->input('gasto_id'),
+        'forma_de_pagos_id' => $request->input('forma_de_pagos_id'),
+        'importe' => $request->input('importe'),
+        'comentario' => $request->input('comentario'),
         'user_id' => auth()->user()->id,
       ]);
       $forma_pagos->save();
@@ -92,7 +95,7 @@ class RegistrodeGastosController extends Controller
 
     public function editar(Request $request, $id)
     {
-      $Disponibilidad = Forma_de_Pagos::find($id);
+      $Disponibilidad = Reg_Gasto::find($id);
       $Disponibilidad->nombre =  $request['nombre'];
       $Disponibilidad->disponibilidad_id = $request['disponibilidad_id'];
 
@@ -103,7 +106,7 @@ class RegistrodeGastosController extends Controller
 
     public function eliminar($id)
     {
-      $Disponibilidad = Forma_de_Pagos::find($id);
+      $Disponibilidad = Reg_Gasto::find($id);
       $Disponibilidad->delete();
       return response()->json(["data" => $Disponibilidad]);
     }
@@ -116,7 +119,7 @@ class RegistrodeGastosController extends Controller
 
         foreach ($ids as $id) {
           // dd($key);
-          $Disponibilidad = Forma_de_Pagos::find($id);
+          $Disponibilidad = Reg_Gasto::find($id);
           $Disponibilidad->delete();
       }
         return response()->json(["data" => 'borrados']);

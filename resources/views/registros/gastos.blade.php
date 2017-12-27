@@ -28,8 +28,12 @@
                             <input type="hidden" id="token" value="{{ csrf_token() }}">
                             <div class="row">
                               <div class="col-lg-12">
+                                <label>FECHA</label><br>
+                                <input type="date" class="form-control" name="gasto" id="fecha_alta">
+                              </div>
+                              <div class="col-lg-12">
                                 <label>GASTO:</label><br>
-                                <select class="form-control" name="tipo" id="selectBancos">
+                                <select class="form-control" name="tipo" id="selectGasto">
                                   <option selected></option>
                                   @foreach ($gasto as $key => $value)
                                     <option value={{$value->id}}>{{$value->gasto}}</option>
@@ -39,7 +43,7 @@
                             </div>
                             <div>
                               <label>FORMA DE PAGO:</label><br>
-                              <select class="form-control" name="tipo" id="selectCuentas">
+                              <select class="form-control" name="tipo" id="selectBanco">
                                 <option selected></option>
                                 @foreach ($forma_pagos as $key => $value)
                                   <option value={{$value->id}}>{{$value->forma_pagos}}</option>
@@ -48,9 +52,12 @@
                             </div>
                             <div >
                               <label>IMPORTE:</label>
-                              <input type="text" class="form-control" name="gasto" id="forma_alta" maxlength="50" placeholder="1000">
+                              <input type="text" class="form-control" name="gasto" id="importe_alta" maxlength="50" placeholder="1000">
                             </div>
-
+                             <div>
+                                <label>COMENTARIO</label><br>
+                                <input type="text" class="form-control" name="gasto" id="comentario_alta">
+                            </div>
                             <div class="modal-footer">
                               <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
                               <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-arrow-circle-left"></i> VOLVER</button>
