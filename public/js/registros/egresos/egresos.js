@@ -40,11 +40,12 @@ document.getElementById('fecha_alta').value = new Date().toDateInputValue();
           type : "get",
           columnDefs: [
               { data: 'fecha',"targets": 0 },
-              { data: 'concepto',"targets": 1 },
-              { data: 'caja',"targets": 2},
-              { data: 'comentario',"targets": 3 },
-              { data: 'importe',render: $.fn.dataTable.render.number( ',', '.', 2 ),"targets": 4},
-              { 'defaultContent': "<button id='editar' type='button' class='editar btn btn-primary' data-target='#modalEditar'><i class='fa fa-pencil-square-o'></i></button> <button id='eliminar' type='button'class='eliminar btn btn-danger' data-target='#modalEliminar' ><i class='fa fa-trash-o'></i></button>","targets": 5},
+              { data: 'tipo',"targets": 1 },
+              { data: 'gasto',"targets": 2 },
+              { data: 'caja',"targets": 3},
+              { data: 'comentario',"targets": 4},
+              { data: 'importe',render: $.fn.dataTable.render.number( ',', '.', 2 ),"targets": 5},
+              { 'defaultContent': "<button id='editar' type='button' class='editar btn btn-primary' data-target='#modalEditar'><i class='fa fa-pencil-square-o'></i></button> <button id='eliminar' type='button'class='eliminar btn btn-danger' data-target='#modalEliminar' ><i class='fa fa-trash-o'></i></button>","targets": 6}
                 ],
         select: {
             style: 'os',
@@ -69,29 +70,35 @@ document.getElementById('fecha_alta').value = new Date().toDateInputValue();
 /*ALTA DE REGISTROS!!!*/
 /*1- Abro el modal*/
 $('#add').click(function(){
+
+  $('#selectGasto').append('<option selected="selected"></option>');
+  $('#selectBanco').append('<option selected="selected"></option>');
+  $('#importe_alta').val("");
+  $('#comentario_alta').val("");
   $('#altaModal').modal('show') 
+
 });
 
 /*2- Aprieto el boton GUARDAR del modal*/
 document.getElementById("btnGuardar").addEventListener("click",function(e){
   e.preventDefault();
-  var url = "http://localhost:8000/registros/registrodegastos"//con esta ruta entro en el STORE, si es por POST!
+  var url = "/registros/registrodegastos"//con esta ruta entro en el STORE, si es por POST!
   var fecha = $('#fecha_alta').val();
   var gasto_id = $('#selectGasto').val();
   var forma_de_pagos_id = $('#selectBanco').val();
   var importe = $('#importe_alta').val();
   var comentario = $('#comentario_alta').val();
-  if(fecha != '' && gasto_id != '' && forma_de_pagos_id != '' && importe != '' && comentario != '')
+  if(fecha != '' && gasto_id != '' && forma_de_pagos_id != '' && importe != '')
   {
     $.ajax({
         url:url,
         headers: {'X-CSRF-TOKEN':token},
         method:"POST",
-        data:{fecha:fecha, gasto_id:gasto_id,forma_de_pagos_id:forma_de_pagos_id,importe:importe,comentario:comentario},
+        data:{fecha:fecha, gasto_id:gasto_id,forma_de_pagos_id:forma_de_pagos_id,importe:importe, comentario:comentario},
         success:function(data)
         {
           $('#altaModal').modal('hide') 
-          $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registro: '+data.data.nombre+' Correctamente</strong</div>');
+          $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registrado Correctamente!</strong</div>');
           /*$('#tabla_datos').DataTable().ajax.reload();*/
           dataTable.destroy()
           crearDataTable(periodo);
@@ -104,7 +111,7 @@ document.getElementById("btnGuardar").addEventListener("click",function(e){
   }
    else
    {
-    $('#alert_message').html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Faltan Campos Obligatorios!!!</strong></div>');
+    $('#alert_modal').html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Faltan Campos Obligatorios!!!</strong></div>');
    }
   });
 
@@ -119,7 +126,7 @@ $(tabla_datos).on("click", "button.eliminar", function (e){
     e.preventDefault();
         $('#modalEliminar').modal('show')
     var data = dataTable.row( $(this).parents("tr") ).data();
-    document.getElementById('gasto_eliminar').innerText =data.nombre+" que es del tipo "+data.medio_id;
+    document.getElementById('gasto_eliminar').innerText =data.gasto+" que es del tipo "+data.tipo;
     $('#id_eliminar').val(data.id);
   })
 
@@ -127,7 +134,7 @@ document.getElementById("form_eliminar").addEventListener("submit",function(e){
   e.preventDefault();
   $('#modalEliminar').modal('hide');
   var data = {'id':$('#id_eliminar').val()};
-  var url = "http://localhost:8000/configuracion/forma_pagos/eliminar/"+$('#id_eliminar').val()+""
+  var url = "/registros/registrodegastos/eliminar/"+$('#id_eliminar').val()+""
 
   $.ajax({
     url: url,
@@ -137,13 +144,9 @@ document.getElementById("form_eliminar").addEventListener("submit",function(e){
     dataType: 'json',
     data: data,
     success:function(data){
-        $('#exito_eliminar').modal('show');
-        document.getElementById('gasto_exito_eliminar').innerText =data.data.nombre;
-        setTimeout(function(){
-          $('#exito_eliminar').modal('hide');
-          $('#tabla_datos').DataTable().ajax.reload();
-        },1500);
-        $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>El Gasto: '+data.data.nombre+' fue Eliminado!</strong></div>');
+          dataTable.destroy()
+          crearDataTable(periodo);
+        $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registro Eliminado!</strong></div>');
       },
     error: function(response) {
         $('#error').modal('show');
@@ -157,17 +160,23 @@ document.getElementById("form_eliminar").addEventListener("submit",function(e){
     /*EDICION!!!*/
 /*1- Abro el formulario modal para editar*/
 $(tabla_datos).on("click", "button.editar", function (e){
-  $('#modalEditar').modal('show')
+  
   e.preventDefault();
   var data = dataTable.row( $(this).parents("tr") ).data();
   console.log(data)
-  $('#id_edicion').val(data.id);
-  $('#gasto_edicion').val(data.nombre);
-  $("#tipo_edicion").val(data.disponibilidad_id);
+  
+   $('#fecha_alta').hide();
+  $('#fecha').append('<input type="text" class="form-control" name="gasto" id="fecha" value="'+data.fecha+'">');
+  $('#selectGasto').val(data.gasto_id);
+  $('#selectBanco').val(data.forma_de_pagos_id);
+  $('#importe_alta').val(data.importe);
+  $('#comentario_alta').val(data.comentario);
+  $('#altaModal').modal('show') 
+
 });
 
 /*2- Aprieto el boton editar del formulario modal de editar*/
-document.getElementById("form_edit").addEventListener("submit",function(e){
+/*document.getElementById("form_edit").addEventListener("submit",function(e){
     e.preventDefault();
     var id = $('#id_edicion').val();
     var nombre = $('#gasto_edicion').val();
@@ -182,12 +191,12 @@ document.getElementById("form_edit").addEventListener("submit",function(e){
         },1500);
    }
 
-  });
+  });*/
 
 /*3- AJAX para editar */
 function update_data(id, nombre, disponibilidad_id)
   {
-    var url = "http://localhost:8000/configuracion/forma_pagos/editar/"+id+""
+    var url = "/registros/registrodegastos/editar/"+id+""
 
    $.ajax({
     url: url,

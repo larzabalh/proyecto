@@ -9,6 +9,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
+          <div id="alert_modal"></div>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -27,7 +28,7 @@
                           <form name="" id="" method="POST">
                             <input type="hidden" id="token" value="{{ csrf_token() }}">
                             <div class="row">
-                              <div class="col-lg-12">
+                              <div class="col-lg-12" id="fecha">
                                 <label>FECHA</label><br>
                                 <input type="date" class="form-control" name="gasto" id="fecha_alta">
                               </div>
@@ -52,7 +53,7 @@
                             </div>
                             <div >
                               <label>IMPORTE:</label>
-                              <input type="text" class="form-control" name="gasto" id="importe_alta" maxlength="50" placeholder="1000">
+                              <input type="number" class="form-control" name="gasto" id="importe_alta" maxlength="50" placeholder="1000">
                             </div>
                              <div>
                                 <label>COMENTARIO</label><br>
@@ -84,9 +85,6 @@
           <h4 class="modal-title" id="myModalLabel">ELIMINACION DE REGISTROS</h4>
         </div>
         <div class="modal-body" id="">
-          <div class="alert alert-success">
-            Exito! El Gasto: "<strong><span id="gasto_exito_eliminar"></span></strong>" ha sido eliminado!!!
-          </div>
         </div>
       </div>
     </div>
@@ -118,61 +116,6 @@
 </div>
 {{-- FIN ELIMINACION DE REGISTROS --}}
 
-
-{{-- EDICION DE REGISTROS --}}
-   {{-- Alarma de ELIMINACION BOOTSTRAP --}}
-    <div class="modal fade" id="modal_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="modal-title" id="myModalLabel">ELIMINACION DE REGISTROS</h4>
-          </div>
-          <div class="modal-body" id="">
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  {{-- FIN!!! Alarma de BOOTSTRAP --}}
-    <!-- Modal -->
-    <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <div id="message_edit"></div>
-            <h4 class="modal-title" id="modalEliminarLabel">Edicion</h4>
-          </div>
-          <div class="modal-body">
-            <form id="form_edit" name="edit" action="" method="POST">
-              <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_edit">
-              <input type="hidden" name="id" id="id_edicion">
-              <div >
-                <label>Nombre:</label>
-                <input type="text" class="form-control" name="gasto" id="gasto_edicion"maxlength="50" placeholder="Nombre del gasto">
-              </div>
-              <div>
-                <label>Tipo de Gastos:</label><br>
-                <select class="form-control" name="tipo" id="tipo_edicion">
-                  <option selected></option>
-                  @foreach ($gasto as $key => $value)
-                    <option value={{$value->id}}>{{$value->gasto}}</option>
-                  @endforeach
-                </select>
-              </div>
-              <div class="modal-footer">
-                <button type="submit" id="editar" class="btn btn-primary">Aceptar</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-{{-- FIN EDICION DE REGISTROS --}}
 
 <form action="prueba_submit" method="get" accept-charset="utf-8">
  <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_datatable">
@@ -209,7 +152,8 @@
      <thead>
       <tr>
         <th>FECHA</th>
-        <th>BANCO</th>
+        <th>TIPO</th>
+        <th>GASTO</th>
         <th>CUENTA</th>
         <th>COMENTARIO</th>
         <th>FORMA DE PAGO</th>

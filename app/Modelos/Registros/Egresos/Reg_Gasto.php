@@ -11,6 +11,12 @@ class Reg_Gasto extends Model
   protected $table = 'reg_gastos';
   protected $guarded = [];
   protected $dates = ['fecha'];
+
+//Relacion
+  public function user() {
+        return $this->belongsTo('App\User'); // Le indicamos que se va relacionar con el atributo id
+    }
+
   //Relacion
   public function gasto() {
         return $this->belongsTo(Gasto::class); // Le indicamos que se va relacionar con el atributo id

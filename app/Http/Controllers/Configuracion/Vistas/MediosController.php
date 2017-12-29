@@ -22,14 +22,13 @@ class MediosController extends Controller
     public function index()
 
     {
-
-      $medios = Medios::all();
+        $medios = Medios::where('user_id',auth()->user()->id)->get();
         return view('configuracion.vistas.medios', ['data' => $medios]);
     }
 
 
     public function listar(){
-      $medios = Medios::all();
+        $medios = Medios::where('user_id',auth()->user()->id)->get();
         return response()->json(["data"=> $medios->toArray()]);
     }
 

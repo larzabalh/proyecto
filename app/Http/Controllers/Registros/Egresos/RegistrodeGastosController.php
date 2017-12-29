@@ -29,12 +29,15 @@ class RegistrodeGastosController extends Controller
         ->get();
 
       $gasto =DB::table('reg_gastos')
-          ->select(DB::raw("distinct(concat(tipos_de_gastos.tipo,'-',gastos.gasto))as gasto"),'reg_gastos.gasto_id as id')
+          /*->select(DB::raw("distinct(concat(tipos_de_gastos.tipo,'-',gastos.gasto))as gasto"),'reg_gastos.gasto_id as id')*/
+          ->select(DB::raw("distinct(gastos.gasto)as gasto"),'reg_gastos.gasto_id as id')
           ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
           ->join('forma_de_pagos', 'reg_gastos.forma_de_pagos_id', '=', 'forma_de_pagos.id')
           ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
           ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
           ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
+          ->join('users', 'gastos.user_id', '=', 'users.id')
+          ->where(DB::raw('users.id'),auth()->user()->id )
           ->get();
 
       $forma_pagos =DB::table('reg_gastos')
@@ -44,6 +47,8 @@ class RegistrodeGastosController extends Controller
           ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
           ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
           ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
+          ->join('users', 'gastos.user_id', '=', 'users.id')
+          ->where(DB::raw('users.id'),auth()->user()->id )
           ->get();
 
 
@@ -60,15 +65,17 @@ class RegistrodeGastosController extends Controller
       $array = explode('-', $periodo);
       $reg_gastos =DB::table('reg_gastos')
           ->select(
-            DB::raw("concat(tipos_de_gastos.tipo,'-',gastos.gasto)as concepto"),
-            DB::raw("concat(medios.nombre,'-',disponibilidades.nombre,'-',forma_de_pagos.nombre)as caja"),
+            /*DB::raw("concat(tipos_de_gastos.tipo,'-',gastos.gasto)as concepto"),*/
+            DB::raw("concat(medios.nombre,'-',forma_de_pagos.nombre)as caja"),
             DB::raw("concat(year(fecha), '-', month(fecha)) as fecha"),
-            'reg_gastos.id','reg_gastos.gasto_id','reg_gastos.forma_de_pagos_id','reg_gastos.importe','reg_gastos.comentario')
+            'tipos_de_gastos.tipo','gastos.gasto','reg_gastos.id','reg_gastos.gasto_id','reg_gastos.forma_de_pagos_id','reg_gastos.importe','reg_gastos.comentario')
           ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
           ->join('forma_de_pagos', 'reg_gastos.forma_de_pagos_id', '=', 'forma_de_pagos.id')
           ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
           ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
           ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
+          ->join('users', 'gastos.user_id', '=', 'users.id')
+          ->where(DB::raw('users.id'),auth()->user()->id )
           ->where(DB::raw('year(reg_gastos.fecha)'), $array[0])
           ->where(DB::raw('month(reg_gastos.fecha)'), $array[1])
           ->get();
@@ -78,7 +85,7 @@ class RegistrodeGastosController extends Controller
 
     public function store(Request $request)
     {
-      $forma_pagos = new Reg_Gasto([
+      $reg_gastos = new Reg_Gasto([
         'fecha' => $request->input('fecha'),
         'gasto_id' => $request->input('gasto_id'),
         'forma_de_pagos_id' => $request->input('forma_de_pagos_id'),
@@ -86,29 +93,34 @@ class RegistrodeGastosController extends Controller
         'comentario' => $request->input('comentario'),
         'user_id' => auth()->user()->id,
       ]);
-      $forma_pagos->save();
+      $reg_gastos->save();
 
-    /*  $forma_pagos ='ok';*/
+    /*  $reg_gastos ='ok';*/
 
-      return response()->json(["data"=> $forma_pagos->toArray()]);
+      return response()->json(["data"=> $reg_gastos->toArray()]);
     }
 
     public function editar(Request $request, $id)
     {
-      $Disponibilidad = Reg_Gasto::find($id);
-      $Disponibilidad->nombre =  $request['nombre'];
-      $Disponibilidad->disponibilidad_id = $request['disponibilidad_id'];
+      $reg_gastos = Reg_Gasto::find($id);
+      $reg_gastos->fecha =  $request['fecha'];
+      $reg_gastos->gasto_id =  $request['gasto_id'];
+      $reg_gastos->forma_de_pagos_id =  $request['forma_de_pagos_id'];
+      $reg_gastos->importe =  $request['importe'];
+      $reg_gastos->comentario =  $request['comentario'];
 
-      $Disponibilidad->save();
+      $reg_gastos->disponibilidad_id = $request['disponibilidad_id'];
 
-      return response()->json(["data" => $Disponibilidad]);
+      $reg_gastos->save();
+
+      return response()->json(["data" => $reg_gastos]);
     }
 
     public function eliminar($id)
     {
-      $Disponibilidad = Reg_Gasto::find($id);
-      $Disponibilidad->delete();
-      return response()->json(["data" => $Disponibilidad]);
+      $reg_gastos = Reg_Gasto::find($id);
+      $reg_gastos->delete();
+      return response()->json(["data" => $reg_gastos]);
     }
 
     public function eliminar_masivos($ids)
@@ -119,8 +131,8 @@ class RegistrodeGastosController extends Controller
 
         foreach ($ids as $id) {
           // dd($key);
-          $Disponibilidad = Reg_Gasto::find($id);
-          $Disponibilidad->delete();
+          $reg_gastos = Reg_Gasto::find($id);
+          $reg_gastos->delete();
       }
         return response()->json(["data" => 'borrados']);
     }
@@ -128,7 +140,7 @@ class RegistrodeGastosController extends Controller
     public function selectCuentas($id)
     {
 
-        $disponibilidades =DB::table('disponibilidades')
+        $reg_gastos =DB::table('disponibilidades')
           ->select('disponibilidades.id','disponibilidades.nombre','disponibilidades.medio_id','medios.nombre as medio_nombre','users.name')
           ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
           ->join('users', 'disponibilidades.user_id', '=', 'users.id')
@@ -136,7 +148,7 @@ class RegistrodeGastosController extends Controller
           ->where(DB::raw('users.id'),auth()->user()->id )
            ->get();
 
-        return response()->json(["data"=> $disponibilidades->toArray()]);
+        return response()->json(["data"=> $reg_gastos->toArray()]);
     }
 
 }
