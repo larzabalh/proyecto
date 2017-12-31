@@ -41,7 +41,7 @@ class RegistrodeGastosController extends Controller
           ->get();
 
       $forma_pagos =DB::table('reg_gastos')
-          ->select(DB::raw("distinct(concat(medios.nombre,'-',disponibilidades.nombre,'-',forma_de_pagos.nombre))as forma_pagos"), 'reg_gastos.forma_de_pagos_id as id')
+          ->select(DB::raw("distinct(concat(medios.nombre,'-',forma_de_pagos.nombre))as forma_pagos"), 'reg_gastos.forma_de_pagos_id as id')
           ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
           ->join('forma_de_pagos', 'reg_gastos.forma_de_pagos_id', '=', 'forma_de_pagos.id')
           ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
@@ -49,6 +49,7 @@ class RegistrodeGastosController extends Controller
           ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
           ->join('users', 'gastos.user_id', '=', 'users.id')
           ->where(DB::raw('users.id'),auth()->user()->id )
+          ->orderBy('forma_pagos','ASC')
           ->get();
 
 
@@ -60,8 +61,10 @@ class RegistrodeGastosController extends Controller
 
     }
 
-    public function listar($periodo)
+    public function listar($periodo,$gasto_filtro=null)
     {
+
+      $gasto_filtro = ($gasto_filtro==0) ? $gasto_filtro=null : $gasto_filtro;
       $array = explode('-', $periodo);
       $reg_gastos =DB::table('reg_gastos')
           ->select(
@@ -79,6 +82,7 @@ class RegistrodeGastosController extends Controller
           ->where(DB::raw('users.id'),auth()->user()->id )
           ->where(DB::raw('year(reg_gastos.fecha)'), $array[0])
           ->where(DB::raw('month(reg_gastos.fecha)'), $array[1])
+          ->where(DB::raw('reg_gastos.forma_de_pagos_id'),'LIKE',$gasto_filtro)
           ->get();
 
         return response()->json(["data"=>$reg_gastos->toArray()]);

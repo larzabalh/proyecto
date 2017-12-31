@@ -12,16 +12,18 @@ var token = $('#token').val();
       // returns the year (four digits)
       var year = currentTime.getFullYear()
       var periodo = year+"-"+month
+      $('#gasto_filtro').append('<option value=0 selected="selected">TODOS</option>');
+      var gasto_filtro = document.getElementById("gasto_filtro").value;
+
       $("#periodo").append("<option selected value='"+periodo+"'>"+periodo+"</option>");
 
   function init(){
-    crearDataTable(periodo);      
+    crearDataTable(periodo,gasto_filtro);      
   }
 
-  function crearDataTable(periodo)
+  function crearDataTable(periodo, gasto_filtro)
   {   
-
-      var url = '/registros/registrodegastos/listar/'+periodo+''
+      var url = '/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+''
 
 
     dataTable = $('#tabla_datos').DataTable({
@@ -56,7 +58,6 @@ var token = $('#token').val();
 
         ajax(url, function (err, response) {
           if (err) return console.error(err)
-          console.log("response", response)
           var saldo = response.data.reduce(function (accum, current) {
             return accum + current.importe
           }, 0)
@@ -223,7 +224,6 @@ function update_data(data_edit)
     headers: {'X-CSRF-TOKEN':token},
     success:function(data)
     {
-    console.log(data)
       $('#altaModal').modal('hide') 
       $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registrado Correctamente!</strong</div>');
       dataTable.destroy()
@@ -254,13 +254,22 @@ function update_data(data_edit)
 
   $("#periodo").change(function(e){
     var periodo = document.getElementById("periodo").value;
+     $('#gasto_filtro').val(0)
     var url = 'http://localhost:8000/registros/registrodegastos/listar/'+periodo+''
 
     dataTable.destroy()
     crearDataTable(periodo);
-
-  
 });
+
+  $("#gasto_filtro").change(function(e){
+    var periodo = document.getElementById("periodo").value;
+    var gasto_filtro = document.getElementById("gasto_filtro").value;
+    var url = 'http://localhost:8000/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+''
+
+    dataTable.destroy()
+    crearDataTable(periodo,gasto_filtro);
+});
+
 
   init();
 

@@ -36,10 +36,10 @@ Date.prototype.toDateInputValue = (function() {
 <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script> -->
 <!-- CON ESTO HAGO SELECT2 A TODOS LOS SELECT!!!! -->
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 $(document).ready(function(){$("select").select2({ width: '100%' });});
 </script>
-
+ -->
 
 
 <!-- FORMATO DE MONEDA -->

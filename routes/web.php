@@ -47,7 +47,7 @@ Route::resource('/configuracion/forma_pagos', 'Forma_PagoController');
 
 
 
-Route::get('/registros/registrodegastos/listar/{periodo}', 'RegistrodeGastosController@listar');
+Route::get('/registros/registrodegastos/listar/{periodo}/{gasto_filtro}', 'RegistrodeGastosController@listar');
 Route::post('/registros/registrodegastos/editar/{id}', 'RegistrodeGastosController@editar');
 Route::post('/registros/registrodegastos/eliminar/{id}', 'RegistrodeGastosController@eliminar');
 Route::resource('/registros/registrodegastos', 'RegistrodeGastosController');
@@ -74,16 +74,8 @@ Route::get('/vistas/egresos/tipo', 'Vistas\Egresos\TipoController@index')->name(
 Route::get('/vistas/egresos/tipo/select_tipo/{id}/{periodo}', 'Vistas\Egresos\TipoController@select_tipo');
 
 
-
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
-
+Route::get('/home/listar/{periodo}', 'HomeController@listar');
 Route::get('/home', 'HomeController@index')->name('home');
