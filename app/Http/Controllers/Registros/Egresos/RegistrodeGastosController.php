@@ -67,7 +67,8 @@ class RegistrodeGastosController extends Controller
           ->select(
             /*DB::raw("concat(tipos_de_gastos.tipo,'-',gastos.gasto)as concepto"),*/
             DB::raw("concat(medios.nombre,'-',forma_de_pagos.nombre)as caja"),
-            DB::raw("concat(year(fecha), '-', month(fecha)) as fecha"),
+            DB::raw("concat(year(fecha), '-', month(fecha)) as periodo"),
+            DB::raw("CAST(fecha AS DATE) as fecha"),
             'tipos_de_gastos.tipo','gastos.gasto','reg_gastos.id','reg_gastos.gasto_id','reg_gastos.forma_de_pagos_id','reg_gastos.importe','reg_gastos.comentario')
           ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
           ->join('forma_de_pagos', 'reg_gastos.forma_de_pagos_id', '=', 'forma_de_pagos.id')
@@ -108,8 +109,6 @@ class RegistrodeGastosController extends Controller
       $reg_gastos->forma_de_pagos_id =  $request['forma_de_pagos_id'];
       $reg_gastos->importe =  $request['importe'];
       $reg_gastos->comentario =  $request['comentario'];
-
-      $reg_gastos->disponibilidad_id = $request['disponibilidad_id'];
 
       $reg_gastos->save();
 

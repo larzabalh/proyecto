@@ -13,7 +13,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title" id="myModalLabel">ALTA DE REGISTROS</h4>
+          <h4 class="modal-title" id="tituloModal"></h4>
         </div>
         <div class="modal-body" id="">
            {{-- Alarma de BOOTSTRAP --}}
@@ -27,6 +27,7 @@
                       <div class="panel-body" >
                           <form name="" id="" method="POST">
                             <input type="hidden" id="token" value="{{ csrf_token() }}">
+                            <input type="hidden" class="form-control" id="id_editar">
                             <div class="row">
                               <div class="col-lg-12" id="fecha">
                                 <label>FECHA</label><br>
@@ -61,6 +62,7 @@
                             </div>
                             <div class="modal-footer">
                               <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
+                              <button class="btn btn-primary" type="submit" id="btnEditar" style='display:none;'><i class="fa fa-edit"></i> editar</button>
                               <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-arrow-circle-left"></i> VOLVER</button>
                             </div>
                           </form>
