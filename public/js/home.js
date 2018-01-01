@@ -15,8 +15,11 @@
   }
 
   function listar(periodo)
-  {   
+  { 
+    $("#tipos").empty();
     $("#gastos").empty();
+    $("#bancos").empty();
+    
       var url = '/home/listar/'+periodo+''
 
         ajax(url, function (err, response) {
@@ -24,12 +27,24 @@
             var saldo = response.reg_gastos.reduce(function (accum, current) {
               return accum + current.importe
             }, 0)
-            console.log(saldo,response.reg_gastos.gasto)
-            for (var i = 0; i < response.gasto.length; i++) {
-              $("#gastos").append("<div>"+response.gasto[i].gasto+"="
-                +2+
+           $('#total_egresos').html('<div><strong>TOTAL EGRESOS:'+numeral(saldo).format('$0,0.00')+'</strong></div>');
+            for (var i = 0; i < response.tipos.length; i++) {
+              $("#tipos").append("<div>"+response.tipos[i].tipo+"="
+                +numeral(response.tipos[i].importe).format('$0,0.00')+
                 "</div>");
             }
+            for (var i = 0; i < response.gastos.length; i++) {
+              $("#gastos").append("<div>"+response.gastos[i].gasto+"="
+                +numeral(response.gastos[i].importe).format('$0,0.00')+
+                "</div>");
+            }
+
+            for (var i = 0; i < response.bancos.length; i++) {
+              $("#bancos").append("<div>"+response.bancos[i].banco+"="
+                +numeral(response.bancos[i].importe).format('$0,0.00')+
+                "</div>");
+            }  
+
         });
 
 }

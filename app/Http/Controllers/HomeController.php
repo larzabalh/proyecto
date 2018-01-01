@@ -32,42 +32,10 @@ class HomeController extends Controller
     public function listar($periodo)
     {
 
-    $array = explode('-', $periodo);  
-        $gasto =DB::table('reg_gastos')
-          /*->select(DB::raw("distinct(concat(tipos_de_gastos.tipo,'-',gastos.gasto))as gasto"),'reg_gastos.gasto_id as id')*/
-        ->select(DB::raw("distinct(gastos.gasto)as gasto"),'reg_gastos.gasto_id as id')
-        ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
-        ->join('forma_de_pagos', 'reg_gastos.forma_de_pagos_id', '=', 'forma_de_pagos.id')
-        ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
-        ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
-        ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
-        ->join('users', 'gastos.user_id', '=', 'users.id')
-        ->where(DB::raw('users.id'),auth()->user()->id )
-        ->where(DB::raw('year(reg_gastos.fecha)'), $array[0])
-        ->where(DB::raw('month(reg_gastos.fecha)'), $array[1])
-        ->get();
+    $array = explode('-', $periodo);
 
-      $forma_pagos =DB::table('reg_gastos')
-        ->select(DB::raw("distinct(concat(medios.nombre,'-',forma_de_pagos.nombre))as forma_pagos"), 'reg_gastos.forma_de_pagos_id as id')
-        ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
-        ->join('forma_de_pagos', 'reg_gastos.forma_de_pagos_id', '=', 'forma_de_pagos.id')
-        ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
-        ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
-        ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
-        ->join('users', 'gastos.user_id', '=', 'users.id')
-        ->where(DB::raw('users.id'),auth()->user()->id )
-        ->where(DB::raw('year(reg_gastos.fecha)'), $array[0])
-        ->where(DB::raw('month(reg_gastos.fecha)'), $array[1])
-        ->orderBy('forma_pagos','ASC')
-        ->get();
-
-      $reg_gastos =DB::table('reg_gastos')
-          ->select(
-            /*DB::raw("concat(tipos_de_gastos.tipo,'-',gastos.gasto)as concepto"),*/
-            DB::raw("concat(medios.nombre,'-',forma_de_pagos.nombre)as caja"),
-            DB::raw("concat(year(fecha), '-', month(fecha)) as periodo"),
-            DB::raw("CAST(fecha AS DATE) as fecha"),
-            'tipos_de_gastos.tipo','gastos.gasto','reg_gastos.id','reg_gastos.gasto_id','reg_gastos.forma_de_pagos_id','reg_gastos.importe','reg_gastos.comentario')
+        $bancos =DB::table('reg_gastos')
+          ->select(DB::raw("concat(medios.nombre,'-',forma_de_pagos.nombre)as banco"),DB::raw('sum(reg_gastos.importe) as importe'))
           ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
           ->join('forma_de_pagos', 'reg_gastos.forma_de_pagos_id', '=', 'forma_de_pagos.id')
           ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
@@ -77,12 +45,58 @@ class HomeController extends Controller
           ->where(DB::raw('users.id'),auth()->user()->id )
           ->where(DB::raw('year(reg_gastos.fecha)'), $array[0])
           ->where(DB::raw('month(reg_gastos.fecha)'), $array[1])
+          ->groupBy('banco')
+          ->get();
+
+        $gastos =DB::table('reg_gastos')
+          ->select('gastos.gasto',DB::raw('sum(reg_gastos.importe) as importe'))
+          ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
+          ->join('forma_de_pagos', 'reg_gastos.forma_de_pagos_id', '=', 'forma_de_pagos.id')
+          ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
+          ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
+          ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
+          ->join('users', 'gastos.user_id', '=', 'users.id')
+          ->where(DB::raw('users.id'),auth()->user()->id )
+          ->where(DB::raw('year(reg_gastos.fecha)'), $array[0])
+          ->where(DB::raw('month(reg_gastos.fecha)'), $array[1])
+          ->groupBy('gastos.gasto')
+          ->get();
+
+
+      $tipos =DB::table('reg_gastos')
+          ->select('tipos_de_gastos.tipo',DB::raw('sum(reg_gastos.importe) as importe'))
+          ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
+          ->join('forma_de_pagos', 'reg_gastos.forma_de_pagos_id', '=', 'forma_de_pagos.id')
+          ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
+          ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
+          ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
+          ->join('users', 'gastos.user_id', '=', 'users.id')
+          ->where(DB::raw('users.id'),auth()->user()->id )
+          ->where(DB::raw('year(reg_gastos.fecha)'), $array[0])
+          ->where(DB::raw('month(reg_gastos.fecha)'), $array[1])
+          ->groupBy('tipos_de_gastos.tipo')
+          ->get();
+
+      $reg_gastos =DB::table('reg_gastos')
+          ->select(
+            'tipos_de_gastos.tipo','gastos.gasto',DB::raw('sum(reg_gastos.importe) as importe'))
+          ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
+          ->join('forma_de_pagos', 'reg_gastos.forma_de_pagos_id', '=', 'forma_de_pagos.id')
+          ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
+          ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
+          ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
+          ->join('users', 'gastos.user_id', '=', 'users.id')
+          ->where(DB::raw('users.id'),auth()->user()->id )
+          ->where(DB::raw('year(reg_gastos.fecha)'), $array[0])
+          ->where(DB::raw('month(reg_gastos.fecha)'), $array[1])
+          ->groupBy('gastos.gasto','tipos_de_gastos.tipo')
           ->get();
 
         return response()->json([
                                 "reg_gastos"=>$reg_gastos->toArray(),
-                                "gasto"=>$gasto->toArray(),
-                                "forma_pagos"=>$forma_pagos->toArray(),
+                                "gastos"=>$gastos->toArray(),
+                                "tipos"=>$tipos->toArray(),
+                                "bancos"=>$bancos->toArray(),
                                 ]);
     }
 

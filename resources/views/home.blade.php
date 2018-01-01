@@ -30,10 +30,12 @@
 					<div class="col-lg-6">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<h3><CENTER>TOTAL EGRESOS</CENTER></h3>
+								<h3><CENTER id="total_egresos"></CENTER></h3>
 							</div>
-							<div class="panel-body">
-								<div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12" id="gastos"></div>
+							<div class="panel-body" id="div_egresos">
+								<div class="form-group col-lg-4 col-md-6 col-sm-6 col-xs-12" id="tipos"></div>
+								<div class="form-group col-lg-4 col-md-6 col-sm-6 col-xs-12" id="gastos"></div>
+								<div class="form-group col-lg-4 col-md-6 col-sm-6 col-xs-12" id="bancos"></div>
 							</div>	
 						</div>
 					</div>
