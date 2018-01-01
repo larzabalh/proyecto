@@ -16,7 +16,7 @@
 				</div>
 			</div>
 
-				<div class="row">
+				<!-- <div class="row">
 					<div class="col-lg-6">
 						<div class="panel panel-default">
 							<div class="panel-heading">
@@ -27,7 +27,7 @@
 							</div>	
 						</div>
 					</div>
-					<div class="col-lg-6">
+					<div class="col-lg-12">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h3><CENTER id="total_egresos"></CENTER></h3>
@@ -39,8 +39,45 @@
 							</div>	
 						</div>
 					</div>
-				</div>
+				</div> -->
 		</div>
+		
+		<div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3><CENTER id="total_egresos"></CENTER></h3>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-pills">
+                                <li class="active"><a href="#gastos_primero" data-toggle="tab">TIPOS</a>
+                                </li>
+                                <li><a href="#gastos_segundo" data-toggle="tab">GASTOS</a>
+                                </li>
+                                <li><a href="#gastos_tercero" data-toggle="tab">MEDIOS DE PAGO</a>
+                                </li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="gastos_primero">
+                                    <h4>Tipos de Gastos</h4>
+                                    <p id="tipos"></p>
+                                </div>
+                                <div class="tab-pane fade" id="gastos_segundo">
+                                    <h4>Detalle de Gastos</h4>
+                                    <p id="gastos"></p>
+                                </div>
+                                <div class="tab-pane fade" id="gastos_tercero">
+                                    <h4>Medios de Pagos</h4>
+                                    <p id="bancos"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
 	</div>
 </div>
 
