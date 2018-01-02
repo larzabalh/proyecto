@@ -18,7 +18,7 @@ class CreateClientesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('cliente')->unique();
             $table->float('honorario');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->integer('facturador_id')->unsigned();
             $table->foreign('facturador_id')->references('id')->on('facturadores');
             $table->integer('liquidador_id')->unsigned();

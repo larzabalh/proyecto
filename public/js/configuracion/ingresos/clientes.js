@@ -252,5 +252,31 @@ function update_data(data_edit)
 
   } /*FIN EDICION!!!!*/
 
+
+  /*ASIGNAR A PAERIODO!!!*/
+/*1- Abro el modal*/
+$('#asignar').click(function(){
+  $('#tituloModal').html('ASIGNAR A PERIODO')
+  $('#btnGuardar').hide();
+  $('#btnEditar').hide();
+  $('#btnAsignar').show();
+
+  $('#fecha').show();  
+  $('#cliente').val("");
+  $('#honorario').val("");
+  $('#comentario').val("");
+
+
+  $('#email').hide();
+  $('#facturador_id').hide();
+  $('#liquidador_id').hide();
+  $('#cobrador_id').hide();
+  $('#disponibilidad_id').hide();
+  $('#contacto').hide();
+  
+  $('#altaModal').modal('show') 
+
+});
+
   init();
 

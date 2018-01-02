@@ -71,8 +71,8 @@ var token = $('#token').val();
 $('#add').click(function(){
 
   document.getElementById('fecha_alta').value = new Date().toDateInputValue();
-  $('#selectGasto').append('<option selected="selected"></option>');
-  $('#selectBanco').append('<option selected="selected"></option>');
+  $('#selectGasto').prop('selectedIndex',0);
+  $('#selectBanco').prop('selectedIndex',0);
   $('#importe_alta').val("");
   $('#comentario_alta').val("");
   $('#tituloModal').html('ALTA DE REGISTROS')

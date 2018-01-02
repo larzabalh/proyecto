@@ -29,6 +29,10 @@
                             <input type="hidden" id="token" value="{{ csrf_token() }}">
                             <input type="hidden" class="form-control" id="id_editar">
                             <div class="row">
+                              <div class="col-lg-12" id="fecha">
+                                <label>FECHA</label><br>
+                                <input type="date" class="form-control" name="gasto" id="fecha" style='display:none;'>
+                              </div>
                               <div class="col-lg-12">
                                 <label>RAZON SOCIAL</label><br>
                                 <input type="text" class="form-control" id="cliente">
@@ -87,7 +91,8 @@
                               </div>
                               <div class="modal-footer">
                                 <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
-                                <button class="btn btn-primary" type="submit" id="btnEditar" style='display:none;'><i class="fa fa-edit"></i> editar</button>
+                                <button class="btn btn-primary" type="submit" id="btnEditar" style='display:none;'><i class="fa fa-edit"></i> Editar</button>
+                                <button class="btn btn-primary" type="submit" id="btnAsignar" style='display:none;'><i class="fa fa-edit"></i> Asignar</button>
                                 <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-arrow-circle-left"></i> VOLVER</button>
                               </div>
                             </div>
@@ -160,6 +165,9 @@
               <button type="button" name="add" id="add" class="btn btn-info">AGREGAR</button>
             </div>
             <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12"><h4 id="total"></h4></div>
+            <div class="form-group col-lg-1 col-md-3 col-sm-3 col-xs-12">
+              <button type="button" id="asignar" class="btn btn-success">ASIGNAR A PERIODO</button>
+            </div>
           </form>
         </div>
       </div>
