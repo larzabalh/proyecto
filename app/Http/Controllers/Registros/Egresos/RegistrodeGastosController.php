@@ -54,7 +54,7 @@ class RegistrodeGastosController extends Controller
 
 
 
-        return view('registros.gastos')
+        return view('registros.egresos.gastos')
         ->with('gasto', $gasto)
         ->with('periodos',$periodos)
         ->with('forma_pagos', $forma_pagos);

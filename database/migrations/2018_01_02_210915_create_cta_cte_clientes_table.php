@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDisponibilidadesTable extends Migration
+class CreateCtaCteClientesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,21 @@ class CreateDisponibilidadesTable extends Migration
      */
     public function up()
     {
-        Schema::create('disponibilidades', function (Blueprint $table) {
-            //CAJA, 362929/0, chequeras
+        Schema::create('cta_cte_clientes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->string('nombre')->unique();
+            $table->timestamp('fecha')->nullable();
+            $table->integer('cliente_id')->unsigned();
+            $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->float('debe')->nullable();
             $table->float('haber')->nullable();
+            $table->integer('disponibilidad_id')->unsigned()->nullable();
+            $table->foreign('disponibilidad_id')->references('id')->on('disponibilidades')->onDelete('cascade');
             $table->string('comentario')->nullable();
-            $table->string('condicion')->default(1);
-            $table->integer('medio_id')->unsigned()->nullable();
-            $table->foreign('medio_id')->references('id')->on('medios')->onDelete('cascade');
+            $table->boolean('condicion')->default(1);
             $table->timestamps();
+
+
         });
     }
 
@@ -35,6 +38,6 @@ class CreateDisponibilidadesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('disponibilidades');
+        Schema::dropIfExists('cta_cte_clientes');
     }
 }

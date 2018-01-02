@@ -33,11 +33,11 @@ class IngresosController extends Controller
       $facturadores = Facturador::orderBy('facturador','ASC')->get();
       $liquidadores = Liquidador::orderBy('liquidador','ASC')->get();
       $cobradores = Cobrador::orderBy('cobrador','ASC')->get();
-      $disponibilidades = Disponibilidad::orderBy('disponibilidad','ASC')->get();
+      $disponibilidades = Disponibilidad::orderBy('nombre','ASC')->get();
       $periodos = Periodo::orderBy('id','ASC')->get();
 
       // dd($facturadores,$liquidadores,$cobradores,$disponibilidades);
-      return view('ingresos.ingresos')
+      return view('registros.ingresos.ingresos')
       ->with('clientes', $clientes)
       ->with('facturadores', $facturadores)
       ->with('liquidadores', $liquidadores)
@@ -114,7 +114,7 @@ class IngresosController extends Controller
         //
     }
 
-    public function asignar(IngresosMensualesRequest $request)
+    public function asignar(Request $request)
     {
       $honorarios = $request->input('honorario');
       $periodo = Periodo::find($request->input('periodo'));

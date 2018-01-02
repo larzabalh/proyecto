@@ -1,5 +1,4 @@
 @extends('template.main')
-@extends('template.nav')
 @section('title','titulo')
 
 @section('content')
@@ -17,16 +16,23 @@
         $saldo += $value->honorario
       @endphp
             @endforeach
-      <div class="col-lg-12">
-          <div class="panel panel-default">
-              <div class="panel-heading">
-                  TOTAL DE INGRESOS:
-              </div>
-              <div class="panel-body text-center">
-                  <h3>$ {{number_format($saldo,2)}}</h3>
+          <div class="col-lg-12">
+              <div class="panel panel-default">
+                  <div class="panel-heading">
+                      TOTAL DE INGRESOS:
+                  </div>
+                  <div class="panel-body text-center">
+                      <h3>$ {{number_format($saldo,2)}}</h3>
+                      <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12" id="fecha">
+                        <label>FECHA</label>
+                        <input type="date" class="form-control" name="gasto" id="fecha_alta">
+                      </div>
+                      <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12" id="fecha">
+                        <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> ASIGNAR</button>
+                      </div>
+                  </div>
               </div>
           </div>
-      </div>
 
 
           <div class="panel-body">
@@ -35,19 +41,6 @@
                   <input type="hidden" name="_method" value="" />
                   {{ csrf_field() }}
                   {{ method_field('POST') }}
-                    <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                      <label>PERIODO:</label><br>
-                      <select class="form-control" name="periodo">
-                        <option selected></option>
-                        @foreach ($periodos as $key => $value)
-                          <option value={{$value->id}}>{{$value->periodo}}</option>
-                        @endforeach
-                      </select>
-                      @if ($errors->has('periodo_id'))
-                         {{$errors->first('periodo_id')}}
-                      @endif
-                      <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Guardar</button>
-                      </div>
                 <table class="table table-hover">
                   <tbody>
                   <tr>
@@ -63,22 +56,16 @@
                     <td>{{$value->cliente}}</td>
                     <td>
                       <input type="hidden" name="cliente[{{$value->id}}]" value="{{$value->id}}">
-                      <input type="decimal" class="form-control" name="honorario[{{$value->id}}]" value="{{$value->honorario}}">
+                      <input type="decimal" class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12" name="honorario[{{$value->id}}]" value="{{$value->honorario}}">
                     </td>
                   </tr>
                     @endforeach
 
                   </tbody>
                 </table>
-                <div class="">
-
                 </form>
-                </div>
               </div>
           </div>
-
-
-
           <!-- /.col-lg-12 -->
       </div>
       <!-- /.row -->
@@ -88,12 +75,8 @@
 </div>
 @endsection
 
+@section('script')
 
-@section('java')
+<script src="{{ asset('/js/registros/egresos/egresos.js')}}"></script>
 
-{{-- <script>
-  $(document).ready(function(){
-      $('#mitabla').DataTable()
-    });
-</script> --}}
 @endsection
