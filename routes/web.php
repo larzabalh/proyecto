@@ -53,7 +53,7 @@ Route::post('/registros/registrodegastos/eliminar/{id}', 'RegistrodeGastosContro
 Route::resource('/registros/registrodegastos', 'RegistrodeGastosController');
 
 Route::resource('/registros/registrodegastos', 'RegistrodeGastosController');
-Route::resource('/clientes', 'ClienteController');
+
 Route::resource('/ingresos/mensual', 'IngresoMensualController');
 Route::resource('/ingresos', 'IngresosController');
   Route::post('/ingresos/ingresos', 'IngresosController@asignar')->name('ingresos.asignar');
@@ -73,6 +73,13 @@ Route::get('/vistas/egresos/tipo_gasto/{periodo}', 'Vistas\Egresos\Tipo_GastoCon
 Route::get('/vistas/egresos/tipo', 'Vistas\Egresos\TipoController@index')->name('vistas.egresos.tipo');
 Route::get('/vistas/egresos/tipo/select_tipo/{id}/{periodo}', 'Vistas\Egresos\TipoController@select_tipo');
 
+
+
+
+Route::get('/configuracion/ingresos/clientes/listar', 'ClienteController@listar');
+Route::post('/configuracion/ingresos/clientes/editar/{id}', 'ClienteController@editar');
+Route::post('/configuracion/ingresos/clientes/eliminar/{id}', 'ClienteController@eliminar');
+Route::resource('/configuracion/ingresos/clientes', 'ClienteController');
 
 Auth::routes();
 

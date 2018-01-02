@@ -2,6 +2,8 @@
 
 use Faker\Generator as Faker;
 
+use Illuminate\Foundation\Auth\User;
+
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -13,13 +15,14 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(Illuminate\Foundation\Auth\User::class, function (Faker $faker) {
     static $password;
 
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
+        'name' => 'hernan',
+        'email' => 'larzabalh@hotmail.com',
+        'password' => $password ?: $password = bcrypt('123123'),
+        'rol' => 'admin',
         'remember_token' => str_random(10),
     ];
 });

@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Cliente;
 use App\Reg_Gasto;
 use App\Forma_de_Pagos;
+use Illuminate\Foundation\Auth\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -141,21 +142,23 @@ class DatabaseSeeder extends Seeder
 
 
         DB::table('clientes')->insert([
-          ['id' => '1','user_id' => 1, 'cliente' => 'Granny','honorario' => 600,'email' => 'kathryne.lakin@hotmail.com','facturador_id' => 3,'liquidador_id' => 1,'cobrador_id' => 1,'forma_de_pagos_id' => 1,'contacto' => 'Marcela','created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '2','user_id' => 1, 'cliente' => 'Chatelet','honorario' => 600,'email' => 'raynor.freida@hotmail.com','facturador_id' => 3,'liquidador_id' => 1,'cobrador_id' => 1,'forma_de_pagos_id' => 1,'contacto' => 'Marcela','created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '3','user_id' => 1, 'cliente' => 'Segovia Marcelo','honorario' => 300,'email' => 'abelardo.koch@hotmail.com','facturador_id' => 4,'liquidador_id' => 2,'cobrador_id' => 1,'forma_de_pagos_id' => 1,'contacto' => 'Marcelo','created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '4','user_id' => 1, 'cliente' => 'Barea Mabel','honorario' => 1800,'email' => 'lilyan.littel@shields.net','facturador_id' => 4,'liquidador_id' => 2,'cobrador_id' => 2,'forma_de_pagos_id' => 7,'contacto' => 'Mabel','created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '5','user_id' => 1, 'cliente' => 'Lanieri Juan Manuel','honorario' => 3500,'email' => 'littel.eladio@gutmann.org','facturador_id' => 5,'liquidador_id' => 3,'cobrador_id' => 1,'forma_de_pagos_id' => 1,'contacto' => 'Lily','created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '6','user_id' => 1, 'cliente' => 'Irineo SRL','honorario' => 3000,'email' => 'marisa.halvorson@zboncak.org','facturador_id' => 1,'liquidador_id' => 3,'cobrador_id' => 3,'forma_de_pagos_id' => 10,'contacto' => 'Pablo','created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '7','user_id' => 1, 'cliente' => 'Mosconi SRL','honorario' => 1000,'email' => 'cfisher@yahoo.com','facturador_id' => 1,'liquidador_id' => 3,'cobrador_id' => 3,'forma_de_pagos_id' => 1,'contacto' => 'Mariela','created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '8','user_id' => 1, 'cliente' => 'Britez Caceres Zunilda','honorario' => 700,'email' => 'fermin87@yahoo.com','facturador_id' => 2,'liquidador_id' => 4,'cobrador_id' => 1,'forma_de_pagos_id' => 6,'contacto' => 'Zunny','created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '9','user_id' => 1, 'cliente' => 'Arias Roberto','honorario' => 1500,'email' => 'mills.jordi@gmail.com','facturador_id' => 2,'liquidador_id' => 3,'cobrador_id' => 2,'forma_de_pagos_id' => 3,'contacto' => 'Roberto','created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '10','user_id' => 1, 'cliente' => 'Caballero Oscar','honorario' => 1300,'email' => 'kertzmann.kevon@denesik.com','facturador_id' => 5,'liquidador_id' => 6,'cobrador_id' => 3,'forma_de_pagos_id' => 4,'contacto' => 'Oscar','created_at' => new DateTime, 'updated_at' => new DateTime],
-          ['id' => '11','user_id' => 1, 'cliente' => 'Espinoza Diego','honorario' => 2300,'email' => 'walker.randall@yahoo.com','facturador_id' => 3,'liquidador_id' => 5,'cobrador_id' => 1,'forma_de_pagos_id' => 5,'contacto' => 'Susana','created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '1','user_id' => 1, 'cliente' => 'Granny','honorario' => 600,'email' => 'kathryne.lakin@hotmail.com','facturador_id' => 3,'liquidador_id' => 1,'cobrador_id' => 1,'disponibilidad_id' => 1,'contacto' => 'Marcela','created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '2','user_id' => 1, 'cliente' => 'Chatelet','honorario' => 600,'email' => 'raynor.freida@hotmail.com','facturador_id' => 3,'liquidador_id' => 1,'cobrador_id' => 1,'disponibilidad_id' => 1,'contacto' => 'Marcela','created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '3','user_id' => 1, 'cliente' => 'Segovia Marcelo','honorario' => 300,'email' => 'abelardo.koch@hotmail.com','facturador_id' => 4,'liquidador_id' => 2,'cobrador_id' => 1,'disponibilidad_id' => 1,'contacto' => 'Marcelo','created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '4','user_id' => 1, 'cliente' => 'Barea Mabel','honorario' => 1800,'email' => 'lilyan.littel@shields.net','facturador_id' => 4,'liquidador_id' => 2,'cobrador_id' => 2,'disponibilidad_id' => 7,'contacto' => 'Mabel','created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '5','user_id' => 1, 'cliente' => 'Lanieri Juan Manuel','honorario' => 3500,'email' => 'littel.eladio@gutmann.org','facturador_id' => 5,'liquidador_id' => 3,'cobrador_id' => 1,'disponibilidad_id' => 1,'contacto' => 'Lily','created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '6','user_id' => 1, 'cliente' => 'Irineo SRL','honorario' => 3000,'email' => 'marisa.halvorson@zboncak.org','facturador_id' => 1,'liquidador_id' => 3,'cobrador_id' => 3,'disponibilidad_id' => 10,'contacto' => 'Pablo','created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '7','user_id' => 1, 'cliente' => 'Mosconi SRL','honorario' => 1000,'email' => 'cfisher@yahoo.com','facturador_id' => 1,'liquidador_id' => 3,'cobrador_id' => 3,'disponibilidad_id' => 1,'contacto' => 'Mariela','created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '8','user_id' => 1, 'cliente' => 'Britez Caceres Zunilda','honorario' => 700,'email' => 'fermin87@yahoo.com','facturador_id' => 2,'liquidador_id' => 4,'cobrador_id' => 1,'disponibilidad_id' => 6,'contacto' => 'Zunny','created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '9','user_id' => 1, 'cliente' => 'Arias Roberto','honorario' => 1500,'email' => 'mills.jordi@gmail.com','facturador_id' => 2,'liquidador_id' => 3,'cobrador_id' => 2,'disponibilidad_id' => 3,'contacto' => 'Roberto','created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '10','user_id' => 1, 'cliente' => 'Caballero Oscar','honorario' => 1300,'email' => 'kertzmann.kevon@denesik.com','facturador_id' => 5,'liquidador_id' => 6,'cobrador_id' => 3,'disponibilidad_id' => 4,'contacto' => 'Oscar','created_at' => new DateTime, 'updated_at' => new DateTime],
+          ['id' => '11','user_id' => 1, 'cliente' => 'Espinoza Diego','honorario' => 2300,'email' => 'walker.randall@yahoo.com','facturador_id' => 3,'liquidador_id' => 5,'cobrador_id' => 1,'disponibilidad_id' => 5,'contacto' => 'Susana','created_at' => new DateTime, 'updated_at' => new DateTime],
 
         ]);
 
+        $users = factory(Illuminate\Foundation\Auth\User::class)->times(1)->create();
         $reg_gasto = factory(Reg_Gasto::class)->times(3000)->create();
+        
 
       }
 }

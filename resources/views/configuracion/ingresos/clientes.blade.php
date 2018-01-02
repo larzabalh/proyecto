@@ -29,41 +29,67 @@
                             <input type="hidden" id="token" value="{{ csrf_token() }}">
                             <input type="hidden" class="form-control" id="id_editar">
                             <div class="row">
-                              <div class="col-lg-12" id="fecha">
-                                <label>FECHA</label><br>
-                                <input type="date" class="form-control" name="gasto" id="fecha_alta">
+                              <div class="col-lg-12">
+                                <label>RAZON SOCIAL</label><br>
+                                <input type="text" class="form-control" id="cliente">
                               </div>
                               <div class="col-lg-12">
-                                <label>GASTO:</label><br>
-                                <select class="form-control" name="tipo" id="selectGasto">
-                                  <option selected></option>
-                                  @foreach ($gasto as $key => $value)
-                                    <option value={{$value->id}}>{{$value->gasto}}</option>
-                                  @endforeach
-                                </select>
+                                <label>HONORARIO</label><br>
+                                <input type="number" class="form-control" id="honorario">
                               </div>
-                            </div>
-                            <div>
-                              <label>FORMA DE PAGO:</label><br>
-                              <select class="form-control" name="tipo" id="selectBanco">
-                                <option selected></option>
-                                @foreach ($forma_pagos as $key => $value)
-                                  <option value={{$value->id}}>{{$value->forma_pagos}}</option>
-                                @endforeach
-                              </select>
-                            </div>
-                            <div >
-                              <label>IMPORTE:</label>
-                              <input type="number" class="form-control" name="gasto" id="importe_alta" maxlength="50" placeholder="1000">
-                            </div>
-                             <div>
-                                <label>COMENTARIO</label><br>
-                                <input type="text" class="form-control" name="gasto" id="comentario_alta">
-                            </div>
-                            <div class="modal-footer">
-                              <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
-                              <button class="btn btn-primary" type="submit" id="btnEditar" style='display:none;'><i class="fa fa-edit"></i> editar</button>
-                              <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-arrow-circle-left"></i> VOLVER</button>
+                              <div class="col-lg-12">
+                                <label>EMAIL</label><br>
+                                <input type="email" class="form-control" id="email">
+                              </div>
+                              <div class="col-lg-12">
+                                <label>FACTURA:</label><br>
+                                <select class="form-control" name="tipo" id="facturador_id">
+                                  <option selected></option>
+                                  @foreach ($facturadores as $key => $value)
+                                    <option value={{$value->id}}>{{$value->facturador}}</option>
+                                  @endforeach
+                                </select>                              
+                              </div>                            
+                              <div class="col-lg-12">
+                                <label>LIQUIDADOR:</label><br>
+                                <select class="form-control" name="tipo" id="liquidador_id">
+                                    <option selected></option>
+                                    @foreach ($liquidadores as $key => $value)
+                                      <option value={{$value->id}}>{{$value->liquidador}}</option>
+                                    @endforeach
+                                  </select>                              
+                              </div>
+                              <div class="col-lg-12">
+                                <label>COBRADOR:</label><br>
+                                <select class="form-control" name="tipo" id="cobrador_id">
+                                    <option selected></option>
+                                    @foreach ($cobradores as $key => $value)
+                                      <option value={{$value->id}}>{{$value->cobrador}}</option>
+                                    @endforeach
+                                  </select>                              
+                              </div>
+                              <div class="col-lg-12">
+                                <label>PAGA EN:</label><br>
+                                <select class="form-control" name="tipo" id="disponibilidad_id">
+                                    <option selected></option>
+                                    @foreach ($disponibilidades as $key => $value)
+                                      <option value={{$value->id}}>{{$value->nombre}}</option>
+                                    @endforeach
+                                  </select>                              
+                              </div>
+                              <div class="col-lg-12">
+                                <label>CONTACTO</label>
+                                <input type="text" class="form-control" id="contacto" maxlength="50" placeholder="nombre">
+                              </div>
+                              <div class="col-lg-12">
+                                  <label>COMENTARIO</label><br>
+                                  <input type="text" class="form-control" id="comentario">
+                              </div>
+                              <div class="modal-footer">
+                                <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
+                                <button class="btn btn-primary" type="submit" id="btnEditar" style='display:none;'><i class="fa fa-edit"></i> editar</button>
+                                <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-arrow-circle-left"></i> VOLVER</button>
+                              </div>
                             </div>
                           </form>
                         </div>
@@ -104,7 +130,7 @@
             <h4 class="modal-title" id="modalEliminarLabel">Eliminar</h4>
           </div>
           <div class="modal-body">
-            ¿Está seguro de eliminar:" <strong id="gasto_eliminar"></strong> "?
+            ¿Está seguro de eliminar:" <strong id="eliminar"></strong> "?
           </div>
           <div class="modal-footer">
             <button type="submit" id="eliminar" class="btn btn-primary">Aceptar</button>
@@ -122,7 +148,7 @@
 <form action="prueba_submit" method="get" accept-charset="utf-8">
  <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_datatable">
 <div class="container box">
-   <h1 align="center">REGISTRACION DE GASTOS</h1>
+   <h1 align="center">CLIENTES</h1>
    <br />
    <div class="table-responsive"><br/>
       <div class="row">
@@ -133,28 +159,7 @@
             <div class="form-group col-lg-1 col-md-3 col-sm-3 col-xs-12">
               <button type="button" name="add" id="add" class="btn btn-info">AGREGAR</button>
             </div>
-            <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-              <label>FECHA:</label><br>
-              <select class="form-control" name="periodo" id="periodo">
-                  <option selected></option>
-                  @foreach ($periodos as $value)
-                  <option value="{{$value->fecha}}">{{$value->fecha}}</option>
-                  @endforeach
-              </select>
-            </div>
-            <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-              <label>FORMA DE PAGO:</label><br>
-              <select class="form-control" name="periodo" id="gasto_filtro">
-                  <option selected></option>
-                  @foreach ($forma_pagos as $value)
-                  <option value="{{$value->id}}">{{$value->forma_pagos}}</option>
-                  @endforeach
-              </select>
-            </div>
-            <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-              <label>TOTAL DE GASTOS DEL PERIODO:</label><br>
-              <h4 id="gasto"></h4>
-            </div>
+            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12"><h4 id="total"></h4></div>
           </form>
         </div>
       </div>
@@ -162,12 +167,15 @@
     <table id="tabla_datos" class="table table-bordered table-striped">
      <thead>
       <tr>
-        <th>FECHA</th>
-        <th>TIPO</th>
-        <th>GASTO</th>
-        <th>CUENTA</th>
+        <th>CLIENTE</th>
+        <th>HONORARIO</th>
+        <th>EMAIL</th>
+        <th>LE FACTURA</th>
+        <th>LIQUIDADOR</th>
+        <th>COBRADOR</th>
+        <th>PAGA EN</th>
+        <th>CONTACTO</th>
         <th>COMENTARIO</th>
-        <th>FORMA DE PAGO</th>
         <th></th>
        </tr>
      </thead>
@@ -181,6 +189,6 @@
 
 @section('script')
 
-<script src="{{ asset('/js/registros/egresos/egresos.js')}}"></script>
+<script src="{{ asset('/js/configuracion/ingresos/clientes.js')}}"></script>
 
 @endsection

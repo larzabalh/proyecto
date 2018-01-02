@@ -34,7 +34,7 @@ class ClienteController extends Controller
           ->where('liquidadores.id',"LIKE",$request->input('liquidador_buscar'))
           ->where('cobradores.id',"LIKE",$request->input('cobrador_buscar'))
           ->where('disponibilidades.id','LIKE',$request->input('disponibilidad_buscar'))
-          ->select('clientes.*','facturadores.facturador','liquidadores.liquidador','cobradores.cobrador','disponibilidades.disponibilidad')
+          ->select('clientes.*','facturadores.facturador','liquidadores.liquidador','cobradores.cobrador','disponibilidades.nombre')
           ->get();
 
           // dd($clientes);
@@ -42,10 +42,10 @@ class ClienteController extends Controller
           $facturadores = Facturador::orderBy('facturador','ASC')->get();
           $liquidadores = Liquidador::orderBy('liquidador','ASC')->get();
           $cobradores = Cobrador::orderBy('cobrador','ASC')->get();
-          $disponibilidades = Disponibilidad::orderBy('disponibilidad','ASC')->get();
+          $disponibilidades = Disponibilidad::orderBy('nombre','ASC')->get();
 
           // dd($facturadores,$liquidadores,$cobradores,$disponibilidades);
-          return view('clientes.clientes')
+          return view('configuracion.ingresos.clientes')
           ->with('clientes', $clientes)
           ->with('facturadores', $facturadores)
           ->with('liquidadores', $liquidadores)
@@ -59,9 +59,22 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+  public function listar()
     {
-        //
+
+      $clientes =DB::table('clientes')
+          ->select('clientes.*','facturadores.facturador','liquidadores.liquidador','cobradores.cobrador','disponibilidades.nombre as banco')
+          ->join('facturadores', 'clientes.facturador_id', '=', 'facturadores.id')
+          ->join('liquidadores', 'clientes.liquidador_id', '=', 'liquidadores.id')
+          ->join('cobradores', 'clientes.cobrador_id', '=', 'cobradores.id')
+          ->join('disponibilidades', 'clientes.disponibilidad_id', '=', 'disponibilidades.id')
+          ->join('users', 'clientes.user_id', '=', 'users.id')
+          ->where(DB::raw('users.id'),auth()->user()->id )
+          ->orderBy('cliente','ASC')
+          ->get();
+
+
+        return response()->json(["data"=>$clientes->toArray()]);
     }
 
     /**
@@ -76,12 +89,13 @@ class ClienteController extends Controller
         'cliente' => $request->input('cliente'),
         'honorario' => $request->input('honorario'),
         'email' => $request->input('email'),
-        'facturador_id' => $request->input('facturador'),
-        'liquidador_id' => $request->input('liquidador'),
-        'cobrador_id' => $request->input('cobrador'),
-        'disponibilidad_id' => $request->input('disponibilidad'),
+        'facturador_id' => $request->input('facturador_id'),
+        'liquidador_id' => $request->input('liquidador_id'),
+        'cobrador_id' => $request->input('cobrador_id'),
+        'disponibilidad_id' => $request->input('disponibilidad_id'),
         'contacto' => $request->input('contacto'),
-        'comentario' => $request->input('comentario')
+        'comentario' => $request->input('comentario'),
+        'user_id' => auth()->user()->id,
 
       ]);
       $cliente->save();
@@ -127,21 +141,21 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function editar(Request $request, $id)
     {
       $cliente = Cliente::find($id);
 
       $cliente->honorario = $request->input('honorario');
       $cliente->email = $request->input('email');
-      $cliente->facturador_id = $request->input('facturador');
-      $cliente->liquidador_id = $request->input('liquidador');
-      $cliente->cobrador_id = $request->input('cobrador');
-      $cliente->disponibilidad_id = $request->input('disponibilidad');
+      $cliente->facturador_id = $request->input('facturador_id');
+      $cliente->liquidador_id = $request->input('liquidador_id');
+      $cliente->cobrador_id = $request->input('cobrador_id');
+      $cliente->disponibilidad_id = $request->input('disponibilidad_id');
       $cliente->contacto = $request->input('contacto');
       $cliente->comentario = $request->input('comentario');
 
       $cliente->save();
-      return redirect()->route('clientes.index');
+     return response()->json(["data" => $cliente]);
     }
 
     /**
@@ -150,10 +164,10 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+   public function eliminar($id)
     {
       $cliente = Cliente::find($id);
       $cliente->delete();
-      return redirect()->route('clientes.index');
+      return response()->json(["data" => $cliente]);
     }
 }
