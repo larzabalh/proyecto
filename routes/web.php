@@ -55,8 +55,9 @@ Route::resource('/registros/registrodegastos', 'RegistrodeGastosController');
 Route::resource('/registros/registrodegastos', 'RegistrodeGastosController');
 
 Route::resource('/ingresos/mensual', 'IngresoMensualController');
-Route::resource('/ingresos', 'IngresosController');
-  Route::post('/ingresos/ingresos', 'IngresosController@asignar')->name('ingresos.asignar');
+Route::get('/registros/ingresos/ingresos/listar', 'IngresosController@listar');
+Route::resource('/registros/ingresos/ingresos', 'IngresosController');
+
 
 
 Route::get('/pruebas/listar', 'PruebaController@listar');

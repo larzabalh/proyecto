@@ -122,8 +122,7 @@
 <form action="prueba_submit" method="get" accept-charset="utf-8">
  <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_datatable">
 <div class="container box">
-   <h1 align="center">REGISTRACION DE GASTOS</h1>
-   <br />
+   <h1 align="center">REGISTRACION DE GASTOS</h1><br />   
    <div class="table-responsive"><br/>
       <div class="row">
         <div class="col-lg-12">

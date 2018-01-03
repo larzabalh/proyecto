@@ -10,7 +10,7 @@ use App\Liquidador;
 use App\Cobrador;
 use App\Disponibilidad;
 use App\Periodo;
-use App\IngresosMensuales;
+use App\CtaCteCliente;
 use App\Http\Requests\IngresosMensualesRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,8 +35,7 @@ class IngresosController extends Controller
       $cobradores = Cobrador::orderBy('cobrador','ASC')->get();
       $disponibilidades = Disponibilidad::orderBy('nombre','ASC')->get();
       $periodos = Periodo::orderBy('id','ASC')->get();
-
-      // dd($facturadores,$liquidadores,$cobradores,$disponibilidades);
+      
       return view('registros.ingresos.ingresos')
       ->with('clientes', $clientes)
       ->with('facturadores', $facturadores)
@@ -44,6 +43,16 @@ class IngresosController extends Controller
       ->with('cobradores', $cobradores)
       ->with('disponibilidades', $disponibilidades)
       ->with('periodos', $periodos);
+    }
+
+     public function listar()
+    {
+      $clientes =DB::table('clientes')
+          ->select('clientes.*')
+          ->where(DB::raw('user_id'),auth()->user()->id )
+          ->get();
+
+        return response()->json(["data"=>$clientes->toArray()]);
     }
 
     /**
@@ -66,63 +75,35 @@ class IngresosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $data = $request->input('data');
+      $fecha = $request->input('fecha');    
+
+      foreach ($data as $ids) {
+        foreach ($ids as $value => $otro) {
+
+                 $CtaCteCliente = new CtaCteCliente([
+                'fecha' =>$fecha,
+                'cliente_id' =>$ids,
+                'debe' => $value,
+                'comentario' => $otro,
+                'user_id' => auth()->user()->id,
+              ]);
+        }
+        $CtaCteCliente->save();
+      }
+
+      return response()->json(["data"=>$CtaCteCliente->toArray()]);
+      
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    public function asignar(Request $request)
+     /*public function asignar(Request $request)
     {
       $honorarios = $request->input('honorario');
-      $periodo = Periodo::find($request->input('periodo'));
+      
 
       foreach ($honorarios as $idCliente => $monto) {
 
-      $ingresomensual = new IngresosMensuales([
-        'periodo_id' => $request->input('periodo'),
+      $ingresomensual = new CtaCteCliente([
         'cliente_id' =>$idCliente,
         'honorario' => $monto
       ]);
@@ -130,8 +111,6 @@ class IngresosController extends Controller
     }
       return redirect()->route('mensual.index')->with('periodo', $periodo);;
 
-  // dd($request);
-
-      // dd($request->input('cliente'));
-    }
+    }*/
+   
 }
