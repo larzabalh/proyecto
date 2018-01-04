@@ -129,12 +129,12 @@
           </li>
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-folder"></i> <span>Acceso</span>
+              <i class="fa fa-folder"></i> <span>CTAS CTES</span>
               <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-              <li><a href="usuario.php"><i class="fa fa-circle-o"></i> Usuarios</a></li>
-              <li><a href="permiso.php"><i class="fa fa-circle-o"></i> Permisos</a></li>
+              <li><a href="{{'/registros/ctacte/clientes'}}"><i class="fa fa-circle-o"></i> Clientes</a></li>
+              <li><a href=""><i class="fa fa-circle-o"></i> Bancos</a></li>
 
             </ul>
           </li>

@@ -151,7 +151,7 @@ document.getElementById("form_eliminar").addEventListener("submit",function(e){
     success:function(data){
           dataTable.destroy()
           listar();
-        $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registro Eliminado!</strong></div>');
+        $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registro Desactivado!</strong></div>');
       },
     error: function(response) {
         $('#error').modal('show');

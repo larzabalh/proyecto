@@ -52,7 +52,12 @@ Route::post('/registros/registrodegastos/editar/{id}', 'RegistrodeGastosControll
 Route::post('/registros/registrodegastos/eliminar/{id}', 'RegistrodeGastosController@eliminar');
 Route::resource('/registros/registrodegastos', 'RegistrodeGastosController');
 
-Route::resource('/registros/registrodegastos', 'RegistrodeGastosController');
+
+Route::get('/registros/ctacte/clientes/listar/{gasto_filtro}', 'CtaCteClientesController@listar');
+Route::post('/registros/ctacte/clientes/editar/{id}', 'CtaCteClientesController@editar');
+Route::post('/registros/ctacte/clientes/eliminar/{id}', 'CtaCteClientesController@eliminar');
+Route::resource('/registros/ctacte/clientes', 'CtaCteClientesController');
+
 
 Route::resource('/ingresos/mensual', 'IngresoMensualController');
 Route::get('/registros/ingresos/ingresos/listar', 'IngresosController@listar');
@@ -84,7 +89,9 @@ Route::post('/configuracion/ingresos/clientes/eliminar/{id}', 'ClienteController
 Route::resource('/configuracion/ingresos/clientes', 'ClienteController');
 
 Auth::routes();
-
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::get('/home/listar/{periodo}', 'HomeController@listar');
 Route::get('/home', 'HomeController@index')->name('home');

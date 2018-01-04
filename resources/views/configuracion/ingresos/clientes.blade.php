@@ -115,7 +115,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title" id="myModalLabel">ELIMINACION DE REGISTROS</h4>
+          <h4 class="modal-title" id="myModalLabel">DESACTIVAR DE REGISTROS</h4>
         </div>
         <div class="modal-body" id="">
         </div>
@@ -132,10 +132,10 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="modalEliminarLabel">Eliminar</h4>
+            <h4 class="modal-title" id="modalEliminarLabel">Desactivar</h4>
           </div>
           <div class="modal-body">
-            ¿Está seguro de eliminar:" <strong id="eliminar"></strong> "?
+            ¿Vas a Desactivar a:" <strong id="eliminar"></strong> "?
           </div>
           <div class="modal-footer">
             <button type="submit" id="eliminar" class="btn btn-primary">Aceptar</button>
