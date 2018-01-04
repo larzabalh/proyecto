@@ -56,6 +56,7 @@ Route::resource('/registros/registrodegastos', 'RegistrodeGastosController');
 
 Route::resource('/ingresos/mensual', 'IngresoMensualController');
 Route::get('/registros/ingresos/ingresos/listar', 'IngresosController@listar');
+Route::get('/registros/ingresos/ingresos/verificar', 'IngresosController@verificarUnSoloIngresoMasivo');
 Route::resource('/registros/ingresos/ingresos', 'IngresosController');
 
 

@@ -24,6 +24,7 @@ class CreateCtaCteClientesTable extends Migration
             $table->integer('disponibilidad_id')->unsigned()->nullable();
             $table->foreign('disponibilidad_id')->references('id')->on('disponibilidades')->onDelete('cascade');
             $table->string('comentario')->nullable();
+            $table->boolean('masivo')->nullable();
             $table->boolean('condicion')->default(1);
             $table->timestamps();
 

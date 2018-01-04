@@ -71,7 +71,6 @@ console.log(data)*/
         url:url,
         headers: {'X-CSRF-TOKEN':token},
         method:"POST",
-        data:{fecha:fecha, ids_clientes:ids_clientes,honorarios:honorarios,comentarios:comentarios},
         data:{data,fecha},
         success:function(data)
           {

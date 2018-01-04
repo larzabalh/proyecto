@@ -77,7 +77,32 @@ class IngresosController extends Controller
     {
 
         $lstData=$request->data;
-        $fecha = $request->input('fecha');    
+        $fecha = $request->fecha;    
+
+        For($i=0; $i<count($lstData);$i++){
+        $datos = $lstData[$i];
+        $cliente_id=$datos['id'];
+        $honorarios=$datos['honorarios'];
+        $comentarios=$datos['comentarios'];
+
+
+        $CtaCteCliente = new CtaCteCliente([
+                'fecha' =>$fecha,
+                'cliente_id' =>$cliente_id,
+                'debe' => $honorarios,
+                'comentario' => $comentarios,
+                'user_id' => auth()->user()->id,
+              ]);
+         $CtaCteCliente->save();
+
+        }
+      return response()->json(["data"=>$CtaCteCliente->toArray()]);
+    }
+
+    public function verificarUnSoloIngresoMasivo(Request $request)
+    {
+
+        $fecha = $request->fecha;    
 
         For($i=0; $i<count($lstData);$i++){
         $datos = $lstData[$i];
