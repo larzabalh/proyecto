@@ -75,42 +75,29 @@ class IngresosController extends Controller
      */
     public function store(Request $request)
     {
-      $data = $request->input('data');
-      $fecha = $request->input('fecha');    
 
-      foreach ($data as $ids) {
-        foreach ($ids as $value => $otro) {
+        $lstData=$request->data;
+        $fecha = $request->input('fecha');    
 
-                 $CtaCteCliente = new CtaCteCliente([
+        For($i=0; $i<count($lstData);$i++){
+        $datos = $lstData[$i];
+        $cliente_id=$datos['id'];
+        $honorarios=$datos['honorarios'];
+        $comentarios=$datos['comentarios'];
+
+
+        $CtaCteCliente = new CtaCteCliente([
                 'fecha' =>$fecha,
-                'cliente_id' =>$ids,
-                'debe' => $value,
-                'comentario' => $otro,
+                'cliente_id' =>$cliente_id,
+                'debe' => $honorarios,
+                'comentario' => $comentarios,
                 'user_id' => auth()->user()->id,
               ]);
+         $CtaCteCliente->save();
+
         }
-        $CtaCteCliente->save();
-      }
-
       return response()->json(["data"=>$CtaCteCliente->toArray()]);
-      
     }
 
-     /*public function asignar(Request $request)
-    {
-      $honorarios = $request->input('honorario');
-      
 
-      foreach ($honorarios as $idCliente => $monto) {
-
-      $ingresomensual = new CtaCteCliente([
-        'cliente_id' =>$idCliente,
-        'honorario' => $monto
-      ]);
-      $ingresomensual->save();
-    }
-      return redirect()->route('mensual.index')->with('periodo', $periodo);;
-
-    }*/
-   
 }

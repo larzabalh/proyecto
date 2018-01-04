@@ -1,3 +1,9 @@
 
 
-{{$banco->id}}
+@section('content')
+
+
+{{$lstData->id}}
+
+
+@endsection
