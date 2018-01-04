@@ -34,6 +34,7 @@ class ClienteController extends Controller
           ->where('liquidadores.id',"LIKE",$request->input('liquidador_buscar'))
           ->where('cobradores.id',"LIKE",$request->input('cobrador_buscar'))
           ->where('disponibilidades.id','LIKE',$request->input('disponibilidad_buscar'))
+          ->where('clientes.condicion',"=",1)
           ->select('clientes.*','facturadores.facturador','liquidadores.liquidador','cobradores.cobrador','disponibilidades.nombre')
           ->get();
 
@@ -70,6 +71,7 @@ class ClienteController extends Controller
           ->join('disponibilidades', 'clientes.disponibilidad_id', '=', 'disponibilidades.id')
           ->join('users', 'clientes.user_id', '=', 'users.id')
           ->where(DB::raw('users.id'),auth()->user()->id )
+          ->where('clientes.condicion',"=",1)
           ->orderBy('cliente','ASC')
           ->get();
 
@@ -167,7 +169,9 @@ class ClienteController extends Controller
    public function eliminar($id)
     {
       $cliente = Cliente::find($id);
-      $cliente->delete();
+      $cliente->condicion = 0;
+
+      $cliente->save();
       return response()->json(["data" => $cliente]);
     }
 }

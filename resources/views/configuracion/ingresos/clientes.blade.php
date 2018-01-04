@@ -165,9 +165,6 @@
               <button type="button" name="add" id="add" class="btn btn-info">AGREGAR</button>
             </div>
             <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12"><h4 id="total"></h4></div>
-            <div class="form-group col-lg-1 col-md-3 col-sm-3 col-xs-12">
-              <button type="button" id="asignar" class="btn btn-success">ASIGNAR A PERIODO</button>
-            </div>
           </form>
         </div>
       </div>

@@ -97,6 +97,7 @@ class RegistrodeGastosController extends Controller
         'importe' => $request->input('importe'),
         'comentario' => $request->input('comentario'),
         'user_id' => auth()->user()->id,
+        'masivo' => 1,
       ]);
       $reg_gastos->save();
 

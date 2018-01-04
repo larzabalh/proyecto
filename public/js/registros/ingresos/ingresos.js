@@ -38,9 +38,10 @@ function suma() {
   };
 
 /*2- Aprieto el boton ASIGNAR*/
+/* Primero Verifico que no haya ingresado otro periodo en forma masiva */
 document.getElementById("btnAsignar").addEventListener("click",function(e){
   e.preventDefault();
-  var url = "/registros/ingresos/ingresos"//con esta ruta entro en el STORE, si es por POST!
+  var url = "/registros/ingresos/ingresos/verificar"
   var fecha = $('#fecha').val();
   var ids_clientes= [];$("input[name^='clientes']").each(function() {ids_clientes.push ($(this).val());});
   var honorarios= [];$("input[name^='honorarios']").each(function() {honorarios.push ($(this).val());});
@@ -54,18 +55,44 @@ document.getElementById("btnAsignar").addEventListener("click",function(e){
           honorarios: honorarios[i],
           comentarios: comentarios[i],
       });
-}
+    } 
 
-console.log(data);
-
-/*var data=[];
-data.push(ids_clientes);
-data.push(honorarios);
-data.push(comentarios);
-
-console.log(data)*/
-  
   if(fecha != '')
+  {
+    $.ajax({
+        url:url,
+        headers: {'X-CSRF-TOKEN':token},
+        method:"get",
+        data:{fecha},
+        success:function(response)
+          { 
+            console.log(response.data.length)
+            if(response.data.length == 0){
+                grabar_masivo(data,fecha); //Verifique que no hubo => Le paso para que grabe
+              }
+            else
+             {
+              $('#alert_message').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Ya se registro una carga masiva en este periodo!!!</strong></div>');
+             }
+          }
+        });
+    setInterval(function(){
+    $('#alert_message').html('');
+    }, 7000);
+
+  }
+  else
+   {
+    $('#alert_message').html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Faltan Campos Obligatorios!!!</strong></div>');
+   }
+
+  
+
+  });
+
+function grabar_masivo(data,fecha) {
+
+  var url = "/registros/ingresos/ingresos"//con esta ruta entro en el STORE, si es por POST!  
   {
     $.ajax({
         url:url,
@@ -79,14 +106,11 @@ console.log(data)*/
         });
     setInterval(function(){
     $('#alert_message').html('');
-    }, 5000);
+    }, 7000);
   }
-   else
-   {
-    $('#alert_message').html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Faltan Campos Obligatorios!!!</strong></div>');
-   }
+   
 
-  });
+  };
 
 
 

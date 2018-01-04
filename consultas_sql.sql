@@ -43,3 +43,12 @@ from reg_gastos rg
 join gastos g on rg.gasto_id = g.id
 join tipos_de_gastos tg on g.tipo_de_gasto_id = tg.id
 where year (fecha) = 2018 and month(fecha)=1
+
+select masivo, concat(year(fecha), '-', month(fecha)) as fecha, count(*)
+from cta_cte_clientes
+where year (fecha) = 2018 and month(fecha)=2 and masivo=1
+group by masivo,fecha
+
+select ciudad, count(*)
+  from visitantes
+  group by ciudad;

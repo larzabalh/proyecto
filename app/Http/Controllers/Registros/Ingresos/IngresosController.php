@@ -29,7 +29,20 @@ class IngresosController extends Controller
      */
     public function index()
     {
-      $clientes = Cliente::orderBy('cliente','ASC')->get();
+      $clientes =DB::table('clientes')
+          ->select('clientes.*','facturadores.facturador','liquidadores.liquidador','cobradores.cobrador','disponibilidades.nombre as banco')
+          ->join('facturadores', 'clientes.facturador_id', '=', 'facturadores.id')
+          ->join('liquidadores', 'clientes.liquidador_id', '=', 'liquidadores.id')
+          ->join('cobradores', 'clientes.cobrador_id', '=', 'cobradores.id')
+          ->join('disponibilidades', 'clientes.disponibilidad_id', '=', 'disponibilidades.id')
+          ->join('users', 'clientes.user_id', '=', 'users.id')
+          ->where(DB::raw('users.id'),auth()->user()->id )
+          ->where('clientes.condicion',"=",1)
+          ->orderBy('cliente','ASC')
+          ->get();
+
+
+
       $facturadores = Facturador::orderBy('facturador','ASC')->get();
       $liquidadores = Liquidador::orderBy('liquidador','ASC')->get();
       $cobradores = Cobrador::orderBy('cobrador','ASC')->get();
@@ -48,8 +61,15 @@ class IngresosController extends Controller
      public function listar()
     {
       $clientes =DB::table('clientes')
-          ->select('clientes.*')
-          ->where(DB::raw('user_id'),auth()->user()->id )
+          ->select('clientes.*','facturadores.facturador','liquidadores.liquidador','cobradores.cobrador','disponibilidades.nombre as banco')
+          ->join('facturadores', 'clientes.facturador_id', '=', 'facturadores.id')
+          ->join('liquidadores', 'clientes.liquidador_id', '=', 'liquidadores.id')
+          ->join('cobradores', 'clientes.cobrador_id', '=', 'cobradores.id')
+          ->join('disponibilidades', 'clientes.disponibilidad_id', '=', 'disponibilidades.id')
+          ->join('users', 'clientes.user_id', '=', 'users.id')
+          ->where(DB::raw('users.id'),auth()->user()->id )
+          ->where('clientes.condicion',"=",1)
+          ->orderBy('cliente','ASC')
           ->get();
 
         return response()->json(["data"=>$clientes->toArray()]);
@@ -92,6 +112,7 @@ class IngresosController extends Controller
                 'debe' => $honorarios,
                 'comentario' => $comentarios,
                 'user_id' => auth()->user()->id,
+                'masivo' => 1,
               ]);
          $CtaCteCliente->save();
 
@@ -104,24 +125,21 @@ class IngresosController extends Controller
 
         $fecha = $request->fecha;    
 
-        For($i=0; $i<count($lstData);$i++){
-        $datos = $lstData[$i];
-        $cliente_id=$datos['id'];
-        $honorarios=$datos['honorarios'];
-        $comentarios=$datos['comentarios'];
-
-
-        $CtaCteCliente = new CtaCteCliente([
-                'fecha' =>$fecha,
-                'cliente_id' =>$cliente_id,
-                'debe' => $honorarios,
-                'comentario' => $comentarios,
-                'user_id' => auth()->user()->id,
-              ]);
-         $CtaCteCliente->save();
-
-        }
-      return response()->json(["data"=>$CtaCteCliente->toArray()]);
+        $array = explode('-', $fecha);
+        $verificar =DB::table('cta_cte_clientes')
+          ->select('masivo',
+            DB::raw("concat(year(fecha), '-', month(fecha)) as periodo"),
+            DB::raw("count(*) as cantidad")
+                  )          
+          ->where(DB::raw('user_id'),auth()->user()->id )
+          ->where(DB::raw('year(fecha)'), $array[0])
+          ->where(DB::raw('month(fecha)'), $array[1])
+          ->where(DB::raw('masivo'),'=',1)
+          ->groupBy('masivo')
+          ->groupBy('fecha')
+          ->get();
+        
+      return response()->json(["data"=>$verificar->toArray()]);
     }
 
 
