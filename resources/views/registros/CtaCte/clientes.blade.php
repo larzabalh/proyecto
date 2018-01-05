@@ -35,10 +35,10 @@
                               </div>
                               <div class="col-lg-12">
                                 <label>GASTO:</label><br>
-                                <select class="form-control" name="tipo" id="selectGasto">
+                                <select class="form-control" name="tipo" id="selectCliente">
                                   <option selected></option>
-                                  @foreach ($cliente_id as $key => $value)
-                                    <option value={{$value->id}}>{{$value->clientes}}</option>
+                                  @foreach ($clientes as $key => $value)
+                                    <option value={{$value->id}}>{{$value->cliente}}</option>
                                   @endforeach
                                 </select>
                               </div>
@@ -60,6 +60,15 @@
                                 <label>COMENTARIO</label><br>
                                 <input type="text" class="form-control" name="gasto" id="comentario_alta">
                             </div>
+                            <fieldset>
+                                <label>DEBITO - CREDITO</label><br>
+                                <label>
+                                    <input type="radio" name="contabilidad" value="debe"> FACTURA
+                                </label>
+                                <label>
+                                    <input type="radio" name="contabilidad" value="haber"> PAGO
+                                </label>
+                            </fieldset>
                             <div class="modal-footer">
                               <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
                               <button class="btn btn-primary" type="submit" id="btnEditar" style='display:none;'><i class="fa fa-edit"></i> editar</button>
@@ -142,7 +151,7 @@
             </div>
             <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
               <label>Saldo del Cliente:</label><br>
-              <h4 id="gasto"></h4>
+              <h4 id="saldo"></h4>
             </div>
           </form>
         </div>
@@ -151,36 +160,12 @@
     <div id="alert_message"></div>
   <div class="table-wrapper">
     <table id="tabla_datos" class="table table-bordered table-hover">
-        <thead>
-          <tr>
-            <th>Nº</th>
-            <th>PERIODO</th>
-            <th>DEBE</th>
-            <th>HABER</th>
-            <th>SALDO</th>
-            <th>PAGA EN</th>
-            <th>COMENTARIO</th>
-            <th>ACCION</th>
-          </tr>
-        </thead>
-        <tbody id="content_table">
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
+       <tbody id="content_table"></tbody>
+    </table>
     </div>
 
 </div>
 </form>
-
 
 @endsection
 
