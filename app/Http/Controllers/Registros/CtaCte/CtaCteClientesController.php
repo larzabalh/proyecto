@@ -71,6 +71,7 @@ class CtaCteClientesController extends Controller
             ->join('clientes', 'cta_cte_clientes.cliente_id', '=', 'clientes.id')
             ->where(DB::raw('users.id'),auth()->user()->id )
             ->where(DB::raw('cta_cte_clientes.cliente_id'),'=',$cliente_id)
+            ->orderBy('cta_cte_clientes.id','desc')
             ->get();
 
         return response()->json(["data"=>$cliente->toArray()]);

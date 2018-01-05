@@ -123,7 +123,7 @@
  <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_datatable">
 <div class="container box">
    <h1 align="center">CUENTAS CORRIENTES DE CLIENTES</h1><br />   
-   <div class="table-responsive"><br/>
+
       <div class="row">
         <div class="col-lg-12">
           <form name="" id="form" method="POST">
@@ -147,21 +147,37 @@
           </form>
         </div>
       </div>
+  
     <div id="alert_message"></div>
-    <table id="tabla_datos" class="table table-bordered table-striped">
-     <thead>
-      <tr>
-        <th>PERIODO</th>
-        <th>DEBE</th>
-        <th>HABER</th>
-        <th>SALDO</th>
-        <th>PAGO EN</th>
-        <th>COMENTARIO</th>
-        <th></th>
-       </tr>
-     </thead>
-    </table>
-  </div>
+  <div class="table-wrapper">
+    <table id="tabla_datos" class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Nº</th>
+            <th>PERIODO</th>
+            <th>DEBE</th>
+            <th>HABER</th>
+            <th>SALDO</th>
+            <th>PAGA EN</th>
+            <th>COMENTARIO</th>
+            <th>ACCION</th>
+          </tr>
+        </thead>
+        <tbody id="content_table">
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
 </div>
 </form>
 
