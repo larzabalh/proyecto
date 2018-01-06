@@ -63,10 +63,10 @@
                             <fieldset>
                                 <label>DEBITO - CREDITO</label><br>
                                 <label>
-                                    <input type="radio" name="contabilidad" value="debe"> FACTURA
+                                    <input type="radio" name="contabilidad" id="debe" value="debe"> FACTURA
                                 </label>
                                 <label>
-                                    <input type="radio" name="contabilidad" value="haber"> PAGO
+                                    <input type="radio" name="contabilidad" id="haber" value="haber"> PAGO
                                 </label>
                             </fieldset>
                             <div class="modal-footer">
@@ -113,7 +113,7 @@
             <h4 class="modal-title" id="modalEliminarLabel">Eliminar</h4>
           </div>
           <div class="modal-body">
-            ¿Está seguro de eliminar:" <strong id="gasto_eliminar"></strong> "?
+            ¿Está seguro de eliminar:" <strong id="registro_eliminar"></strong> "?
           </div>
           <div class="modal-footer">
             <button type="submit" id="eliminar" class="btn btn-primary">Aceptar</button>
