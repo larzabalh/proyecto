@@ -6,6 +6,7 @@
 </footer>
 <!-- jQuery -->
 <script src="/plugins/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="/plugins/js/jquery.numeric.js"></script>
 <!-- Bootstrap 3.3.5 -->
 <script src="/plugins/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
@@ -41,6 +42,10 @@ $(document).ready(function(){$("select").select2({ width: '100%' });});
 </script>
  -->
 
+<!-- Esto es para que todos los input number, sean numericos!!!! -->
+<script type="text/javascript">
+$(':input[type="number"]').numeric();
+</script>
 
 <!-- FORMATO DE MONEDA -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>

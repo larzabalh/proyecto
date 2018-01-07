@@ -18,8 +18,6 @@ class CreateDisponibilidadesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('nombre')->unique();
-            $table->float('debe')->nullable();
-            $table->float('haber')->nullable();
             $table->string('comentario')->nullable();
             $table->string('condicion')->default(1);
             $table->integer('medio_id')->unsigned()->nullable();

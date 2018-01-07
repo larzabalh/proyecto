@@ -60,6 +60,13 @@ Route::post('/registros/ctacte/clientes/eliminar/{id}', 'CtaCteClientesControlle
 Route::post('/registros/ctacte/clientes/grabar', 'CtaCteClientesController@grabar');
 Route::resource('/registros/ctacte/clientes', 'CtaCteClientesController');
 
+Route::get('/registros/ctacte/disponibilidades/listar/{gasto_filtro}', 'Cta_Cte_DisponibilidadesController@listar');
+Route::get('/registros/ctacte/disponibilidades/listar_uno/{id}', 'Cta_Cte_DisponibilidadesController@listar_uno');
+Route::post('/registros/ctacte/disponibilidades/editar/{id}', 'Cta_Cte_DisponibilidadesController@editar');
+Route::post('/registros/ctacte/disponibilidades/eliminar/{id}', 'Cta_Cte_DisponibilidadesController@eliminar');
+Route::post('/registros/ctacte/disponibilidades/grabar', 'Cta_Cte_DisponibilidadesController@grabar');
+Route::resource('/registros/ctacte/disponibilidades', 'Cta_Cte_DisponibilidadesController');
+
 
 Route::resource('/ingresos/mensual', 'IngresoMensualController');
 Route::get('/registros/ingresos/ingresos/listar', 'IngresosController@listar');

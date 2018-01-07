@@ -31,7 +31,7 @@
                             </div>
                             <div>
                               <label>Tipo de Gastos:</label><br>
-                              <select class="form-control" name="tipo" id="tipo_alta">
+                              <select class="form-control selectpicker" data-live-search="true" name="tipo" id="tipo_alta">
                                 <option selected></option>
                                 @foreach ($tipos as $key => $value)
                                   <option value={{$value->id}}>{{$value->tipo}}</option>

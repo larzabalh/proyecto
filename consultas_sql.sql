@@ -52,3 +52,9 @@ group by masivo,fecha
 select ciudad, count(*)
   from visitantes
   group by ciudad;
+  
+select clientes.cliente,clientes.id as cliente_id from clientes
+union all
+select gastos.gasto,gastos.id as gasto_id from gastos
+union all
+select forma_de_pagos.nombre,forma_de_pagos.id forma_pago_id from forma_de_pagos

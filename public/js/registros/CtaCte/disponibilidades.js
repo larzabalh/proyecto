@@ -14,7 +14,7 @@ function init(){
   {   
     $("#tabla_datos tr").remove(); 
 
-      var url = '/registros/ctacte/clientes/listar/'+cliente+''
+      var url = '/registros/ctacte/disponibilidades/listar/'+cliente+''
 
         ajax(url, function (err, response) {
           if (err) return console.error(err)
@@ -30,7 +30,7 @@ function init(){
             row.insertCell(3).innerHTML='<p class="text-center"><strong>DEBE</strong></p>';
             row.insertCell(4).innerHTML='<p class="text-center"><strong>HABER</strong></p>';
             row.insertCell(5).innerHTML='<p class="text-center"><strong>SALDO</strong></p>';
-            row.insertCell(6).innerHTML='<p class="text-center"><strong>PAGA EN</strong></p>';
+            row.insertCell(6).innerHTML='<p class="text-center"><strong>INGRESO DE</strong></p>';
             row.insertCell(7).innerHTML='<p class="text-center"><strong>COMENTARIO</strong></p>';
             row.insertCell(8).innerHTML='<p class="text-center"><strong>OPCIONES</strong></p>';
 
@@ -61,7 +61,7 @@ function init(){
             cell4.innerHTML = '<p name="descuento_p[]" class="text-center">'+numeral(data.debe).format('$0,0.00')+'</p>';
             cell5.innerHTML = '<p name="cantidad_p[]" class="text-center">'+numeral(data.haber).format('$0,0.00')+'</p>';
             cell6.innerHTML = '<p name="cantidad_p[]" class="text-center">'+numeral(saldo).format('$0,0.00')+'</p>';
-            cell7.innerHTML = '<p name="precio_p[]" class="non-margin">'+data.disponibilidad_id+'</p>';
+            cell7.innerHTML = '<p name="precio_p[]" class="non-margin">'+data.cliente+'</p>';
             cell8.innerHTML = '<p name="subtotal_p[]" class="non-margin">'+data.comentario+'</p>';
             cell9.innerHTML = "<button id='editar' type='button' class='editar btn btn-primary'><i class='fa fa-pencil-square-o'></i></button> <button id='eliminar' type='button'class='eliminar btn btn-danger' ><i class='fa fa-trash-o'></i></button>";
           
@@ -113,32 +113,25 @@ document.getElementById("btnGuardar").addEventListener("click",function(e){
   var comentario = $('#comentario_alta').val();
   var contabilidad = $('input[name=contabilidad]:checked').val();
   if(fecha != '' && cliente_id != '' && honorario != '' && $("input[name='contabilidad']").is(':checked'))
-  { 
-    if(contabilidad == 'haber' && disponibilidad_id != '')
-    { 
-        $.ajax({
-            url:url,
-            headers: {'X-CSRF-TOKEN':token},
-            method:"POST",
-            data:{fecha:fecha, cliente_id:cliente_id,disponibilidad_id:disponibilidad_id,honorario:honorario, comentario:comentario,contabilidad:contabilidad},
-            success:function(data)
-            {
-              $('#altaModal').modal('hide') 
-              $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registrado Correctamente!</strong</div>');
-              
-              
-              listar(cliente_id);
+  {
+    $.ajax({
+        url:url,
+        headers: {'X-CSRF-TOKEN':token},
+        method:"POST",
+        data:{fecha:fecha, cliente_id:cliente_id,disponibilidad_id:disponibilidad_id,honorario:honorario, comentario:comentario,contabilidad:contabilidad},
+        success:function(data)
+        {
+          $('#altaModal').modal('hide') 
+          $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registrado Correctamente!</strong</div>');
+          
+          
+          listar(cliente_id);
 
-            }
-            });
-        setInterval(function(){
-        $('#alert_message').html('');
-        }, 5000);
-    }
-      else
-     {
-      $('#alert_modal').html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Seleccionar Forma de Pago!!!</strong></div>');
-     }     
+        }
+        });
+    setInterval(function(){
+    $('#alert_message').html('');
+    }, 5000);
   }
    else
    {
@@ -170,7 +163,7 @@ document.getElementById("form_eliminar").addEventListener("submit",function(e){
   $('#modalEliminar').modal('hide');
   var cliente_id = $('#cliente').val();
   var data = {'id':$('#id_eliminar').val()};
-  var url = "/registros/ctacte/clientes/eliminar/"+$('#id_eliminar').val()+""
+  var url = "/registros/ctacte/disponibilidades/eliminar/"+$('#id_eliminar').val()+""
 
   $.ajax({
     url: url,
@@ -204,7 +197,7 @@ $(tabla_datos).on("click", "button.editar", function (e){
 
   var cliente_id = $('#cliente').val();
   var data = {'id':id};
-  var url = "/registros/ctacte/clientes/listar_uno/"+id+""
+  var url = "/registros/ctacte/disponibilidades/listar_uno/"+id+""
 
   $.ajax({
     url: url,
@@ -261,7 +254,7 @@ document.getElementById("btnEditar").addEventListener("click",function(e,data_ed
 
     var cliente_id = $('#cliente').val();
     var data = {'id':$('#id_eliminar').val()};
-    var url = "/registros/ctacte/clientes/editar/"+$('#id_editar').val()+""
+    var url = "/registros/ctacte/disponibilidades/editar/"+$('#id_editar').val()+""
 
 
     var id = $('#id_editar').val();

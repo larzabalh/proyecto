@@ -134,7 +134,7 @@
             </a>
             <ul class="treeview-menu">
               <li><a href="{{'/registros/ctacte/clientes'}}"><i class="fa fa-circle-o"></i> Clientes</a></li>
-              <li><a href=""><i class="fa fa-circle-o"></i> Bancos</a></li>
+              <li><a href="{{'/registros/ctacte/disponibilidades'}}"><i class="fa fa-circle-o"></i> Bancos</a></li>
 
             </ul>
           </li>

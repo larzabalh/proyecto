@@ -10,6 +10,7 @@ use App\Liquidador;
 use App\Cobrador;
 use App\Disponibilidad;
 use App\CtaCteCliente;
+use App\cta_cte_disponibilidades;
 use Illuminate\Support\Facades\Auth;
 
 class CtaCteClientesController extends Controller
@@ -65,10 +66,7 @@ class CtaCteClientesController extends Controller
     }
 
     public function listar($cliente_id)
-    {
-
-      
-      
+    { 
       $cliente =DB::table('cta_cte_clientes')
             ->select('clientes.cliente','cta_cte_clientes.*',
             DB::raw("concat(year(fecha), '-', month(fecha)) as periodo"),
@@ -88,8 +86,6 @@ class CtaCteClientesController extends Controller
 
      public function listar_uno($id)
     {
-
-      
       
       $cliente =DB::table('cta_cte_clientes')
             ->select('clientes.cliente','cta_cte_clientes.*',
@@ -140,7 +136,22 @@ class CtaCteClientesController extends Controller
               ]);
         $CtaCteCliente->save();
 
-      return response()->json(["data"=> $CtaCteCliente->toArray()]);
+        if (isset($request->disponibilidad_id) and $haber !=0) {
+          $CtaCteDisponibilidades = new cta_cte_disponibilidades([
+                'fecha' =>$request->fecha,
+                'cliente_id' =>$request->cliente_id,
+                'debe' => $haber,
+                'haber' => $debe,
+                'disponibilidad_id' => $request->disponibilidad_id,
+                'comentario' => $request->comentario,
+                'user_id' => auth()->user()->id,
+              ]);
+        $CtaCteDisponibilidades->save();
+        }
+
+      return response()->json([
+              "data"=> $CtaCteCliente->toArray(),
+              ]);
     }
 
     public function editar(Request $request, $id)
@@ -166,6 +177,21 @@ class CtaCteClientesController extends Controller
       $CtaCteCliente->comentario =  $request['comentario'];
 
       $CtaCteCliente->save();
+
+         if (isset($request->disponibilidad_id) and $haber !=0) {
+          $CtaCteDisponibilidades = new cta_cte_disponibilidades([
+                'fecha' =>$request->fecha,
+                'cliente_id' =>$request->cliente_id,
+                'debe' => $haber,
+                'haber' => $debe,
+                'disponibilidad_id' => $request->disponibilidad_id,
+                'comentario' => $request->comentario,
+                'user_id' => auth()->user()->id,
+              ]);
+        $CtaCteDisponibilidades->save();
+        }
+
+
 
       return response()->json(["data" => $CtaCteCliente]);
     }
