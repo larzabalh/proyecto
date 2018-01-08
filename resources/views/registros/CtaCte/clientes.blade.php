@@ -1,5 +1,5 @@
 @extends('template.main')
-@section('titulo','Configuracion de Gastos')
+@section('titulo','Cta Cte Clientes')
 
 
 @section('content')
@@ -28,6 +28,7 @@
                           <form name="" id="" method="POST">
                             <input type="hidden" id="token" value="{{ csrf_token() }}">
                             <input type="hidden" class="form-control" id="id_editar">
+                            <input type="hidden" class="form-control" id="contabilidad_anterior">
                             <div class="row">
                               <div class="col-lg-12" id="fecha">
                                 <label>FECHA</label><br>

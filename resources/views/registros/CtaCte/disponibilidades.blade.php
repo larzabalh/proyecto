@@ -1,5 +1,5 @@
 @extends('template.main')
-@section('titulo','Configuracion de Gastos')
+@section('titulo','Cta Cta Disponibilidades')
 
 
 @section('content')

@@ -110,6 +110,7 @@ class IngresosController extends Controller
                 'fecha' =>$fecha,
                 'cliente_id' =>$cliente_id,
                 'debe' => $honorarios,
+                'haber' => 0,
                 'comentario' => $comentarios,
                 'user_id' => auth()->user()->id,
                 'masivo' => 1,

@@ -24,4 +24,8 @@ class CtaCteCliente extends Model
     public function disponibilidad() {
           return $this->belongsTo(Disponibilidad::class); // Le indicamos que se va relacionar con el atributo id
       }
+
+    public function id_cta_cte_disponibilidad() {
+          return $this->belongsTo(cta_cte_disponibilidades::class); // Le indicamos que se va relacionar con el atributo id
+      }
 }

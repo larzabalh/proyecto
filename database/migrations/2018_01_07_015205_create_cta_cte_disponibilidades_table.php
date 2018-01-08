@@ -23,6 +23,8 @@ class CreateCtaCteDisponibilidadesTable extends Migration
             $table->float('haber')->nullable();
             $table->integer('disponibilidad_id')->unsigned()->nullable();
             $table->foreign('disponibilidad_id')->references('id')->on('disponibilidades')->onDelete('cascade');
+            $table->integer('id_CtaCteCliente')->unsigned()->nullable();
+            $table->foreign('id_CtaCteCliente')->references('id')->on('cta_cte_clientes')->onDelete('cascade');
             $table->string('comentario')->nullable();
             $table->boolean('masivo')->nullable();
             $table->boolean('condicion')->default(1);

@@ -203,6 +203,7 @@ $(tabla_datos).on("click", "button.editar", function (e){
     console.log(id)
 
   var cliente_id = $('#cliente').val();
+  $("[name=contabilidad]").removeAttr("checked");
   var data = {'id':id};
   var url = "/registros/ctacte/clientes/listar_uno/"+id+""
 
@@ -224,12 +225,12 @@ $(tabla_datos).on("click", "button.editar", function (e){
         if (data.data[0].debe!=0) 
           { importe=data.data[0].debe;
             $("#debe").attr('checked', 'checked');
-
+            $("#contabilidad_anterior").val('debe');
           } 
-
         else {
             importe=data.data[0].haber;
             $("#haber").attr('checked', 'checked');
+            $("#contabilidad_anterior").val('haber');
               }
 
           $('#id_editar').val(data.data[0].id).val();
@@ -274,24 +275,39 @@ document.getElementById("btnEditar").addEventListener("click",function(e,data_ed
 
   if(fecha != '' && cliente_id != '' && honorario != '' && $("input[name='contabilidad']").is(':checked'))
   {
-    $.ajax({
-        url:url,
-        headers: {'X-CSRF-TOKEN':token},
-        method:"POST",
-        data:{id:id,fecha:fecha, cliente_id:cliente_id,disponibilidad_id:disponibilidad_id,honorario:honorario, comentario:comentario,contabilidad:contabilidad},
-        success:function(data)
+      if(contabilidad == 'haber' && disponibilidad_id != '')
+      {
+        if(contabilidad = $("#contabilidad_anterior").val())
         {
-          $('#altaModal').modal('hide') 
-          $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registrado Correctamente!</strong</div>');
-          
-          
-          listar(cliente_id);
+            $.ajax({
+                url:url,
+                headers: {'X-CSRF-TOKEN':token},
+                method:"POST",
+                data:{id:id,fecha:fecha, cliente_id:cliente_id,disponibilidad_id:disponibilidad_id,honorario:honorario, comentario:comentario,contabilidad:contabilidad},
+                success:function(data)
+                {
+                  $('#altaModal').modal('hide') 
+                  $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registrado Correctamente!</strong</div>');
+                  
+                  
+                  listar(cliente_id);
 
-        }
-        });
-    setInterval(function(){
-    $('#alert_message').html('');
-    }, 5000);
+                }
+                });
+            setInterval(function(){
+            $('#alert_message').html('');
+            }, 5000);
+          }
+        else
+       {
+        $('#alert_modal').html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Una factura no se puede transformar en un pago!!!</strong></div>');
+       }    
+
+      }
+      else
+     {
+      $('#alert_modal').html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Seleccionar Forma de Pago!!!</strong></div>');
+     }    
   }
    else
    {
