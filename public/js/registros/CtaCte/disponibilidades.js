@@ -30,7 +30,7 @@ function init(){
             row.insertCell(3).innerHTML='<p class="text-center"><strong>DEBE</strong></p>';
             row.insertCell(4).innerHTML='<p class="text-center"><strong>HABER</strong></p>';
             row.insertCell(5).innerHTML='<p class="text-center"><strong>SALDO</strong></p>';
-            row.insertCell(6).innerHTML='<p class="text-center"><strong>INGRESO DE</strong></p>';
+            row.insertCell(6).innerHTML='<p class="text-center"><strong>CONCEPTO</strong></p>';
             row.insertCell(7).innerHTML='<p class="text-center"><strong>COMENTARIO</strong></p>';
             row.insertCell(8).innerHTML='<p class="text-center"><strong>OPCIONES</strong></p>';
 
@@ -61,7 +61,7 @@ function init(){
             cell4.innerHTML = '<p name="descuento_p[]" class="text-center">'+numeral(data.debe).format('$0,0.00')+'</p>';
             cell5.innerHTML = '<p name="cantidad_p[]" class="text-center">'+numeral(data.haber).format('$0,0.00')+'</p>';
             cell6.innerHTML = '<p name="cantidad_p[]" class="text-center">'+numeral(saldo).format('$0,0.00')+'</p>';
-            cell7.innerHTML = '<p name="precio_p[]" class="non-margin">'+data.cliente+'</p>';
+            cell7.innerHTML = '<p name="precio_p[]" class="non-margin">'+data.id_concepto+'</p>';
             cell8.innerHTML = '<p name="subtotal_p[]" class="non-margin">'+data.comentario+'</p>';
             cell9.innerHTML = "<button id='editar' type='button' class='editar btn btn-primary'><i class='fa fa-pencil-square-o'></i></button> <button id='eliminar' type='button'class='eliminar btn btn-danger' ><i class='fa fa-trash-o'></i></button>";
           
@@ -74,11 +74,7 @@ function init(){
 }
 
 $("#cliente").change(function(e){
-
     var cliente = document.getElementById("cliente").value;
-
-    
-
     listar(cliente);
 });
 
@@ -105,27 +101,27 @@ $('#add').click(function(){
 /*2- Aprieto el boton GUARDAR del modal*/
 document.getElementById("btnGuardar").addEventListener("click",function(e){
   e.preventDefault();
-  var url = "/registros/ctacte/clientes/grabar"
+  var url = "/registros/ctacte/disponibilidades/grabar"
   var fecha = $('#fecha_alta').val();
-  var cliente_id = $('#selectCliente').val();
-  var disponibilidad_id = $('#selectBanco').val();
+  var disponibilidad_id = $('#selectCliente').val();
+  var id_concepto = $('#selectBanco').val();
   var honorario = $('#importe_alta').val();
   var comentario = $('#comentario_alta').val();
   var contabilidad = $('input[name=contabilidad]:checked').val();
-  if(fecha != '' && cliente_id != '' && honorario != '' && $("input[name='contabilidad']").is(':checked'))
+  if(fecha != '' && disponibilidad_id != '' && id_concepto != '' && honorario != '' && $("input[name='contabilidad']").is(':checked'))
   {
     $.ajax({
         url:url,
         headers: {'X-CSRF-TOKEN':token},
         method:"POST",
-        data:{fecha:fecha, cliente_id:cliente_id,disponibilidad_id:disponibilidad_id,honorario:honorario, comentario:comentario,contabilidad:contabilidad},
+        data:{fecha:fecha, disponibilidad_id:disponibilidad_id,id_concepto:id_concepto,honorario:honorario, comentario:comentario,contabilidad:contabilidad},
         success:function(data)
         {
           $('#altaModal').modal('hide') 
           $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registrado Correctamente!</strong</div>');
           
           
-          listar(cliente_id);
+          listar(disponibilidad_id);
 
         }
         });
@@ -154,8 +150,8 @@ $(tabla_datos).on("click", "button.eliminar", function (e){
   //obtengo la primer columna, donde tengo el ID
   var id=a.getElementsByTagName("td")[0].getElementsByTagName("p")[0].innerHTML;
   
-  document.getElementById('registro_eliminar').innerText =" el ID "+id;
-    $('#id_eliminar').val(id);  
+  $('#id_eliminar').val(id);  
+  document.getElementById('modal_eliminar').innerHTML ='¿Está seguro de eliminar: <strong>'+id+'</strong>? <div>(En caso de que tenga movimiento con clientes, tambien se eliminará!)</div>';
 });
 
 document.getElementById("form_eliminar").addEventListener("submit",function(e){
@@ -207,28 +203,25 @@ $(tabla_datos).on("click", "button.editar", function (e){
     dataType: 'json',
     data: data,
     success:function(data){
-      console.log(data.data)
-      console.log(data.data[0].id)
-      console.log(data.data[0].debe)
-
           
           var importe=0;
 
         if (data.data[0].debe!=0) 
           { importe=data.data[0].debe;
-            $("#debe").attr('checked', 'checked');
-
+            $("#debe").prop('checked', 'checked');
+            $("#contabilidad_anterior").val('debe');
           } 
 
         else {
             importe=data.data[0].haber;
-            $("#haber").attr('checked', 'checked');
+            $("#haber").prop('checked', 'checked');
+            $("#contabilidad_anterior").val('haber');
               }
 
           $('#id_editar').val(data.data[0].id).val();
           $('#fecha_alta').val(data.data[0].fecha).val();
-          $('#selectCliente').val(data.data[0].cliente_id).val();
-          $('#selectBanco').val(data.data[0].disponibilidad_id).val();
+          $('#selectCliente').val(data.data[0].disponibilidad_id).val();
+          $('#selectBanco').val(data.data[0].id_concepto).val();
           $('#importe_alta').val(importe).val();
           $('#comentario_alta').val(data.data[0].comentario).val();
 
@@ -259,8 +252,8 @@ document.getElementById("btnEditar").addEventListener("click",function(e,data_ed
 
     var id = $('#id_editar').val();
     var fecha = $('#fecha_alta').val();
-    var cliente_id = $("#selectCliente").val();
-    var disponibilidad_id = $("#selectBanco").val();
+    var disponibilidad_id = $("#selectCliente").val();
+    var id_concepto = $("#selectBanco").val();
     var honorario = $("#importe_alta").val();
     var comentario = $("#comentario_alta").val();
     var contabilidad = $('input[name=contabilidad]:checked').val();
@@ -271,7 +264,7 @@ document.getElementById("btnEditar").addEventListener("click",function(e,data_ed
         url:url,
         headers: {'X-CSRF-TOKEN':token},
         method:"POST",
-        data:{id:id,fecha:fecha, cliente_id:cliente_id,disponibilidad_id:disponibilidad_id,honorario:honorario, comentario:comentario,contabilidad:contabilidad},
+        data:{id:id,fecha:fecha, disponibilidad_id:disponibilidad_id,id_concepto:id_concepto,honorario:honorario, comentario:comentario,contabilidad:contabilidad},
         success:function(data)
         {
           $('#altaModal').modal('hide') 

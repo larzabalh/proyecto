@@ -28,13 +28,14 @@
                           <form name="" id="" method="POST">
                             <input type="hidden" id="token" value="{{ csrf_token() }}">
                             <input type="hidden" class="form-control" id="id_editar">
+                            <input type="hidden" class="form-control" id="contabilidad_anterior">
                             <div class="row">
                               <div class="col-lg-12" id="fecha">
                                 <label>FECHA</label><br>
                                 <input type="date" class="form-control" name="gasto" id="fecha_alta">
                               </div>
                               <div class="col-lg-12">
-                                <label>GASTO:</label><br>
+                                <label>DISPONIBILIDAD:</label><br>
                                 <select class="form-control" name="tipo" id="selectCliente">
                                   <option selected></option>
                                   @foreach ($disponibilidades as $key => $value)
@@ -44,12 +45,11 @@
                               </div>
                             </div>
                             <div>
-                              <label>FORMA DE PAGO:</label><br>
-                              <select class="form-control selectpicker" data-live-search="true" name="tipo" id="selectBanco">
+                              <label>CONCEPTO:</label><br>
+                              <select class="form-control" name="tipo" id="selectBanco">
                                 <option selected></option>
                                 @foreach ($conceptos as $key => $value)
-                                  <option value={{$value->concepto}}>{{$value->concepto}}</option>
-                                @endforeach
+                                  <option value={{$value->id}}>{{$value->concepto}}</option> @endforeach
                               </select>
                             </div>
                             <div >
@@ -63,7 +63,7 @@
                             <fieldset>
                                 <label>DEBITO - CREDITO</label><br>
                                 <label>
-                                    <input type="radio" name="contabilidad" id="debe" value="debe"> FACTURA
+                                    <input type="radio" name="contabilidad" id="debe" value="debe"> COBRANZA
                                 </label>
                                 <label>
                                     <input type="radio" name="contabilidad" id="haber" value="haber"> PAGO

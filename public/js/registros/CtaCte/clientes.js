@@ -228,11 +228,13 @@ $(tabla_datos).on("click", "button.editar", function (e){
         if (data.data[0].debe!=0) 
           { importe=data.data[0].debe;
             $("#debe").prop('checked', 'checked');
+            $("#haber").attr('disabled',true);
             $("#contabilidad_anterior").val('debe');
           } 
         else {
             importe=data.data[0].haber;
             $("#haber").prop('checked', 'checked');
+            $("#haber").attr('disabled',false);
             $("#contabilidad_anterior").val('haber');
               }
 
@@ -280,9 +282,7 @@ document.getElementById("btnEditar").addEventListener("click",function(e,data_ed
   {
       if(contabilidad = 'haber' && disponibilidad_id != '')
       {
-        if(contabilidad === $("#contabilidad_anterior").val())
-        {
-            $.ajax({
+           $.ajax({
                 url:url,
                 headers: {'X-CSRF-TOKEN':token},
                 method:"POST",
@@ -300,12 +300,6 @@ document.getElementById("btnEditar").addEventListener("click",function(e,data_ed
             setInterval(function(){
             $('#alert_message').html('');
             }, 5000);
-          }
-        else
-       {
-        $('#alert_modal').html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Una factura no se puede transformar en un pago!!!</strong></div>');
-       }    
-
       }
       else
      {

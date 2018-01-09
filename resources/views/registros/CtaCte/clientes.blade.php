@@ -35,7 +35,7 @@
                                 <input type="date" class="form-control" name="gasto" id="fecha_alta">
                               </div>
                               <div class="col-lg-12">
-                                <label>GASTO:</label><br>
+                                <label>CLIENTE:</label><br>
                                 <select class="form-control" name="tipo" id="selectCliente">
                                   <option selected></option>
                                   @foreach ($clientes as $key => $value)
@@ -48,8 +48,8 @@
                               <label>FORMA DE PAGO:</label><br>
                               <select class="form-control" name="tipo" id="selectBanco">
                                 <option selected></option>
-                                @foreach ($disponibilidad_id as $key => $value)
-                                  <option value={{$value->id}}>{{$value->bancos}}</option>
+                                @foreach ($disponibilidades as $key => $value)
+                                  <option value={{$value->id}}>{{$value->nombre}}</option>
                                 @endforeach
                               </select>
                             </div>
@@ -142,7 +142,7 @@
             </div>
             <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
               <label>CLIENTE:</label><br>
-              <select class="form-control" name="periodo" id="cliente">
+              <select class="form-control selectpicker" data-live-search="true" name="periodo" id="cliente">
                   @foreach ($cliente_id as $value)
                   <option value="{{$value->id}}">{{$value->clientes}}</option>
                   @endforeach
