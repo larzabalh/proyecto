@@ -72,7 +72,8 @@ class CtaCteClientesController extends Controller
             DB::raw("concat(year(fecha), '-', month(fecha)) as periodo"),
             DB::raw("CAST(fecha AS DATE) as fecha"),
             DB::raw("IFNULL(cta_cte_clientes.haber, 0) as haber"),//Esto lo hago para que salga el cero y esta pisando * que puse primero
-            DB::raw("IFNULL(disponibilidades.nombre, '') as disponibilidad_id"))//Esto lo hago para que salga el cero y esta pisando * que puse primero
+            DB::raw("IFNULL(disponibilidades.nombre, '') as disponibilidad_id"),//Esto lo hago para que salga el cero y esta pisando * que puse primero
+            DB::raw("IFNULL(cta_cte_clientes.comentario, '') as comentario"))//Esto lo hago para que salga el cero y esta pisando * que puse primero
             ->leftjoin('disponibilidades', 'cta_cte_clientes.disponibilidad_id', '=', 'disponibilidades.id')
             ->join('users', 'cta_cte_clientes.user_id', '=', 'users.id')
             ->join('clientes', 'cta_cte_clientes.cliente_id', '=', 'clientes.id')
@@ -204,9 +205,25 @@ class CtaCteClientesController extends Controller
 
     public function eliminar($id)
     {
+      $CtaCteDisponibilidades=[];
+
       $CtaCteCliente = CtaCteCliente::find($id);
+      $id_cta_cte_disponibilidad =$CtaCteCliente->id_cta_cte_disponibilidad; //Guardo el id en esta variable que despues le paso para que lo encuentre
       $CtaCteCliente->delete();
-      return response()->json(["data" => $CtaCteCliente]);
+
+      if ($id_cta_cte_disponibilidad!='') {
+          
+          $CtaCteDisponibilidades= cta_cte_disponibilidades::find($id_cta_cte_disponibilidad);
+          $CtaCteDisponibilidades->delete();
+
+      }
+
+
+      
+      return response()->json([
+                              "data" => $CtaCteCliente,
+                              "data1" => $CtaCteDisponibilidades
+                              ]);
     }
 
 }

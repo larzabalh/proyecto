@@ -87,7 +87,7 @@ $("#cliente").change(function(e){
 /*1- Abro el modal*/
 $('#add').click(function(){
   document.getElementById('fecha_alta').value = new Date().toDateInputValue();
-  
+  $('#alert_modal').html('');
   var cliente = $('#cliente').val();
 
   $('#selectCliente').val(cliente).val();
@@ -160,8 +160,11 @@ $(tabla_datos).on("click", "button.eliminar", function (e){
   var a=this.parentNode.parentNode;
   //obtengo la primer columna, donde tengo el ID
   var id=a.getElementsByTagName("td")[0].getElementsByTagName("p")[0].innerHTML;
+  var haber=a.getElementsByTagName("td")[4].getElementsByTagName("p")[0].innerHTML;
+
   
-  document.getElementById('registro_eliminar').innerText =" el ID "+id;
+  document.getElementById('modal_eliminar').innerHTML ='¿Está seguro de eliminar: <strong>'+id+'</strong>? <div>(En caso de que tenga movimiento de cobranza, tambien se eliminará!)</div>';
+  
     $('#id_eliminar').val(id);  
 });
 
@@ -202,8 +205,8 @@ $(tabla_datos).on("click", "button.editar", function (e){
   var id=a.getElementsByTagName("td")[0].getElementsByTagName("p")[0].innerHTML;
     console.log(id)
 
+  $('#alert_modal').html('');
   var cliente_id = $('#cliente').val();
-  $("[name=contabilidad]").removeAttr("checked");
   var data = {'id':id};
   var url = "/registros/ctacte/clientes/listar_uno/"+id+""
 
@@ -224,12 +227,12 @@ $(tabla_datos).on("click", "button.editar", function (e){
 
         if (data.data[0].debe!=0) 
           { importe=data.data[0].debe;
-            $("#debe").attr('checked', 'checked');
+            $("#debe").prop('checked', 'checked');
             $("#contabilidad_anterior").val('debe');
           } 
         else {
             importe=data.data[0].haber;
-            $("#haber").attr('checked', 'checked');
+            $("#haber").prop('checked', 'checked');
             $("#contabilidad_anterior").val('haber');
               }
 
@@ -275,9 +278,9 @@ document.getElementById("btnEditar").addEventListener("click",function(e,data_ed
 
   if(fecha != '' && cliente_id != '' && honorario != '' && $("input[name='contabilidad']").is(':checked'))
   {
-      if(contabilidad == 'haber' && disponibilidad_id != '')
+      if(contabilidad = 'haber' && disponibilidad_id != '')
       {
-        if(contabilidad = $("#contabilidad_anterior").val())
+        if(contabilidad === $("#contabilidad_anterior").val())
         {
             $.ajax({
                 url:url,
