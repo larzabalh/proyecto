@@ -22,6 +22,8 @@ class CreateGastosTable extends Migration
             $table->foreign('tipo_de_gasto_id')->references('id')->on('tipos_de_gastos')->onDelete('cascade');
             $table->timestamps();
         });
+
+        DB::update('ALTER TABLE gastos AUTO_INCREMENT = 20000;');
     }
 
     /**

@@ -4,6 +4,8 @@
 
 @section('content')
 
+<?php dd($CtaCteDisponibilidades); ?>
+
 {{-- ELIMINACION DE REGISTROS --}}
     {{-- Alarma de ELIMINACION BOOTSTRAP --}}
 <div class="modal fade" id="exito_eliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

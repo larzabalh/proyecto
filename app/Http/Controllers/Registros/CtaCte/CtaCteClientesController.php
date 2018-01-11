@@ -119,6 +119,7 @@ class CtaCteClientesController extends Controller
       $debe=0;
       $haber=0;
 
+
       if ($request->contabilidad == 'debe') {
         $debe = $honorario;
       }else{
@@ -138,6 +139,7 @@ class CtaCteClientesController extends Controller
               ]);
         $CtaCteDisponibilidades->save();
         }
+
         
         //$CtaCteDisponibilidades->id: Esto es el ultimo ID que guarde!        
         //3- Guardo y tambien guardo el ultimo id de la otra tabla
@@ -147,16 +149,21 @@ class CtaCteClientesController extends Controller
                 'debe' => $debe,
                 'haber' => $haber,
                 'disponibilidad_id' => $request->disponibilidad_id,
-                'id_cta_cte_disponibilidad' => $CtaCteDisponibilidades->id,
+                'id_cta_cte_disponibilidad' => (isset ($CtaCteDisponibilidades->id)?$CtaCteDisponibilidades->id:null),
                 'comentario' => $request->comentario,
                 'user_id' => auth()->user()->id,
               ]);
         $CtaCteCliente->save();
 
+      
+
         //4- Actualizo lo que guarde antes, con el ultimo id de la otra tabla.
-        $CtaCteDisponibilidades = cta_cte_disponibilidades::find($CtaCteDisponibilidades->id);
-        $CtaCteDisponibilidades->id_CtaCteCliente =  $CtaCteCliente->id;
+      if (isset($request->disponibilidad_id) and $haber !=0) {
+       /* $CtaCteDisponibilidades = cta_cte_disponibilidades::find($CtaCteDisponibilidades->id);*/
+        $CtaCteDisponibilidades->id_CtaCteCliente =  (isset ($CtaCteCliente->id)?$CtaCteCliente->id:null);
         $CtaCteDisponibilidades->save();
+      }
+
 
       return response()->json([
               "data"=> $CtaCteCliente->toArray(),
@@ -196,7 +203,7 @@ class CtaCteClientesController extends Controller
             $CtaCteDisponibilidades->debe =  $haber;
             $CtaCteDisponibilidades->haber =  $debe;
             $CtaCteDisponibilidades->disponibilidad_id =  $request['disponibilidad_id'];
-            $CtaCteDisponibilidades->id_concepto =  $request['id_concepto'];
+            $CtaCteDisponibilidades->id_concepto =  $request['cliente_id'];
             $CtaCteDisponibilidades->comentario =  $request['comentario'];
 
           $CtaCteDisponibilidades->save();
@@ -212,21 +219,24 @@ class CtaCteClientesController extends Controller
 
     public function eliminar($id)
     {
-      $CtaCteDisponibilidades=[];
+
 
       $CtaCteCliente = CtaCteCliente::find($id);
       $id_cta_cte_disponibilidad =$CtaCteCliente->id_cta_cte_disponibilidad; //Guardo el id en esta variable que despues le paso para que lo encuentre
       $CtaCteCliente->delete();
 
-      if ($id_cta_cte_disponibilidad!='') {
-          
-          $CtaCteDisponibilidades= cta_cte_disponibilidades::find($id_cta_cte_disponibilidad);
-          $CtaCteDisponibilidades->delete();
+      if (isset($CtaCteCliente->id_cta_cte_disponibilidad)) {
+
+          $CtaCteDisponibilidades= cta_cte_disponibilidades::find($CtaCteCliente->id_cta_cte_disponibilidad);
+
+          if ($CtaCteDisponibilidades != null) {
+                $CtaCteDisponibilidades->delete();
+                }
       }
      
       return response()->json([
                               "data" => $CtaCteCliente,
-                              "data1" => $CtaCteDisponibilidades
+                              /*"data1" => $CtaCteDisponibilidades*/
                               ]);
     }
 

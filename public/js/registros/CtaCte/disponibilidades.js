@@ -55,13 +55,15 @@ function init(){
             saldo=saldo +data.debe-data.haber;
             numero = index+1
 
+            console.log(data)
+
             cell1.innerHTML = '<p name="id" id="id" class="text-center">'+data.id+'</p>';
             cell2.innerHTML = '<p name="numero_f[]" id="id" class="text-center">'+numero+'</p>';
             cell3.innerHTML = '<p name="codigo_p[]" class="text-center">'+data.periodo+'</p>';
             cell4.innerHTML = '<p name="descuento_p[]" class="text-center">'+numeral(data.debe).format('$0,0.00')+'</p>';
             cell5.innerHTML = '<p name="cantidad_p[]" class="text-center">'+numeral(data.haber).format('$0,0.00')+'</p>';
             cell6.innerHTML = '<p name="cantidad_p[]" class="text-center">'+numeral(saldo).format('$0,0.00')+'</p>';
-            cell7.innerHTML = '<p name="precio_p[]" class="non-margin">'+data.id_concepto+'</p>';
+            cell7.innerHTML = '<p name="precio_p[]" class="non-margin">'+data.concepto+'</p>';
             cell8.innerHTML = '<p name="subtotal_p[]" class="non-margin">'+data.comentario+'</p>';
             cell9.innerHTML = "<button id='editar' type='button' class='editar btn btn-primary'><i class='fa fa-pencil-square-o'></i></button> <button id='eliminar' type='button'class='eliminar btn btn-danger' ><i class='fa fa-trash-o'></i></button>";
           

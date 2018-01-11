@@ -22,6 +22,8 @@ class CreateTiposDeGastosTable extends Migration
         });
     }
 
+   
+
     /**
      * Reverse the migrations.
      *

@@ -28,4 +28,10 @@ class cta_cte_disponibilidades extends Model
     public function id_CtaCteCliente() {
           return $this->belongsTo(CtaCteCliente::class); // Le indicamos que se va relacionar con el atributo id
       }
+
+    public function id_concepto() {
+          return $this->belongsTo(View_Conceptos::class); // Le indicamos que se va relacionar con el atributo id
+      }
+
+      
 }

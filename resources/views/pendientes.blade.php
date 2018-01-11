@@ -1,8 +1,6 @@
 Cta Cte Disponibilidades:
-	* Como hago para relacion la columna id_concepto con Clientes, Gastos y Formas de pago?
-	* En ambas disponibilidades, cuando grabo o cuando edito, debe actualizarse el input de clientes o disponibilidades, esto es por si cambie de cliente o de caja
 
-Ver los tipos de relaciones, porque yo uso siempre la misma relacion HAS ONE!!! 
+
 
 
 

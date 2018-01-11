@@ -22,6 +22,8 @@ class CreateFormaDePagosTable extends Migration
             $table->foreign('disponibilidad_id')->references('id')->on('disponibilidades')->onDelete('cascade');
             $table->timestamps();
         });
+
+              DB::update('ALTER TABLE forma_de_pagos AUTO_INCREMENT = 10000;');
     }
 
     /**

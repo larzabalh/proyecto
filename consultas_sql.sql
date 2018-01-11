@@ -58,3 +58,13 @@ union all
 select gastos.gasto,gastos.id as gasto_id from gastos
 union all
 select forma_de_pagos.nombre,forma_de_pagos.id forma_pago_id from forma_de_pagos
+
+-- CREAR UNA VISTA: unir la vista con left join de lo que quiero
+create view concepto as 
+select id, cliente as concepto from clientes
+union
+select id, nombre from forma_de_pagos
+union
+select id, gasto from gastos
+
+select * from concepto

@@ -11,6 +11,7 @@ use App\Cobrador;
 use App\Disponibilidad;
 use App\CtaCteCliente;
 use App\cta_cte_disponibilidades;
+use App\View_Conceptos;
 use Illuminate\Support\Facades\Auth;
 
 class Cta_Cte_DisponibilidadesController extends Controller
@@ -48,7 +49,7 @@ class Cta_Cte_DisponibilidadesController extends Controller
             ->orderBy('clientes','ASC')
             ->get();
 
-            $clientes =DB::table('clientes')
+      /*      $clientes =DB::table('clientes')
          	 	->select('cliente as concepto','clientes.id as id')
             	->where(DB::raw('user_id'),auth()->user()->id )
             	->orderBy('cliente','ASC')
@@ -58,15 +59,20 @@ class Cta_Cte_DisponibilidadesController extends Controller
 	          	->select('nombre as concepto','forma_de_pagos.id as id')
 	            ->where(DB::raw('user_id'),auth()->user()->id )
 	            ->orderBy('nombre','ASC')
-	     		;
+	     		    ;
 	            
 	        $gastos =DB::table('gastos')
 	          	->select('gasto as concepto','gastos.id as id')
 	            ->where(DB::raw('user_id'),auth()->user()->id )
 	            ->orderBy('gasto','ASC')
-	     		;
+	     		    ;
 
-        $conceptos = $clientes->union($forma_pagos)->union($gastos)->get();
+        $conceptos = $clientes->union($forma_pagos)->union($gastos)->get();*/
+
+        $conceptos =DB::table('view_conceptos')
+            ->select('view_conceptos.*')
+            ->where('view_conceptos.user_id',"=",auth()->user()->id )
+            ->get();
 
 
         $disponibilidad_id =DB::table('cta_cte_disponibilidades')
@@ -91,16 +97,14 @@ class Cta_Cte_DisponibilidadesController extends Controller
     public function listar($disponibilidad_id)
     { 
       $disponibilidades =DB::table('cta_cte_disponibilidades')
-            ->select('clientes.cliente','cta_cte_disponibilidades.*',
+            ->select('clientes.cliente','view_conceptos.*','cta_cte_disponibilidades.*',
             DB::raw("concat(year(fecha), '-', month(fecha)) as periodo"),
             DB::raw("CAST(fecha AS DATE) as fecha"),
             DB::raw("IFNULL(cta_cte_disponibilidades.debe, 0) as debe"),//Esto lo hago para que salga el cero y esta pisando * que puse primero
             DB::raw("IFNULL(disponibilidades.nombre, '') as disponibilidad_id"),//Esto lo hago para que salga el cero y esta pisando * que puse primero
             DB::raw("IFNULL(cta_cte_disponibilidades.comentario, '') as comentario"))//Esto lo hago para que salga el cero y esta pisando * que puse primero
             ->join('disponibilidades', 'cta_cte_disponibilidades.disponibilidad_id', '=', 'disponibilidades.id')
-            /*->join('clientes', 'cta_cte_disponibilidades.id_concepto', '=', 'clientes.id')*/
-            /*->join('gastos', 'cta_cte_disponibilidades.id_concepto', '=', 'gastos.id')
-            ->join('forma_de_pagos', 'cta_cte_disponibilidades.id_concepto', '=', 'forma_de_pagos.id')*/
+            ->join('view_conceptos', 'cta_cte_disponibilidades.id_concepto', '=', 'view_conceptos.id')
             ->leftjoin('clientes', 'cta_cte_disponibilidades.cliente_id', '=', 'clientes.id')
             ->join('users', 'cta_cte_disponibilidades.user_id', '=', 'users.id')
             ->where(DB::raw('cta_cte_disponibilidades.user_id'),auth()->user()->id )

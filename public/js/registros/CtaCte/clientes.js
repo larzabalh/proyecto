@@ -89,6 +89,7 @@ $('#add').click(function(){
   document.getElementById('fecha_alta').value = new Date().toDateInputValue();
   $('#alert_modal').html('');
   var cliente = $('#cliente').val();
+  $("input[type=radio]").attr('disabled', false);
 
   $('#selectCliente').val(cliente).val();
   $('#selectBanco').prop('selectedIndex',0);
@@ -113,9 +114,7 @@ document.getElementById("btnGuardar").addEventListener("click",function(e){
   var comentario = $('#comentario_alta').val();
   var contabilidad = $('input[name=contabilidad]:checked').val();
   if(fecha != '' && cliente_id != '' && honorario != '' && $("input[name='contabilidad']").is(':checked'))
-  { 
-    if(contabilidad == 'haber' && disponibilidad_id != '')
-    { 
+  {     
         $.ajax({
             url:url,
             headers: {'X-CSRF-TOKEN':token},
@@ -134,11 +133,6 @@ document.getElementById("btnGuardar").addEventListener("click",function(e){
         setInterval(function(){
         $('#alert_message').html('');
         }, 5000);
-    }
-      else
-     {
-      $('#alert_modal').html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Seleccionar Forma de Pago!!!</strong></div>');
-     }     
   }
    else
    {
