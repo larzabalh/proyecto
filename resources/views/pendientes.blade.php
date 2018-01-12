@@ -1,9 +1,11 @@
 Cta Cte Disponibilidades:
 
 
+* Manejo de Errores: como hago si hago una llamada ajax y vuelve error, la llamada? Como hago para que no salga el error de la llamada ajax y pueda mostrar otra cosa en la consola!  
 
 
-
+* El menu dejarlo cerrado
+* El encabezado de las tablas de Cta Cte sea fijo, para que no se desplace hacia abajo!
 
 Liquidador:
 

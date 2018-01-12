@@ -229,7 +229,7 @@ class CtaCteClientesController extends Controller
 
           $CtaCteDisponibilidades= cta_cte_disponibilidades::find($CtaCteCliente->id_cta_cte_disponibilidad);
 
-          if ($CtaCteDisponibilidades != null) {
+          if ($CtaCteDisponibilidades != null) { //Esto lo hago por un error loco que me tira!!!
                 $CtaCteDisponibilidades->delete();
                 }
       }

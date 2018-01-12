@@ -55,8 +55,6 @@ function init(){
             saldo=saldo +data.debe-data.haber;
             numero = index+1
 
-            console.log(data)
-
             cell1.innerHTML = '<p name="id" id="id" class="text-center">'+data.id+'</p>';
             cell2.innerHTML = '<p name="numero_f[]" id="id" class="text-center">'+numero+'</p>';
             cell3.innerHTML = '<p name="codigo_p[]" class="text-center">'+data.periodo+'</p>';
@@ -87,7 +85,7 @@ $('#add').click(function(){
   document.getElementById('fecha_alta').value = new Date().toDateInputValue();
   
   var cliente = $('#cliente').val();
-
+  $('#selectCliente').attr("disabled",false);
   $('#selectCliente').val(cliente).val();
   $('#selectBanco').prop('selectedIndex',0);
   $('#importe_alta').val("");
@@ -103,33 +101,28 @@ $('#add').click(function(){
 /*2- Aprieto el boton GUARDAR del modal*/
 document.getElementById("btnGuardar").addEventListener("click",function(e){
   e.preventDefault();
-  var url = "/registros/ctacte/disponibilidades/grabar"
+  
   var fecha = $('#fecha_alta').val();
   var disponibilidad_id = $('#selectCliente').val();
   var id_concepto = $('#selectBanco').val();
   var honorario = $('#importe_alta').val();
   var comentario = $('#comentario_alta').val();
   var contabilidad = $('input[name=contabilidad]:checked').val();
+
+  var data = {
+                'fecha':fecha,
+                'disponibilidad_id': disponibilidad_id,
+                'id_concepto':id_concepto,
+                'honorario':honorario,
+                'comentario':comentario,
+                'contabilidad':contabilidad
+                };
+
+
   if(fecha != '' && disponibilidad_id != '' && id_concepto != '' && honorario != '' && $("input[name='contabilidad']").is(':checked'))
   {
-    $.ajax({
-        url:url,
-        headers: {'X-CSRF-TOKEN':token},
-        method:"POST",
-        data:{fecha:fecha, disponibilidad_id:disponibilidad_id,id_concepto:id_concepto,honorario:honorario, comentario:comentario,contabilidad:contabilidad},
-        success:function(data)
-        {
-          $('#altaModal').modal('hide') 
-          $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registrado Correctamente!</strong</div>');
-          
-          
-          listar(disponibilidad_id);
-
-        }
-        });
-    setInterval(function(){
-    $('#alert_message').html('');
-    }, 5000);
+    AjaxGuardar(data)
+    console.log(data)
   }
    else
    {
@@ -139,9 +132,31 @@ document.getElementById("btnGuardar").addEventListener("click",function(e){
 
   $(document).on('click', '#cancelar', function(){
   $('#tabla_datos').DataTable().ajax.reload();      
-    
-
   });
+
+function AjaxGuardar(data){
+
+  var url = "/registros/ctacte/disponibilidades/grabar"
+  $.ajax({
+        url:url,
+        headers: {'X-CSRF-TOKEN':token},
+        method:"POST",
+        data:data,
+        success:function(data)
+        {
+          $('#altaModal').modal('hide') 
+          $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registrado Correctamente!</strong</div>');
+          
+          
+          listar(data.data.disponibilidad_id);
+
+        }
+        });
+    setInterval(function(){
+    $('#alert_message').html('');
+    }, 5000);
+
+}
 
 /*ELIMINACION!!!*/
 $(tabla_datos).on("click", "button.eliminar", function (e){
@@ -191,8 +206,8 @@ $(tabla_datos).on("click", "button.editar", function (e){
   var a=this.parentNode.parentNode;
   //obtengo la primer columna, donde tengo el ID
   var id=a.getElementsByTagName("td")[0].getElementsByTagName("p")[0].innerHTML;
-    console.log(id)
 
+  $('#selectCliente').attr("disabled",true);
   var cliente_id = $('#cliente').val();
   var data = {'id':id};
   var url = "/registros/ctacte/disponibilidades/listar_uno/"+id+""

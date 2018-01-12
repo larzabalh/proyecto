@@ -103,41 +103,53 @@ $('#add').click(function(){
 
 });
 
-/*2- Aprieto el boton GUARDAR del modal*/
+/*2- Aprieto el boton GUARDAR del modal, valid y llamo a grabar!*/
 document.getElementById("btnGuardar").addEventListener("click",function(e){
   e.preventDefault();
-  var url = "/registros/ctacte/clientes/grabar"
+
+  var ok =true;
+
+
   var fecha = $('#fecha_alta').val();
   var cliente_id = $('#selectCliente').val();
   var disponibilidad_id = $('#selectBanco').val();
   var honorario = $('#importe_alta').val();
   var comentario = $('#comentario_alta').val();
   var contabilidad = $('input[name=contabilidad]:checked').val();
-  if(fecha != '' && cliente_id != '' && honorario != '' && $("input[name='contabilidad']").is(':checked'))
-  {     
-        $.ajax({
-            url:url,
-            headers: {'X-CSRF-TOKEN':token},
-            method:"POST",
-            data:{fecha:fecha, cliente_id:cliente_id,disponibilidad_id:disponibilidad_id,honorario:honorario, comentario:comentario,contabilidad:contabilidad},
-            success:function(data)
-            {
-              $('#altaModal').modal('hide') 
-              $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registrado Correctamente!</strong</div>');
-              
-              
-              listar(cliente_id);
 
-            }
-            });
-        setInterval(function(){
-        $('#alert_message').html('');
-        }, 5000);
-  }
-   else
-   {
-    $('#alert_modal').html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Faltan Campos Obligatorios!!!</strong></div>');
-   }
+ var data = {
+                'fecha':fecha,
+                'cliente_id': cliente_id,
+                'disponibilidad_id':disponibilidad_id,
+                'honorario':honorario,
+                'comentario':comentario,
+                'contabilidad':contabilidad
+                };
+
+                console.log(disponibilidad_id)
+
+        if (contabilidad==='haber') //Valido que este seleccionado la disponibilidad
+        {
+            if(disponibilidad_id === '')
+              { 
+                ok = false;
+              }
+        };
+  
+        //Valido que los campos esten seleccionados
+        if(fecha === '' ||  cliente_id === '' ||  honorario === '' || !$("input[name='contabilidad']").is(':checked'))
+        {     
+          ok = false;
+        }
+
+        if (ok ===true) {
+            AjaxGuardar(data)
+             console.log('entro al ajax')
+
+        }else{
+            $('#alert_modal').html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Faltan Campos Obligatorios!!!</strong></div>');
+            console.log('entro en mensaje')
+        }
   });
 
   $(document).on('click', '#cancelar', function(){
@@ -145,6 +157,26 @@ document.getElementById("btnGuardar").addEventListener("click",function(e){
     
 
   });
+
+ /* VALIDACIONES DE GUARDAR*/
+ function AjaxGuardar(data){
+  var url = "/registros/ctacte/clientes/grabar";
+  $.ajax({
+            url:url,
+            headers: {'X-CSRF-TOKEN':token},
+            method:"POST",
+            data:data,
+            success:function(data)
+            {
+              $('#altaModal').modal('hide') 
+              $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registrado Correctamente!</strong</div>');
+              listar(data.data.cliente_id);
+            }
+            });
+            setInterval(function(){
+            $('#alert_message').html('');
+            }, 5000);
+ }
 
 /*ELIMINACION!!!*/
 $(tabla_datos).on("click", "button.eliminar", function (e){
@@ -199,6 +231,8 @@ $(tabla_datos).on("click", "button.editar", function (e){
   var id=a.getElementsByTagName("td")[0].getElementsByTagName("p")[0].innerHTML;
     console.log(id)
 
+  $('input[name=contabilidad]').attr("disabled",true);
+  $('#selectCliente').attr("disabled",true);
   $('#alert_modal').html('');
   var cliente_id = $('#cliente').val();
   var data = {'id':id};
@@ -222,13 +256,11 @@ $(tabla_datos).on("click", "button.editar", function (e){
         if (data.data[0].debe!=0) 
           { importe=data.data[0].debe;
             $("#debe").prop('checked', 'checked');
-            $("#haber").attr('disabled',true);
             $("#contabilidad_anterior").val('debe');
           } 
         else {
             importe=data.data[0].haber;
             $("#haber").prop('checked', 'checked');
-            $("#haber").attr('disabled',false);
             $("#contabilidad_anterior").val('haber');
               }
 
