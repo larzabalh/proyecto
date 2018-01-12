@@ -82,6 +82,11 @@ $("#cliente").change(function(e){
     listar(cliente);
 });
 
+//Esto lo hago para seleccionar la factura que estoy pagando!!!
+document.getElementById("haber").addEventListener("click",function(e,data_edit ){
+    e.preventDefault();
+    $('#altaModalFactura').modal('show') 
+});
 
 /*ALTA DE REGISTROS!!!*/
 /*1- Abro el modal*/
@@ -153,9 +158,7 @@ document.getElementById("btnGuardar").addEventListener("click",function(e){
   });
 
   $(document).on('click', '#cancelar', function(){
-  $('#tabla_datos').DataTable().ajax.reload();      
-    
-
+ 
   });
 
  /* VALIDACIONES DE GUARDAR*/

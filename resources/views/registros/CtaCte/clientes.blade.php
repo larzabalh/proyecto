@@ -85,6 +85,87 @@
     </div>
 </div>
 
+{{-- ELIJA UNA FACTURA--}}
+<div class="modal fade" id="altaModalFactura"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div id="alert_modal"></div>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="tituloModal"></h4>
+        </div>
+        <div class="modal-body" id="">
+           {{-- Alarma de BOOTSTRAP --}}
+                <div class="alert alert-success collapse" id="exito_alta">
+                  <a id="linkClose" href="#" class="close">&times;</a>
+                     <strong>Registro con Exito!</strong>
+              </div>
+              {{-- FIN!!! Alarma de BOOTSTRAP --}}
+              <div id="formularioregistros">
+                    <div class="panel panel-default">
+                      <div class="panel-body" >
+                          <form name="" id="" method="POST">
+                            <input type="hidden" id="token" value="{{ csrf_token() }}">
+                            <input type="hidden" class="form-control" id="id_editar">
+                            <input type="hidden" class="form-control" id="contabilidad_anterior">
+                            <div class="row">
+                              <div class="col-lg-12" id="fecha">
+                                <label>FECHA</label><br>
+                                <input type="date" class="form-control" name="gasto" id="fecha_alta">
+                              </div>
+                              <div class="col-lg-12">
+                                <label>CLIENTE:</label><br>
+                                <select class="form-control" name="tipo" id="selectCliente">
+                                  <option selected></option>
+                                  @foreach ($clientes as $key => $value)
+                                    <option value={{$value->id}}>{{$value->cliente}}</option>
+                                  @endforeach
+                                </select>
+                              </div>
+                            </div>
+                            <div>
+                              <label>FORMA DE PAGO:</label><br>
+                              <select class="form-control" name="tipo" id="selectBanco">
+                                <option selected></option>
+                                @foreach ($disponibilidades as $key => $value)
+                                  <option value={{$value->id}}>{{$value->nombre}}</option>
+                                @endforeach
+                              </select>
+                            </div>
+                            <div >
+                              <label>IMPORTE:</label>
+                              <input type="number" class="form-control" name="gasto" id="importe_alta" maxlength="50" placeholder="1000">
+                            </div>
+                             <div>
+                                <label>COMENTARIO</label><br>
+                                <input type="text" class="form-control" name="gasto" id="comentario_alta">
+                            </div>
+                            <fieldset>
+                                <label>DEBITO - CREDITO</label><br>
+                                <label>
+                                    <input type="radio" name="contabilidad" id="debe" value="debe"> FACTURA
+                                </label>
+                                <label>
+                                    <input type="radio" name="contabilidad" id="haber" value="haber"> PAGO
+                                </label>
+                            </fieldset>
+                            <div class="modal-footer">
+                              <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
+                              <button class="btn btn-primary" type="submit" id="btnEditar" style='display:none;'><i class="fa fa-edit"></i> editar</button>
+                              <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-arrow-circle-left"></i> VOLVER</button>
+                            </div>
+                          </form>
+                        </div>
+                    </div>
+                      <!-- /.panel-body -->
+                </div>
+        </div>
+      </div>
+    </div>
+</div>
+
 {{-- ELIMINACION DE REGISTROS --}}
     {{-- Alarma de ELIMINACION BOOTSTRAP --}}
 <div class="modal fade" id="exito_eliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
