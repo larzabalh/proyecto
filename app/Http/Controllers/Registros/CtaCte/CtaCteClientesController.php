@@ -104,6 +104,29 @@ class CtaCteClientesController extends Controller
         return response()->json(["data"=>$cliente->toArray()]);
     }
 
+    public function listar_impagas($cliente_id)
+    {
+      
+      $cliente =DB::table('cta_cte_clientes')
+            ->select('clientes.cliente','cta_cte_clientes.*',
+            DB::raw("concat(year(fecha), '-', month(fecha)) as periodo"),
+            DB::raw("CAST(fecha AS DATE) as fecha"),
+            DB::raw("IFNULL(cta_cte_clientes.haber, 0) as haber"),//Esto lo hago para que salga el cero y esta pisando * que puse primero
+            DB::raw("IFNULL(disponibilidades.nombre, '') as disponibilidad_id"),//Esto lo hago para que salga el cero y esta pisando * que puse primero
+            DB::raw("IFNULL(cta_cte_clientes.comentario, '') as comentario"))//Esto lo hago para que salga el cero y esta pisando * que puse primero
+            ->leftjoin('disponibilidades', 'cta_cte_clientes.disponibilidad_id', '=', 'disponibilidades.id')
+            ->join('users', 'cta_cte_clientes.user_id', '=', 'users.id')
+            ->join('clientes', 'cta_cte_clientes.cliente_id', '=', 'clientes.id')
+            ->where(DB::raw('cta_cte_clientes.user_id'),auth()->user()->id )
+            ->where('cta_cte_clientes.pagado',"=",null)
+            ->where('cta_cte_clientes.cliente_id',"=",$cliente_id)
+            ->where('cta_cte_clientes.debe',"<>",0)
+            ->orderBy('cta_cte_clientes.id','asc')
+            ->get();
+
+        return response()->json(["data"=>$cliente->toArray()]);
+    }
+
     
     public function store(Request $request)
     {
@@ -143,18 +166,20 @@ class CtaCteClientesController extends Controller
         
         //$CtaCteDisponibilidades->id: Esto es el ultimo ID que guarde!        
         //3- Guardo y tambien guardo el ultimo id de la otra tabla
-        $CtaCteCliente = new CtaCteCliente([
-                'fecha' =>$request->fecha,
-                'cliente_id' =>$request->cliente_id,
-                'debe' => $debe,
-                'haber' => $haber,
-                'disponibilidad_id' => $request->disponibilidad_id,
-                'id_cta_cte_disponibilidad' => (isset ($CtaCteDisponibilidades->id)?$CtaCteDisponibilidades->id:null),
-                'comentario' => $request->comentario,
-                'user_id' => auth()->user()->id,
-              ]);
-        $CtaCteCliente->save();
+        
 
+            $CtaCteCliente = new CtaCteCliente([
+                    'fecha' =>$request->fecha,
+                    'cliente_id' =>$request->cliente_id,
+                    'debe' => $debe,
+                    'haber' => $haber,
+                    'disponibilidad_id' => $request->disponibilidad_id,
+                    'id_cta_cte_disponibilidad' => (isset ($CtaCteDisponibilidades->id)?$CtaCteDisponibilidades->id:null),
+                    'comentario' => $request->comentario,
+                    'user_id' => auth()->user()->id,
+                  ]);
+            $CtaCteCliente->save();
+        
       
 
         //4- Actualizo lo que guarde antes, con el ultimo id de la otra tabla.
@@ -164,6 +189,14 @@ class CtaCteClientesController extends Controller
         $CtaCteDisponibilidades->save();
       }
 
+      //5 - Le pongo un 1 a las facturas que estoy pagando
+      if (isset($request->pagado)) {
+        For($i=0; $i<count($request->pagado);$i++){
+          $CtaCteCliente = CtaCteCliente::find($request->pagado[$i]);
+          $CtaCteCliente->pagado=1;
+          $CtaCteCliente->save();
+        }
+      }
 
       return response()->json([
               "data"=> $CtaCteCliente->toArray(),

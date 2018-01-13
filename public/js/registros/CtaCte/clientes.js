@@ -58,13 +58,13 @@ function init(){
             cell1.innerHTML = '<p name="id" id="id" class="text-center">'+data.id+'</p>';
             cell2.innerHTML = '<p name="numero_f[]" id="id" class="text-center">'+numero+'</p>';
             cell3.innerHTML = '<p name="codigo_p[]" class="text-center">'+data.periodo+'</p>';
-            cell4.innerHTML = '<p name="descuento_p[]" class="text-center">'+numeral(data.debe).format('$0,0.00')+'</p>';
+            cell4.innerHTML = '<p name="debe[]" class="text-center ">'+numeral(data.debe).format('$0,0.00')+'</p>';
             cell5.innerHTML = '<p name="cantidad_p[]" class="text-center">'+numeral(data.haber).format('$0,0.00')+'</p>';
             cell6.innerHTML = '<p name="cantidad_p[]" class="text-center">'+numeral(saldo).format('$0,0.00')+'</p>';
             cell7.innerHTML = '<p name="precio_p[]" class="non-margin">'+data.disponibilidad_id+'</p>';
             cell8.innerHTML = '<p name="subtotal_p[]" class="non-margin">'+data.comentario+'</p>';
             cell9.innerHTML = "<button id='editar' type='button' class='editar btn btn-primary'><i class='fa fa-pencil-square-o'></i></button> <button id='eliminar' type='button'class='eliminar btn btn-danger' ><i class='fa fa-trash-o'></i></button>";
-          
+
           });
 
           document.getElementById("saldo").innerHTML = numeral(saldo).format('$0,0.00');
@@ -80,12 +80,6 @@ $("#cliente").change(function(e){
     
 
     listar(cliente);
-});
-
-//Esto lo hago para seleccionar la factura que estoy pagando!!!
-document.getElementById("haber").addEventListener("click",function(e,data_edit ){
-    e.preventDefault();
-    $('#altaModalFactura').modal('show') 
 });
 
 /*ALTA DE REGISTROS!!!*/
@@ -122,13 +116,15 @@ document.getElementById("btnGuardar").addEventListener("click",function(e){
   var comentario = $('#comentario_alta').val();
   var contabilidad = $('input[name=contabilidad]:checked').val();
 
+
  var data = {
                 'fecha':fecha,
                 'cliente_id': cliente_id,
                 'disponibilidad_id':disponibilidad_id,
                 'honorario':honorario,
                 'comentario':comentario,
-                'contabilidad':contabilidad
+                'contabilidad':contabilidad,
+                'pagado':pagado,
                 };
 
                 console.log(disponibilidad_id)
@@ -343,7 +339,66 @@ document.getElementById("btnEditar").addEventListener("click",function(e,data_ed
 /*FIN EDICION!!!!*/
 
 
+//Esto lo hago para seleccionar la factura que estoy pagando!!!
+document.getElementById("haber").addEventListener("change",function(e,data_edit ){
+    e.preventDefault();
+    var cliente = $('#cliente').val();
+    listarFacturasImpagas(cliente);
+    $('#altaModalFactura').modal('show')
 
+});
+
+  function listarFacturasImpagas(cliente)
+  {   
+    $("#tabla_datosFactura tr").remove(); 
+
+      var url = '/registros/ctacte/clientes/listar_impagas/'+cliente+''
+
+        ajax(url, function (err, response) {
+          if (err) return console.error(err)
+
+          var tabla = document.getElementById('tabla_datosFactura').getElementsByTagName('tbody')[0];
+          var row = tabla.insertRow(tabla.rows.length);
+            row.insertCell(0).innerHTML='<p class="text-center"><strong>ID</strong></p>';
+            row.insertCell(1).innerHTML='<p class="text-center"><strong>PERIODO</strong></p>';
+            row.insertCell(2).innerHTML='<p class="text-center"><strong>DEBE</strong></p>';
+            row.insertCell(3).innerHTML='<p class="text-center"><strong>COMENTARIO</strong></p>';
+            row.insertCell(4).innerHTML='<p class="text-center"><strong>SELECCIONAR</strong></p>';
+          
+
+          response.data.forEach(function(data,index,a) {
+            
+
+          var row = tabla.insertRow(tabla.rows.length);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            
+            cell1.innerHTML = '<p name="idCheckeados[]" id="idCheckeados[]" class="text-center">'+data.id+'</p>';
+            cell2.innerHTML = '<p name="periodoFactura[]" class="text-center">'+data.periodo+'</p>';
+            cell3.innerHTML = '<p name="debeFactura[]" class="text-center">'+numeral(data.debe).format('$0,0.00')+'</p>';
+            cell4.innerHTML = '<p name="periodoFactura[]" class="text-center">'+data.comentario+'</p>';
+            cell5.innerHTML = "<input type='checkbox' name='checkFacturaImpaga[]' value="+data.id+">";
+          
+          });
+        });
+}
+
+//la declaro aca, para poder levantarle del formulario de GUARDAR
+var pagado = [];
+document.getElementById("cerrarFactura").addEventListener("click",function(e){
+    e.preventDefault();
+      
+      
+      
+       $(':checkbox:checked').each(function(i) {
+          pagado [i] = $ ( this ) .val ();
+       });
+       console.log(pagado)
+
+});
 
 
 init()

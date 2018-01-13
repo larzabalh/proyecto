@@ -54,6 +54,7 @@ Route::resource('/registros/registrodegastos', 'RegistrodeGastosController');
 
 
 Route::get('/registros/ctacte/clientes/listar/{gasto_filtro}', 'CtaCteClientesController@listar');
+Route::get('/registros/ctacte/clientes/listar_impagas/{cliente_id}', 'CtaCteClientesController@listar_impagas');
 Route::get('/registros/ctacte/clientes/listar_uno/{id}', 'CtaCteClientesController@listar_uno');
 Route::post('/registros/ctacte/clientes/editar/{id}', 'CtaCteClientesController@editar');
 Route::post('/registros/ctacte/clientes/eliminar/{id}', 'CtaCteClientesController@eliminar');
