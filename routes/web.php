@@ -47,7 +47,7 @@ Route::resource('/configuracion/forma_pagos', 'Forma_PagoController');
 
 
 
-Route::get('/registros/registrodegastos/listar/{periodo}/{gasto_filtro}', 'RegistrodeGastosController@listar');
+Route::get('/registros/registrodegastos/listar/{periodo}/{gasto_filtro}/{pagado}', 'RegistrodeGastosController@listar');
 Route::post('/registros/registrodegastos/editar/{id}', 'RegistrodeGastosController@editar');
 Route::post('/registros/registrodegastos/eliminar/{id}', 'RegistrodeGastosController@eliminar');
 Route::resource('/registros/registrodegastos', 'RegistrodeGastosController');

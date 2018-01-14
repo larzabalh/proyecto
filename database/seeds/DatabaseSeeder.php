@@ -157,7 +157,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $users = factory(Illuminate\Foundation\Auth\User::class)->times(1)->create();
-        $reg_gasto = factory(Reg_Gasto::class)->times(3000)->create();
+        $reg_gasto = factory(Reg_Gasto::class)->times(36)->create();
         
 
       }

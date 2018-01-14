@@ -61,10 +61,11 @@ class RegistrodeGastosController extends Controller
 
     }
 
-    public function listar($periodo,$gasto_filtro=null)
+    public function listar($periodo,$gasto_filtro=null,$pagado=null)
     {
 
       $gasto_filtro = ($gasto_filtro==0) ? $gasto_filtro=null : $gasto_filtro;
+      $pagado = ($pagado==0) ? $pagado=null : $pagado;
       $array = explode('-', $periodo);
       $reg_gastos =DB::table('reg_gastos')
           ->select(
@@ -83,6 +84,7 @@ class RegistrodeGastosController extends Controller
           ->where(DB::raw('year(reg_gastos.fecha)'), $array[0])
           ->where(DB::raw('month(reg_gastos.fecha)'), $array[1])
           ->where(DB::raw('reg_gastos.forma_de_pagos_id'),'LIKE',$gasto_filtro)
+          ->where('reg_gastos.pagado',"=",$pagado)
           ->get();
 
         return response()->json(["data"=>$reg_gastos->toArray()]);

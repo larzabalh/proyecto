@@ -15,7 +15,7 @@ $factory->define(Reg_Gasto::class, function (Faker $faker) {
       'fecha'=> $faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now', $timezone = date_default_timezone_get()),
       'gasto_id'=> App\Gasto::all()->random()->id,
       'forma_de_pagos_id'=> App\Forma_de_Pagos::all()->random()->id,
-      'importe'=> $faker->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
+      'importe'=> $faker->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 1000),
 
     ];
 });

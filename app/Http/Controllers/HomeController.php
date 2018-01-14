@@ -92,11 +92,35 @@ class HomeController extends Controller
           ->groupBy('gastos.gasto','tipos_de_gastos.tipo')
           ->get();
 
+      $ingresos_todos =DB::table('cta_cte_clientes')
+            ->select('clientes.cliente',DB::raw('sum(cta_cte_clientes.debe) as debe'))
+            ->join('users', 'cta_cte_clientes.user_id', '=', 'users.id')
+            ->join('clientes', 'cta_cte_clientes.cliente_id', '=', 'clientes.id')
+            ->where(DB::raw('cta_cte_clientes.user_id'),auth()->user()->id )
+            ->where(DB::raw('year(cta_cte_clientes.fecha)'), $array[0])
+            ->where(DB::raw('month(cta_cte_clientes.fecha)'), $array[1])
+            ->groupBy('clientes.cliente')
+            ->orderBy('clientes.cliente','asc')
+            ->get();
+
+      $ingresos_impagos =DB::table('cta_cte_clientes')
+            ->select('clientes.cliente',DB::raw('sum(cta_cte_clientes.debe - cta_cte_clientes.haber) as deuda'))
+            ->join('users', 'cta_cte_clientes.user_id', '=', 'users.id')
+            ->join('clientes', 'cta_cte_clientes.cliente_id', '=', 'clientes.id')
+            ->where(DB::raw('cta_cte_clientes.user_id'),auth()->user()->id )
+            ->where(DB::raw('year(cta_cte_clientes.fecha)'), $array[0])
+            ->where(DB::raw('month(cta_cte_clientes.fecha)'), $array[1])
+            ->groupBy('clientes.cliente')
+            ->orderBy('clientes.cliente','asc')
+            ->get();
+
         return response()->json([
                                 "reg_gastos"=>$reg_gastos->toArray(),
                                 "gastos"=>$gastos->toArray(),
                                 "tipos"=>$tipos->toArray(),
                                 "bancos"=>$bancos->toArray(),
+                                "ingresos_todos"=>$ingresos_todos->toArray(),
+                                "ingresos_impagos"=>$ingresos_impagos->toArray(),
                                 ]);
     }
 

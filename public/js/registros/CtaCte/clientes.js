@@ -55,7 +55,7 @@ function init(){
             saldo=saldo +data.debe-data.haber;
             numero = index+1
 
-            cell1.innerHTML = '<p name="id" id="id" class="text-center">'+data.id+'</p>';
+            cell1.innerHTML = '<p name="id" id="id['+data.id+']" class="text-center">'+data.id+'</p>';
             cell2.innerHTML = '<p name="numero_f[]" id="id" class="text-center">'+numero+'</p>';
             cell3.innerHTML = '<p name="codigo_p[]" class="text-center">'+data.periodo+'</p>';
             cell4.innerHTML = '<p name="debe[]" class="text-center ">'+numeral(data.debe).format('$0,0.00')+'</p>';
@@ -64,6 +64,11 @@ function init(){
             cell7.innerHTML = '<p name="precio_p[]" class="non-margin">'+data.disponibilidad_id+'</p>';
             cell8.innerHTML = '<p name="subtotal_p[]" class="non-margin">'+data.comentario+'</p>';
             cell9.innerHTML = "<button id='editar' type='button' class='editar btn btn-primary'><i class='fa fa-pencil-square-o'></i></button> <button id='eliminar' type='button'class='eliminar btn btn-danger' ><i class='fa fa-trash-o'></i></button>";
+
+  
+
+            if (data.pagado==1) {$("p["+index+"]").css({'text-decoration':'line-through'})}
+
 
           });
 

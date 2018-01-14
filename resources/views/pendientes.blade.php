@@ -6,6 +6,8 @@ Cta Cte Disponibilidades:
 
 * El menu dejarlo cerrado
 * El encabezado de las tablas de Cta Cte sea fijo, para que no se desplace hacia abajo!
+* Tachar las facturas que estan pagas con CSS
+* Tabla de Periodos? Como hacer para que pueda diferencia la fecha de los periodos? Quiero registrar una cobranza en el periodo 2017-12, pero que me quede registrado que se pago el 12/01/2018!!
 
 Liquidador:
 

@@ -14,8 +14,15 @@
     listar(periodo);
   }
 
+
+
+
+
   function listar(periodo)
   { 
+    $("#ingresos_todos").empty();
+    $("#ingresos_impagos").empty();
+    $("#ingresos_cobrados").empty();
     $("#tipos").empty();
     $("#gastos").empty();
     $("#bancos").empty();
@@ -24,10 +31,38 @@
 
         ajax(url, function (err, response) {
           if (err) return console.error(err)
-            var saldo = response.reg_gastos.reduce(function (accum, current) {
+
+          //INGRESOS
+          //todos los ingresos
+          var ingresos_todos = response.ingresos_todos.reduce(function (accum, current) {
+              return accum + current.debe
+            }, 0)
+          $('#titulo_ingresos_todos').html('<div><strong>'+numeral(ingresos_todos).format('$0,0.00')+'</strong></div>');
+          for (var i = 0; i < response.ingresos_todos.length; i++) {
+              $("#ingresos_todos").append("<div>"+response.ingresos_todos[i].cliente+"="
+                +numeral(response.ingresos_todos[i].debe).format('$0,0.00')+
+                "</div>");
+            }
+
+          //ingresos impagos
+          var ingresos_impagos = response.ingresos_impagos.reduce(function (accum, current) {
+              return accum + current.deuda
+            }, 0)
+          $('#titulo_ingresos_impagos').html('<div><strong>'+numeral(ingresos_impagos).format('$0,0.00')+'</strong></div>');
+          for (var i = 0; i < response.ingresos_impagos.length; i++) {
+            if (response.ingresos_impagos[i].deuda!=0) {
+              $("#ingresos_impagos").append("<div>"+response.ingresos_impagos[i].cliente+"="
+                +numeral(response.ingresos_impagos[i].deuda).format('$0,0.00')+
+                "</div>");
+            } 
+          }
+
+
+          //EGRESOS
+          var total_egresos = response.reg_gastos.reduce(function (accum, current) {
               return accum + current.importe
             }, 0)
-           $('#total_egresos').html('<div><strong>TOTAL EGRESOS:'+numeral(saldo).format('$0,0.00')+'</strong></div>');
+           $('#total_egresos').html('<div><strong>TOTAL EGRESOS:'+numeral(total_egresos).format('$0,0.00')+'</strong></div>');
             for (var i = 0; i < response.tipos.length; i++) {
               $("#tipos").append("<div>"+response.tipos[i].tipo+"="
                 +numeral(response.tipos[i].importe).format('$0,0.00')+
@@ -43,7 +78,10 @@
               $("#bancos").append("<div>"+response.bancos[i].banco+"="
                 +numeral(response.bancos[i].importe).format('$0,0.00')+
                 "</div>");
-            }  
+            }
+
+
+            $('#resultado').html('<div><strong>'+numeral(ingresos_todos-total_egresos).format('$0,0.00')+'</strong></div>');
 
         });
 

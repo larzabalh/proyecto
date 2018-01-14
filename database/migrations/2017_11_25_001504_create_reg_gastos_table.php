@@ -22,6 +22,7 @@ class CreateRegGastosTable extends Migration
             $table->integer('forma_de_pagos_id')->unsigned();
             $table->foreign('forma_de_pagos_id')->references('id')->on('forma_de_pagos')->onDelete('cascade');
             $table->float('importe');
+            $table->boolean('pagado')->nullable();//1 esta pago, vacio impago
             $table->string('comentario')->nullable();
             $table->timestamps();
         });

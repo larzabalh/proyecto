@@ -66,5 +66,8 @@ union
 select id, nombre from forma_de_pagos
 union
 select id, gasto from gastos
+-- con esto selecciono la vista!!!
+	select * from concepto
 
-select * from concepto
+-- operacion matematica
+select (debe-haber) as deuda from cta_cte_clientes

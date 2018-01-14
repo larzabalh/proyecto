@@ -144,12 +144,16 @@
             <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
               <label>FORMA DE PAGO:</label><br>
               <select class="form-control" name="periodo" id="gasto_filtro">
-                  <option selected></option>
-                  @foreach ($forma_pagos as $value)
-                  <option value="{{$value->id}}">{{$value->forma_pagos}}</option>
-                  @endforeach
               </select>
             </div>
+            <fieldset>
+                <label>
+                    <input type="radio" name="pagados" id="pagados" value="si"> PAGADOS
+                </label>
+                <label>
+                    <input type="radio" name="pagados" id="impagos" value="no" checked="checked"> IMPAGOS
+                </label>
+            </fieldset>
             <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
               <label>TOTAL DE GASTOS DEL PERIODO:</label><br>
               <h4 id="gasto"></h4>

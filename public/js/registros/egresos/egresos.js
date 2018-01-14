@@ -14,18 +14,28 @@ var token = $('#token').val();
       var periodo = year+"-"+month
       $('#gasto_filtro').append('<option value=0 selected="selected">TODOS</option>');
       var gasto_filtro = document.getElementById("gasto_filtro").value;
-
       $("#periodo").append("<option selected value='"+periodo+"'>"+periodo+"</option>");
+      var pagado =0;
+      
 
   function init(){
-    crearDataTable(periodo,gasto_filtro);      
+    //Le pongo al select, todas las cuentas de Gastos que tiene en ese periodo
+    var url = '/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+'/'+pagado+''
+    ajax(url, function (err, response) {
+          $("#gasto_filtro").empty();
+          $('#gasto_filtro').append('<option value=0 selected="selected">TODOS</option>');
+                $.each(response, function(i, value) {
+                  for (var i = 0; i < value.length; i++) {
+                      $("#gasto_filtro").append("<option value='"+response.data[i].forma_de_pagos_id+"'>"+response.data[i].caja+"</option>");
+                    };
+          });
+      });
+    crearDataTable(periodo,gasto_filtro,pagado);      
   }
 
-  function crearDataTable(periodo, gasto_filtro)
-  {   
-      var url = '/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+''
-
-
+  function crearDataTable(periodo, gasto_filtro,pagado)
+  { 
+    var url = '/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+'/'+pagado+''
     dataTable = $('#tabla_datos').DataTable({
         "aProcessing": true,//Activamos el procesamiento del datatables
             "aServerSide": true,//Paginación y filtrado realizados por el servidor
@@ -62,6 +72,8 @@ var token = $('#token').val();
             return accum + current.importe
           }, 0)
           document.getElementById('gasto').innerText = numeral(saldo).format('$0,0.00')
+
+
         });
 
 }
@@ -255,20 +267,77 @@ function update_data(data_edit)
   $("#periodo").change(function(e){
     var periodo = document.getElementById("periodo").value;
      $('#gasto_filtro').val(0)
-    var url = 'http://localhost:8000/registros/registrodegastos/listar/'+periodo+''
-
+    var url = 'http://localhost:8000/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+'/'+pagado+''
+    $("#impagos").prop('checked', 'checked');
     dataTable.destroy()
     crearDataTable(periodo);
+
+      ajax(url, function (err, response) {
+          //Le pongo al select, todas las cuentas de Gastos que tiene en ese periodo
+          $("#gasto_filtro").empty();
+          $('#gasto_filtro').append('<option value=0 selected="selected">TODOS</option>');
+                $.each(response, function(i, value) {
+                  for (var i = 0; i < value.length; i++) {
+                      $("#gasto_filtro").append("<option value='"+response.data[i].forma_de_pagos_id+"'>"+response.data[i].caja+"</option>");
+                    };
+          });
+      });
 });
 
   $("#gasto_filtro").change(function(e){
     var periodo = document.getElementById("periodo").value;
     var gasto_filtro = document.getElementById("gasto_filtro").value;
-    var url = 'http://localhost:8000/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+''
-
+    var url = 'http://localhost:8000/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+'/'+pagado+''
+    $("#impagos").prop('checked', 'checked');
     dataTable.destroy()
     crearDataTable(periodo,gasto_filtro);
 });
+
+$("#pagados").change(function(e){
+    var periodo = document.getElementById("periodo").value;
+     $('#gasto_filtro').val(0)
+    var url = 'http://localhost:8000/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+'/'+pagado+''
+
+    pagado =1;
+    dataTable.destroy()
+    crearDataTable(periodo,gasto_filtro,pagado);   
+
+      ajax(url, function (err, response) {
+          //Le pongo al select, todas las cuentas de Gastos que tiene en ese periodo
+          $("#gasto_filtro").empty();
+          $('#gasto_filtro').append('<option value=0 selected="selected">TODOS</option>');
+                $.each(response, function(i, value) {
+                  for (var i = 0; i < value.length; i++) {
+                      $("#gasto_filtro").append("<option value='"+response.data[i].forma_de_pagos_id+"'>"+response.data[i].caja+"</option>");
+                    };
+          });
+      });
+});
+
+$("#impagos").change(function(e){
+    var periodo = document.getElementById("periodo").value;
+     $('#gasto_filtro').val(0)
+    var url = 'http://localhost:8000/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+'/'+pagado+''
+
+    pagado =0;
+    dataTable.destroy()
+    crearDataTable(periodo,gasto_filtro,pagado);   
+
+      ajax(url, function (err, response) {
+          //Le pongo al select, todas las cuentas de Gastos que tiene en ese periodo
+          $("#gasto_filtro").empty();
+          $('#gasto_filtro').append('<option value=0 selected="selected">TODOS</option>');
+                $.each(response, function(i, value) {
+                  for (var i = 0; i < value.length; i++) {
+                      $("#gasto_filtro").append("<option value='"+response.data[i].forma_de_pagos_id+"'>"+response.data[i].caja+"</option>");
+                    };
+          });
+      });
+});
+
+
+
+
 
 
   init();
