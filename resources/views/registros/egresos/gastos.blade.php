@@ -60,6 +60,17 @@
                                 <label>COMENTARIO</label><br>
                                 <input type="text" class="form-control" name="gasto" id="comentario_alta">
                             </div>
+                            <fieldset>
+                                <label>
+                                    <input type="radio" name="pagar" id="impago" value="" checked="checked"> IMPAGO
+                                </label>
+                                <label>
+                                    <input type="radio" name="pagar" id="pagado" value="1"> PAGADO
+                                </label>
+                                <label style='display:none;' id="chek_banco">
+                                <input type="checkbox" name="banco" value="1" id="banco"> Registrar en el Banco<br>
+                                </label>
+                            </fieldset>
                             <div class="modal-footer">
                               <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
                               <button class="btn btn-primary" type="submit" id="btnEditar" style='display:none;'><i class="fa fa-edit"></i> editar</button>

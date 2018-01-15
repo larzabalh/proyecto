@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Reg_Gasto;
 use App\Forma_de_Pagos;
 use App\Gasto;
+use App\cta_cte_disponibilidades;
 
 class RegistrodeGastosController extends Controller
 {
@@ -73,7 +74,7 @@ class RegistrodeGastosController extends Controller
             DB::raw("concat(medios.nombre,'-',forma_de_pagos.nombre)as caja"),
             DB::raw("concat(year(fecha), '-', month(fecha)) as periodo"),
             DB::raw("CAST(fecha AS DATE) as fecha"),
-            'tipos_de_gastos.tipo','gastos.gasto','reg_gastos.id','reg_gastos.gasto_id','reg_gastos.forma_de_pagos_id','reg_gastos.importe','reg_gastos.comentario')
+            'tipos_de_gastos.tipo','gastos.gasto','reg_gastos.id','reg_gastos.gasto_id','reg_gastos.forma_de_pagos_id','reg_gastos.importe','reg_gastos.comentario','reg_gastos.pagado')
           ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
           ->join('forma_de_pagos', 'reg_gastos.forma_de_pagos_id', '=', 'forma_de_pagos.id')
           ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
@@ -97,13 +98,28 @@ class RegistrodeGastosController extends Controller
         'gasto_id' => $request->input('gasto_id'),
         'forma_de_pagos_id' => $request->input('forma_de_pagos_id'),
         'importe' => $request->input('importe'),
+        'pagado' => $request->input('pagado'),
         'comentario' => $request->input('comentario'),
         'user_id' => auth()->user()->id,
-        'masivo' => 1,
       ]);
       $reg_gastos->save();
 
-    /*  $reg_gastos ='ok';*/
+      if ($request->registrarBanco==1) {
+          //1- Busco disponibilidad_id de la forma de pago, para poder registrarlo!!!
+          $disponibilidad_id = Forma_de_Pagos::find($request->forma_de_pagos_id);
+
+          //2- Guardo, en la cuenta bancaria que corresponde
+          $disponibilidades = new cta_cte_disponibilidades([
+                  'fecha' =>$request->fecha,
+                  'debe' => 0,
+                  'haber' => $request->importe,
+                  'disponibilidad_id' =>$disponibilidad_id->disponibilidad_id,//estoy accediendo a la consulta que hice
+                  'id_concepto' => $request->gasto_id,
+                  'comentario' => $request->comentario,
+                  'user_id' => auth()->user()->id,
+                ]);
+          $disponibilidades->save();
+      }
 
       return response()->json(["data"=> $reg_gastos->toArray()]);
     }
@@ -115,9 +131,26 @@ class RegistrodeGastosController extends Controller
       $reg_gastos->gasto_id =  $request['gasto_id'];
       $reg_gastos->forma_de_pagos_id =  $request['forma_de_pagos_id'];
       $reg_gastos->importe =  $request['importe'];
+      $reg_gastos->pagado =  $request['pagado'];
       $reg_gastos->comentario =  $request['comentario'];
 
       $reg_gastos->save();
+
+      if ($request->registrarBanco==1) {
+          //1- Busco disponibilidad_id de la forma de pago, para poder registrarlo!!!
+          $disponibilidad_id = Forma_de_Pagos::find($request->forma_de_pagos_id);
+
+          //2- Guardo, en la cuenta bancaria que corresponde
+          $disponibilidades = new cta_cte_disponibilidades([
+                  'fecha' =>$request->fecha,
+                  'haber' => $request->importe,
+                  'disponibilidad_id' =>$disponibilidad_id->disponibilidad_id,//estoy accediendo a la consulta que hice
+                  'id_concepto' => $request->gasto_id,
+                  'comentario' => $request->comentario,
+                  'user_id' => auth()->user()->id,
+                ]);
+          $disponibilidades->save();
+      }
 
       return response()->json(["data" => $reg_gastos]);
     }

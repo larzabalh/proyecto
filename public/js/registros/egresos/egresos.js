@@ -35,6 +35,7 @@ var token = $('#token').val();
 
   function crearDataTable(periodo, gasto_filtro,pagado)
   { 
+
     var url = '/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+'/'+pagado+''
     dataTable = $('#tabla_datos').DataTable({
         "aProcessing": true,//Activamos el procesamiento del datatables
@@ -77,16 +78,28 @@ var token = $('#token').val();
         });
 
 }
+document.getElementById("pagado").addEventListener("change",function(e){
+  e.preventDefault();
+  $('#chek_banco').show();
+});
+document.getElementById("impago").addEventListener("change",function(e){
+  e.preventDefault();
+  $('input[name=banco]').prop('checked',false);
+  $('#chek_banco').hide();
+});
 
 /*ALTA DE REGISTROS!!!*/
 /*1- Abro el modal*/
 $('#add').click(function(){
+  $('input[name=banco]').prop('checked',false);
+  $('#chek_banco').hide();
 
   document.getElementById('fecha_alta').value = new Date().toDateInputValue();
   $('#selectGasto').prop('selectedIndex',0);
   $('#selectBanco').prop('selectedIndex',0);
   $('#importe_alta').val("");
   $('#comentario_alta').val("");
+  $("#impago").prop('checked', 'checked');
   $('#tituloModal').html('ALTA DE REGISTROS')
   $('#btnGuardar').show();
   $('#btnEditar').hide();
@@ -103,13 +116,16 @@ document.getElementById("btnGuardar").addEventListener("click",function(e){
   var forma_de_pagos_id = $('#selectBanco').val();
   var importe = $('#importe_alta').val();
   var comentario = $('#comentario_alta').val();
+  var pagado = $('input[name=pagar]:checked').val();
+  var registrarBanco = $('input[name=banco]:checked').val();
+
   if(fecha != '' && gasto_id != '' && forma_de_pagos_id != '' && importe != '')
   {
     $.ajax({
         url:url,
         headers: {'X-CSRF-TOKEN':token},
         method:"POST",
-        data:{fecha:fecha, gasto_id:gasto_id,forma_de_pagos_id:forma_de_pagos_id,importe:importe, comentario:comentario},
+        data:{fecha:fecha, gasto_id:gasto_id,forma_de_pagos_id:forma_de_pagos_id,importe:importe, comentario:comentario,pagado:pagado,registrarBanco:registrarBanco},
         success:function(data)
         {
           $('#altaModal').modal('hide') 
@@ -175,9 +191,21 @@ document.getElementById("form_eliminar").addEventListener("submit",function(e){
     /*EDICION!!!*/
 /*1- Abro el formulario modal para editar*/
 $(tabla_datos).on("click", "button.editar", function (e){
-  
   e.preventDefault();
+  $('input[name=banco]').prop('checked',false);
+  $('#chek_banco').hide();
   var data = dataTable.row( $(this).parents("tr") ).data();
+
+  console.log(data)
+   if (data.pagado===1) 
+          { 
+            $("#pagado").prop('checked', 'checked');
+            $('#chek_banco').hide();
+          } 
+        else {
+            $("#impago").prop('checked', 'checked');
+              }
+
   $('#id_editar').val(data.id).val();
   $('#fecha_alta').val(data.fecha).val();
   $('#selectGasto').val(data.gasto_id).val();
@@ -202,6 +230,8 @@ document.getElementById("btnEditar").addEventListener("click",function(e,data_ed
     var forma_de_pagos_id = $("#selectBanco").val();
     var importe = $("#importe_alta").val();
     var comentario = $("#comentario_alta").val();
+    var pagado = $('input[name=pagar]:checked').val();
+    var registrarBanco = $('input[name=banco]:checked').val();
 
     var data_edit = {
                 'id':id,
@@ -209,7 +239,9 @@ document.getElementById("btnEditar").addEventListener("click",function(e,data_ed
                 'gasto_id': gasto_id,
                 'forma_de_pagos_id':forma_de_pagos_id,
                 'importe':importe,
-                'comentario':comentario
+                'comentario':comentario,
+                'pagado':pagado,
+                'registrarBanco':registrarBanco
                 };
 
   if(data_edit.fecha != '' && data_edit.gasto_id != '' && data_edit.forma_de_pagos_id != '' && data_edit.importe != '')

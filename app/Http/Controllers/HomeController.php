@@ -114,6 +114,20 @@ class HomeController extends Controller
             ->orderBy('clientes.cliente','asc')
             ->get();
 
+      $saldosBancarios =DB::table('cta_cte_disponibilidades')
+            ->select(
+                    DB::raw("concat(medios.nombre,'-',disponibilidades.nombre)as banco"),
+                    DB::raw('sum(cta_cte_disponibilidades.debe - cta_cte_disponibilidades.haber) as saldo'))
+            ->join('users', 'cta_cte_disponibilidades.user_id', '=', 'users.id')
+            ->join('disponibilidades', 'cta_cte_disponibilidades.disponibilidad_id', '=', 'disponibilidades.id')
+            ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
+            ->where(DB::raw('cta_cte_disponibilidades.user_id'),auth()->user()->id )
+            ->where(DB::raw('year(cta_cte_disponibilidades.fecha)'), $array[0])
+            ->where(DB::raw('month(cta_cte_disponibilidades.fecha)'), $array[1])
+            ->groupBy('banco')
+            ->orderBy('banco','asc')
+            ->get();
+
         return response()->json([
                                 "reg_gastos"=>$reg_gastos->toArray(),
                                 "gastos"=>$gastos->toArray(),
@@ -121,6 +135,7 @@ class HomeController extends Controller
                                 "bancos"=>$bancos->toArray(),
                                 "ingresos_todos"=>$ingresos_todos->toArray(),
                                 "ingresos_impagos"=>$ingresos_impagos->toArray(),
+                                "saldosBancarios"=>$saldosBancarios->toArray(),
                                 ]);
     }
 

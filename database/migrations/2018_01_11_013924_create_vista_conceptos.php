@@ -14,11 +14,13 @@ class CreateVistaConceptos extends Migration
     public function up()
     {
       DB::statement( 'create view view_conceptos as 
-                        select id, user_id,cliente as concepto from clientes
+                        select clientes.id, clientes.user_id,clientes.cliente as concepto from clientes
                         union
-                        select id, user_id,nombre from forma_de_pagos
+                        select forma_de_pagos.id, forma_de_pagos.user_id,concat(medios.nombre, "-" ,forma_de_pagos.nombre) as concepto from forma_de_pagos
+                            join disponibilidades on forma_de_pagos.disponibilidad_id = disponibilidades.id
+                            join medios on disponibilidades.medio_id = medios.id
                         union
-                        select id, user_id,gasto from gastos' 
+                        select gastos.id, gastos.user_id,gastos.gasto as concepto from gastos' 
                     );
     }
 

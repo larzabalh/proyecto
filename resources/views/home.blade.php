@@ -30,7 +30,7 @@
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#home">TODOS</a></li>
 						<li><a data-toggle="tab" href="#menu1">IMPAGOS</a></li>
-						<li><a data-toggle="tab" href="#menu2">COBRADOS</a></li>
+						<li><a data-toggle="tab" href="#menu2">BANCOS</a></li>
 					</ul>
 					<div class="tab-content">
 						<div id="home" class="tab-pane fade in active">
@@ -42,8 +42,8 @@
 							<p id="ingresos_impagos"></p>
 						</div>
 						<div id="menu2" class="tab-pane fade">
-							<h3 id="titulo_ingresos_cobrados"></h3>
-							<p id="ingresos_cobrados"></p>
+							<h3 id="titulo_saldosBancarios"></h3>
+							<p id="saldosBancarios"></p>
 						</div>
 					</div>
 			</div>

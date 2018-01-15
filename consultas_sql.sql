@@ -63,7 +63,9 @@ select forma_de_pagos.nombre,forma_de_pagos.id forma_pago_id from forma_de_pagos
 create view concepto as 
 select id, cliente as concepto from clientes
 union
-select id, nombre from forma_de_pagos
+select forma_de_pagos.id, concat(medios.nombre, '-' ,forma_de_pagos.nombre) as concepto from forma_de_pagos
+join disponibilidades on forma_de_pagos.disponibilidad_id = disponibilidades.id
+join medios on disponibilidades.medio_id = medios.id
 union
 select id, gasto from gastos
 -- con esto selecciono la vista!!!

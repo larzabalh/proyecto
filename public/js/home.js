@@ -57,6 +57,18 @@
             } 
           }
 
+          //BANCOS
+          var saldo = response.saldosBancarios.reduce(function (accum, current) {
+              return accum + current.saldo
+            }, 0)
+          $('#titulo_saldosBancarios').html('<div><strong>'+numeral(saldo).format('$0,0.00')+'</strong></div>');
+          for (var i = 0; i < response.saldosBancarios.length; i++) {
+              $("#saldosBancarios").append("<div>"+response.saldosBancarios[i].banco+"="
+                +numeral(response.saldosBancarios[i].saldo).format('$0,0.00')+
+                "</div>");
+          }
+          
+
 
           //EGRESOS
           var total_egresos = response.reg_gastos.reduce(function (accum, current) {
