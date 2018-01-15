@@ -22,7 +22,7 @@
   { 
     $("#ingresos_todos").empty();
     $("#ingresos_impagos").empty();
-    $("#ingresos_cobrados").empty();
+    $("#saldosBancarios").empty();
     $("#tipos").empty();
     $("#gastos").empty();
     $("#bancos").empty();

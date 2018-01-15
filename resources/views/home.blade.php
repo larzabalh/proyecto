@@ -22,71 +22,213 @@
 			</div>
 		</div>
 
-		<div class="col-lg-6">
-			<div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3><CENTER id="total_ingresos">INGRESOS</CENTER></h3>
-                </div>
-					<ul class="nav nav-tabs">
-						<li class="active"><a data-toggle="tab" href="#home">TODOS</a></li>
-						<li><a data-toggle="tab" href="#menu1">IMPAGOS</a></li>
-						<li><a data-toggle="tab" href="#menu2">BANCOS</a></li>
-					</ul>
-					<div class="tab-content">
-						<div id="home" class="tab-pane fade in active">
-							<h3 id="titulo_ingresos_todos"></h3>
-							<p id="ingresos_todos"></p>
-						</div>
-						<div id="menu1" class="tab-pane fade">
-							<h3 id="titulo_ingresos_impagos"></h3>
-							<p id="ingresos_impagos"></p>
-						</div>
-						<div id="menu2" class="tab-pane fade">
-							<h3 id="titulo_saldosBancarios"></h3>
-							<p id="saldosBancarios"></p>
-						</div>
-					</div>
-			</div>
-		</div>
-
-
-		
-		<div class="col-lg-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3><CENTER id="total_egresos"></CENTER></h3>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-pills">
-                                <li class="active"><a href="#gastos_primero" data-toggle="tab">TIPOS</a>
-                                </li>
-                                <li><a href="#gastos_segundo" data-toggle="tab">GASTOS</a>
-                                </li>
-                                <li><a href="#gastos_tercero" data-toggle="tab">MEDIOS DE PAGO</a>
-                                </li>
-                            </ul>
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div class="tab-pane fade in active" id="gastos_primero">
-                                    <h4>Tipos de Gastos</h4>
-                                    <p id="tipos"></p>
-                                </div>
-                                <div class="tab-pane fade" id="gastos_segundo">
-                                    <h4>Detalle de Gastos</h4>
-                                    <p id="gastos"></p>
-                                </div>
-                                <div class="tab-pane fade" id="gastos_tercero">
-                                    <h4>Medios de Pagos</h4>
-                                    <p id="bancos"></p>
-                                </div>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#reales">REALES</a></li>
+            <li><a data-toggle="tab" href="#menuprincipal1">PROYECTADO</a></li>
+            <li><a data-toggle="tab" href="#menuprincipal2">OTRO</a></li>
+        </ul>
+        <div class="tab-content">
+            <!-- Aca arranca la primer solapa!! -->
+            <div id="reales" class="tab-pane fade in active">                    
+            		<div class="col-lg-6">
+            			<div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3><CENTER id="total_ingresos">INGRESOS</CENTER></h3>
                             </div>
-                        </div>
-                        <!-- /.panel-body -->
+            					<ul class="nav nav-tabs">
+            						<li class="active"><a data-toggle="tab" href="#home">TODOS</a></li>
+            						<li><a data-toggle="tab" href="#menu1">IMPAGOS</a></li>
+            						<li><a data-toggle="tab" href="#menu2">BANCOS</a></li>
+            					</ul>
+            					<div class="tab-content">
+            						<div id="home" class="tab-pane fade in active">
+            							<h3 id="titulo_ingresos_todos"></h3>
+            							<p id="ingresos_todos"></p>
+            						</div>
+            						<div id="menu1" class="tab-pane fade">
+            							<h3 id="titulo_ingresos_impagos"></h3>
+            							<p id="ingresos_impagos"></p>
+            						</div>
+            						<div id="menu2" class="tab-pane fade">
+            							<h3 id="titulo_saldosBancarios"></h3>
+            							<p id="saldosBancarios"></p>
+            						</div>
+            					</div>
+            			</div>
+            		</div>
+            		<div class="col-lg-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3><CENTER id="total_egresos"></CENTER></h3>
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <!-- Nav tabs -->
+                                        <ul class="nav nav-pills">
+                                            <li class="active"><a href="#gastos_primero" data-toggle="tab">TIPOS</a>
+                                            </li>
+                                            <li><a href="#gastos_segundo" data-toggle="tab">GASTOS</a>
+                                            </li>
+                                            <li><a href="#gastos_tercero" data-toggle="tab">MEDIOS DE PAGO</a>
+                                            </li>
+                                        </ul>
+                                        <!-- Tab panes -->
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade in active" id="gastos_primero">
+                                                <h4>Tipos de Gastos</h4>
+                                                <p id="tipos"></p>
+                                            </div>
+                                            <div class="tab-pane fade" id="gastos_segundo">
+                                                <h4>Detalle de Gastos</h4>
+                                                <p id="gastos"></p>
+                                            </div>
+                                            <div class="tab-pane fade" id="gastos_tercero">
+                                                <h4>Medios de Pagos</h4>
+                                                <p id="bancos"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
                     </div>
-                    <!-- /.panel -->
-        </div>
+            </div>
+            
+            <!-- Aca arranca la otro solapa!! -->
+            <div id="menuprincipal1" class="tab-pane fade">                    
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3><CENTER id="total_ingresos">INGRESOS</CENTER></h3>
+                            </div>
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a data-toggle="tab" href="#home2">TODOS</a></li>
+                                    <li><a data-toggle="tab" href="#menu21">IMPAGOS</a></li>
+                                    <li><a data-toggle="tab" href="#menu22">BANCOS</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="home2" class="tab-pane fade in active">
+                                        <h3 id="titulo_ingresos_todos"></h3>
+                                        <p id="ingresos_todos"></p>
+                                    </div>
+                                    <div id="menu21" class="tab-pane fade">
+                                        <h3 id="titulo_ingresos_impagos"></h3>
+                                        <p id="ingresos_impagos"></p>
+                                    </div>
+                                    <div id="menu22" class="tab-pane fade">
+                                        <h3 id="titulo_saldosBancarios"></h3>
+                                        <p id="saldosBancarios"></p>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3><CENTER id="total_egresos">EGRESOS 2</CENTER></h3>
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <!-- Nav tabs -->
+                                        <ul class="nav nav-pills">
+                                            <li class="active"><a href="#gastos_primero_2" data-toggle="tab">TIPOS</a>
+                                            </li>
+                                            <li><a href="#gastos_segundo_2" data-toggle="tab">GASTOS</a>
+                                            </li>
+                                            <li><a href="#gastos_tercero_2" data-toggle="tab">MEDIOS DE PAGO</a>
+                                            </li>
+                                        </ul>
+                                        <!-- Tab panes -->
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade in active" id="gastos_primero_2">
+                                                <h4>Tipos de Gastos</h4>
+                                                <p id="tipos"></p>
+                                            </div>
+                                            <div class="tab-pane fade" id="gastos_segundo_2">
+                                                <h4>Detalle de Gastos</h4>
+                                                <p id="gastos"></p>
+                                            </div>
+                                            <div class="tab-pane fade" id="gastos_tercero_2">
+                                                <h4>Medios de Pagos</h4>
+                                                <p id="bancos"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                    </div>
+            </div>
+            
+            <!-- Aca arranca la otro solapa!! -->
+            <div id="menuprincipal2" class="tab-pane fade">                    
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3><CENTER id="total_ingresos">OTRA COSA</CENTER></h3>
+                            </div>
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a data-toggle="tab" href="#home3">TODOS</a></li>
+                                    <li><a data-toggle="tab" href="#menu31">IMPAGOS</a></li>
+                                    <li><a data-toggle="tab" href="#menu32">BANCOS</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="home3" class="tab-pane fade in active">
+                                        <h3 id="titulo_ingresos_todos"></h3>
+                                        <p id="ingresos_todos"></p>
+                                    </div>
+                                    <div id="menu31" class="tab-pane fade">
+                                        <h3 id="titulo_ingresos_impagos"></h3>
+                                        <p id="ingresos_impagos"></p>
+                                    </div>
+                                    <div id="menu32" class="tab-pane fade">
+                                        <h3 id="titulo_saldosBancarios"></h3>
+                                        <p id="saldosBancarios"></p>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3><CENTER id="total_egresos">OTRA COSA</CENTER></h3>
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <!-- Nav tabs -->
+                                        <ul class="nav nav-pills">
+                                            <li class="active"><a href="#gastos_primero_3" data-toggle="tab">otro</a>
+                                            </li>
+                                            <li><a href="#gastos_segundo_3" data-toggle="tab">otro 2</a>
+                                            </li>
+                                            <li><a href="#gastos_tercero_3" data-toggle="tab">OTRO 3</a>
+                                            </li>
+                                        </ul>
+                                        <!-- Tab panes -->
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade in active" id="gastos_primero_3">
+                                                <h4>Tipos de Gastos</h4>
+                                                <p id="tipos"></p>
+                                            </div>
+                                            <div class="tab-pane fade" id="gastos_segundo_2">
+                                                <h4>Detalle de Gastos</h4>
+                                                <p id="gastos"></p>
+                                            </div>
+                                            <div class="tab-pane fade" id="gastos_tercero_3">
+                                                <h4>Medios de Pagos</h4>
+                                                <p id="bancos"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>
+                                <!-- /.panel -->
+                    </div>
+            </div>
+            
+        </div><!-- aca termina la pantalla de solapas -->
 	</div>
 </div>
 

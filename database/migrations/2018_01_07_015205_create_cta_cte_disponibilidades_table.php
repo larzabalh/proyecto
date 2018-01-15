@@ -19,8 +19,8 @@ class CreateCtaCteDisponibilidadesTable extends Migration
             $table->timestamp('fecha')->nullable();
             $table->integer('cliente_id')->unsigned()->nullable();
             $table->foreign('cliente_id')->references('id')->on('clientes');
-            $table->float('debe')->nullable();
-            $table->float('haber')->nullable();
+            $table->float('debe')->default(0);
+            $table->float('haber')->default(0);
             $table->integer('disponibilidad_id')->unsigned()->nullable();
             $table->foreign('disponibilidad_id')->references('id')->on('disponibilidades')->onDelete('cascade');
             $table->integer('id_CtaCteCliente')->unsigned()->nullable();
