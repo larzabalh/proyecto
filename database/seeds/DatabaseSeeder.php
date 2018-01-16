@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Cliente;
-use App\Reg_Gasto;
+use App\GastosMensuales;
 use App\Forma_de_Pagos;
 use Illuminate\Foundation\Auth\User;
 
@@ -157,7 +157,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $users = factory(Illuminate\Foundation\Auth\User::class)->times(1)->create();
-        $reg_gasto = factory(Reg_Gasto::class)->times(120)->create();
+        $gastos_mensuales = factory(GastosMensuales::class)->times(60)->create();
         
 
       }

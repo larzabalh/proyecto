@@ -75,6 +75,7 @@
             <ul class="treeview-menu">
               <li><a href="{{ route('tipos_de_gastos.index')}}"><i class="fa fa-circle-o"></i> Tipos de Gastos</a></li>
               <li><a href="{{ route('gasto.index')}}"><i class="fa fa-circle-o"></i> Gastos</a></li>
+              <li><a href="{{ route('gastos_mensuales.index')}}"><i class="fa fa-circle-o"></i> Gastos Mensuales</a></li>
               <li><a href="{{route ('clientes.index')}}"><i class="fa fa-circle-o"></i> Clientes</a></li>
               <li><a href="{{route ('medios.index')}}"><i class="fa fa-circle-o"></i> Medios</a></li>
               <li><a href="{{route ('disponibilidades.index')}}"><i class="fa fa-circle-o"></i> Disponibilidades</a></li>
@@ -90,7 +91,8 @@
             </a>
             <ul class="treeview-menu">
               <li><a href="{{route ('ingresos.index')}}"><i class="fa fa-circle-o"></i> Ingresos</a></li>
-              <li><a href="{{route ('registrodegastos.index')}}"><i class="fa fa-circle-o"></i> Egresos</a></li>
+              <li><a href="{{route ('egresosMasivos.index')}}"><i class="fa fa-circle-o"></i> Egresos Masivos</a></li>
+              <li><a href="{{route ('registrodegastos.index')}}"><i class="fa fa-circle-o"></i> Egresos Individuales</a></li>
             </ul>
           </li>
           <li class="treeview">
