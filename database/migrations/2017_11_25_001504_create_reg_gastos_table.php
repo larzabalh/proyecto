@@ -24,6 +24,7 @@ class CreateRegGastosTable extends Migration
             $table->float('importe');
             $table->boolean('pagado')->nullable();//1 esta pago, vacio impago
             $table->string('comentario')->nullable();
+            $table->boolean('masivo')->nullable();
             $table->timestamps();
         });
     }

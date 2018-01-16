@@ -23,26 +23,17 @@ class GastosMensualesController extends Controller
     public function index()
     {
 
-      $gasto =DB::table('gastos_mensuales')
-          /*->select(DB::raw("distinct(concat(tipos_de_gastos.tipo,'-',gastos.gasto))as gasto"),'gastos_mensuales.gasto_id as id')*/
-          ->select(DB::raw("distinct(gastos.gasto)as gasto"),'gastos_mensuales.gasto_id as id')
-          ->join('gastos', 'gastos_mensuales.gasto_id', '=', 'gastos.id')
-          ->join('forma_de_pagos', 'gastos_mensuales.forma_de_pagos_id', '=', 'forma_de_pagos.id')
-          ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
-          ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
+      $gasto =DB::table('gastos')
+          ->select('gastos.*')
           ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
-          ->join('users', 'gastos.user_id', '=', 'users.id')
-          ->where(DB::raw('users.id'),auth()->user()->id )
+          ->where('gastos.user_id',"=",auth()->user()->id )
           ->get();
 
-      $forma_pagos =DB::table('gastos_mensuales')
-          ->select(DB::raw("distinct(concat(medios.nombre,'-',forma_de_pagos.nombre))as forma_pagos"), 'gastos_mensuales.forma_de_pagos_id as id')
-          ->join('gastos', 'gastos_mensuales.gasto_id', '=', 'gastos.id')
-          ->join('forma_de_pagos', 'gastos_mensuales.forma_de_pagos_id', '=', 'forma_de_pagos.id')
+      $forma_pagos =DB::table('forma_de_pagos')
+          ->select(DB::raw("distinct(concat(medios.nombre,'-',forma_de_pagos.nombre))as forma_pagos"),'forma_de_pagos.*')
           ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
           ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
-          ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
-          ->join('users', 'gastos.user_id', '=', 'users.id')
+          ->join('users', 'forma_de_pagos.user_id', '=', 'users.id')
           ->where(DB::raw('users.id'),auth()->user()->id )
           ->orderBy('forma_pagos','ASC')
           ->get();

@@ -18,7 +18,7 @@ class egresosMasivosController extends Controller
      */
     public function index()
     {
-        $forma_pagos =DB::table('forma_de_pagos')
+        /*$forma_pagos =DB::table('forma_de_pagos')
           ->select(DB::raw("distinct(concat(medios.nombre,'-',forma_de_pagos.nombre))as nombre"),'forma_de_pagos.id','forma_de_pagos.disponibilidad_id')
           ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
           ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
@@ -27,12 +27,44 @@ class egresosMasivosController extends Controller
           ->orderBy('nombre','ASC')
           ->get();
 
-        $gastos =DB::table('gastos')
+        $forma_pagos =DB::table('gastos')
           ->select('gastos.*','tipos_de_gastos.tipo')
           ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
           ->join('users', 'gastos.user_id', '=', 'users.id')
           ->where(DB::raw('users.id'),auth()->user()->id )
-          ->get();
+          ->get();*/
+
+        $gastos_mensuales=DB::table('gastos_mensuales')
+           ->select('gastos_mensuales.gasto_id','gastos.gasto','forma_de_pagos.nombre as forma_pago','gastos_mensuales.forma_de_pagos_id')
+            ->join('gastos', 'gastos_mensuales.gasto_id', '=', 'gastos.id')
+            ->join('forma_de_pagos', 'gastos_mensuales.forma_de_pagos_id', '=', 'forma_de_pagos.id')
+            ->join('users', 'gastos_mensuales.user_id', '=', 'users.id')
+            ->where(DB::raw('users.id'),auth()->user()->id )
+            ->groupBy('gasto_id')
+            ->groupBy('gasto')
+            ->groupBy('forma_de_pagos_id')
+            ->groupBy('forma_pago')
+            ->orderBy('gastos.gasto','ASC')
+            ->orderBy('forma_de_pagos.nombre','ASC')
+            ->get();
+
+/*        dd($gastos_mensuales);*/
+
+        $forma_pagos=DB::table('gastos_mensuales')
+            ->select(DB::raw("distinct(forma_de_pagos.nombre)as forma_de_pago"), 'gastos_mensuales.forma_de_pagos_id')
+            ->join('forma_de_pagos', 'gastos_mensuales.forma_de_pagos_id', '=', 'forma_de_pagos.id')
+            ->join('users', 'gastos_mensuales.user_id', '=', 'users.id')
+            ->where(DB::raw('users.id'),auth()->user()->id )
+            ->orderBy('forma_de_pagos.nombre','ASC')
+            ->get();
+
+        $gastos=DB::table('gastos_mensuales')
+            ->select(DB::raw("distinct(gastos.gasto)as gasto"), 'gastos_mensuales.gasto_id')
+            ->join('gastos', 'gastos_mensuales.gasto_id', '=', 'gastos.id')
+            ->join('users', 'gastos_mensuales.user_id', '=', 'users.id')
+            ->where(DB::raw('users.id'),auth()->user()->id )
+            ->orderBy('gastos.gasto','ASC')
+            ->get();
 
         $tipos_de_gastos =DB::table('tipos_de_gastos')
           ->select('tipos_de_gastos.*')
@@ -45,6 +77,7 @@ class egresosMasivosController extends Controller
         return view('registros.egresos.egresosMasivos')
                     ->with('forma_pagos', $forma_pagos)
                     ->with('gastos', $gastos)
+                    ->with('gastos_mensuales', $gastos_mensuales)
                     ->with('tipos_de_gastos', $tipos_de_gastos);
     }
 

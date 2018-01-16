@@ -20,8 +20,8 @@
                   </div>
                 </div>
                 
-                @foreach ($forma_pagos as $value)
-                <div class="row">{{$value->nombre}}
+                @foreach ($gastos_mensuales as $value)
+                <div class="row">{{$value->forma_pago}}
                   <form name="" id="" method="POST">
                         <input type="hidden" id="token" value="{{ csrf_token() }}">
                           <div id="alert_message"></div>
@@ -34,7 +34,7 @@
                                <th width='25%'>IMPORTE</th>
                                <th width='25%'>COMENTARIO</th>
                             </tr>
-                            @foreach ($gastos as $value)
+                            @foreach ($gastos_mensuales as $value)
                             <tr>
                               <td></td>
                               <td>{{$value->gasto}}</td>
@@ -52,7 +52,7 @@
                               <td><input type="decimal" class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" name="comentarios[]" value="Honorario Mensual">
                               </td>
                             </tr>
-                            @endforeach  
+                            @endforeach
                             </tbody>
                           </table>
                   </form>
