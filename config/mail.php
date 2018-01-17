@@ -29,7 +29,7 @@ return [
     |
     */
     /*'host' => env('MAIL_HOST', 'smtp.mailgun.org'),*/
-    'host' => env('MAIL_HOST', 'bravada.websitewelcome.com'),
+    'host' => env('MAIL_HOST', 'mail.tucontadorpublico.com.ar'),
 
     /*
     |--------------------------------------------------------------------------
@@ -71,7 +71,7 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
+    'encryption' => env('MAIL_ENCRYPTION', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -84,9 +84,9 @@ return [
     |
     */
 
-    'username' => env('MAIL_USERNAME'),
+    'username' => env('MAIL_USERNAME', 'hernan@tucontadorpublico.com.ar'),
 
-    'password' => env('MAIL_PASSWORD'),
+    'password' => env('MAIL_PASSWORD', '321654987'),
 
     /*
     |--------------------------------------------------------------------------
