@@ -16,6 +16,9 @@ return $user;
   echo "<pre>{$query->sql}</pre>";
 });*/
 
+Route::resource('/contactanos', 'contactanosController');
+
+
 Route::get('/configuracion/egresos/gastos_mensuales/listar/{gasto_filtro}', 'GastosMensualesController@listar');
 Route::post('/configuracion/egresos/gastos_mensuales/editar/{id}', 'GastosMensualesController@editar');
 Route::post('/configuracion/egresos/gastos_mensuales/eliminar/{id}', 'GastosMensualesController@eliminar');
