@@ -60,9 +60,8 @@ Route::post('/registros/registrodegastos/editar/{id}', 'RegistrodeGastosControll
 Route::post('/registros/registrodegastos/eliminar/{id}', 'RegistrodeGastosController@eliminar');
 Route::resource('/registros/registrodegastos', 'RegistrodeGastosController');
 
-Route::get('/registros/egresos/egresosMasivos/listar/{periodo}/{gasto_filtro}/{pagado}', 'egresosMasivosController@listar');
-Route::post('/registros/egresos/egresosMasivos/editar/{id}', 'egresosMasivosController@editar');
-Route::post('/registros/egresos/egresosMasivos/eliminar/{id}', 'egresosMasivosController@eliminar');
+Route::get('/registros/egresos/egresosMasivos/listar', 'egresosMasivosController@listar');
+Route::get('/registros/egresos/egresosMasivos/verificar', 'egresosMasivosController@verificarUnSoloEgresoMasivo');
 Route::resource('/registros/egresos/egresosMasivos', 'egresosMasivosController');
 
 

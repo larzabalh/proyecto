@@ -29,26 +29,18 @@ class RegistrodeGastosController extends Controller
        ->orderby('fecha','ASC')
         ->get();
 
-      $gasto =DB::table('reg_gastos')
-          /*->select(DB::raw("distinct(concat(tipos_de_gastos.tipo,'-',gastos.gasto))as gasto"),'reg_gastos.gasto_id as id')*/
-          ->select(DB::raw("distinct(gastos.gasto)as gasto"),'reg_gastos.gasto_id as id')
-          ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
-          ->join('forma_de_pagos', 'reg_gastos.forma_de_pagos_id', '=', 'forma_de_pagos.id')
-          ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
-          ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
-          ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
+      $gasto =DB::table('gastos')
+          
+          ->select('gastos.id','gastos.gasto')
           ->join('users', 'gastos.user_id', '=', 'users.id')
           ->where(DB::raw('users.id'),auth()->user()->id )
           ->get();
 
-      $forma_pagos =DB::table('reg_gastos')
-          ->select(DB::raw("distinct(concat(medios.nombre,'-',forma_de_pagos.nombre))as forma_pagos"), 'reg_gastos.forma_de_pagos_id as id')
-          ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
-          ->join('forma_de_pagos', 'reg_gastos.forma_de_pagos_id', '=', 'forma_de_pagos.id')
+      $forma_pagos =DB::table('forma_de_pagos')
+          ->select(DB::raw("distinct(concat(medios.nombre,'-',forma_de_pagos.nombre))as forma_pagos"), 'forma_de_pagos.id')
           ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
           ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
-          ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
-          ->join('users', 'gastos.user_id', '=', 'users.id')
+          ->join('users', 'forma_de_pagos.user_id', '=', 'users.id')
           ->where(DB::raw('users.id'),auth()->user()->id )
           ->orderBy('forma_pagos','ASC')
           ->get();
