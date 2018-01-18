@@ -49,7 +49,7 @@ class egresosMasivosController extends Controller
             ->orderBy('forma_de_pagos.nombre','ASC')
             ->get();
 
-        //dd($gastos_mensuales);
+  /*      dd($gastos_mensuales);*/
 
         $forma_pagos=DB::table('gastos_mensuales')
             ->select(DB::raw("distinct(forma_de_pagos.nombre)as forma_de_pago"), 'gastos_mensuales.forma_de_pagos_id')
