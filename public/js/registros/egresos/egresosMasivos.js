@@ -48,6 +48,21 @@ document.getElementById("btnAsignar").addEventListener("click",function(e){
   var importe= [];$("input[name^='importe']").each(function() {importe.push ($(this).val());});
   var comentarios= [];$("input[name^='comentarios']").each(function() {comentarios.push ($(this).val());});
 
+  var calcular= [];$("input[name^='calcular']").each(function() {calcular.push ($(this).attr("name"));});
+  var valor= [];$("input[name^='calcular']").each(function() {valor.push ($(this).val());});
+  var subtotal=0;
+  var actual='';
+
+  for (var i = 0; i < calcular.length; i++) {
+      actual=calcular[i]
+      if (actual ==calcular[i]) {
+        subtotal=subtotal+ parseFloat(valor[i]);
+      }
+    
+    }
+    console.log(subtotal);
+
+
   var data = [];
   var len = gastos.length;
   for (var i = 0; i < len; i++) {

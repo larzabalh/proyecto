@@ -44,7 +44,7 @@ class contactanosController extends Controller
             [ 'request' => $request->all() ]
             ,function($msj){
             $msj->subject('Correo de Contacto');
-            $msj->to('jcgljuancarlos@gmail.com');
+            $msj->to('larzabalh@gmail.com');
 
         });
 

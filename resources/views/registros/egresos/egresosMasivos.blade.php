@@ -53,6 +53,7 @@
                             <tr>
                               <td>{{$x}}</td>
                               <td>
+                                <input type="hidden" name="calcular[{{$data->forma_de_pagos_id}}]" value="{{$data->importe}}" id="calcular">
                                 <input type="hidden" name="gastos[{{$data->gasto_id}}]" value="{{$data->gasto_id}}">
                                 <input type="hidden" name="forma_de_pagos_id[{{$data->forma_de_pagos_id}}]" value="{{$data->forma_de_pagos_id}}">
 
