@@ -30,8 +30,8 @@
         <div class="tab-content">
             <!-- Aca arranca la primer solapa!! -->
             <div id="reales" class="tab-pane fade in active">                    
-            		<div class="col-lg-6">
-            			<div class="panel panel-default">
+            		<div class="col-lg-6"><br>
+            			<div class="panel panel-default"> 
                             <div class="panel-heading">
                                 <h3><CENTER id="total_ingresos">INGRESOS</CENTER></h3>
                             </div>
@@ -56,7 +56,7 @@
             					</div>
             			</div>
             		</div>
-            		<div class="col-lg-6">
+            		<div class="col-lg-6"><br>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h3><CENTER id="total_egresos"></CENTER></h3>
@@ -96,7 +96,7 @@
             
             <!-- Aca arranca la otro solapa!! -->
             <div id="menuprincipal1" class="tab-pane fade">                    
-                    <div class="col-lg-6">
+                    <div class="col-lg-6"><br>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3><CENTER id="total_ingresos">INGRESOS</CENTER></h3>
@@ -123,7 +123,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-6"><br>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h3><CENTER id="total_egresos">EGRESOS 2</CENTER></h3>
@@ -163,7 +163,7 @@
             
             <!-- Aca arranca la otro solapa!! -->
             <div id="menuprincipal2" class="tab-pane fade">                    
-                    <div class="col-lg-6">
+                    <div class="col-lg-6"><br>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3><CENTER id="total_ingresos">OTRA COSA</CENTER></h3>
@@ -190,7 +190,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-6"><br>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h3><CENTER id="total_egresos">OTRA COSA</CENTER></h3>

@@ -124,17 +124,20 @@ class egresosMasivosController extends Controller
         $importe=$datos['importe'];
         $comentarios=$datos['comentarios'];
 
-
-        $Reg_Gasto = new Reg_Gasto([
-                'fecha' =>$fecha,
-                'gasto_id' =>$gasto_id,
-                'forma_de_pagos_id' =>$forma_de_pagos_id,
-                'importe' => $importe,
-                'comentario' => $comentarios,
-                'user_id' => auth()->user()->id,
-                'masivo' => 1,
-              ]);
-         $Reg_Gasto->save();
+        if ($importe!=0) {//esto lo hago para no ingresar los registros con importe $0
+            
+            $Reg_Gasto = new Reg_Gasto([
+                    'fecha' =>$fecha,
+                    'gasto_id' =>$gasto_id,
+                    'forma_de_pagos_id' =>$forma_de_pagos_id,
+                    'importe' => $importe,
+                    'comentario' => $comentarios,
+                    'user_id' => auth()->user()->id,
+                    'masivo' => 1,
+                  ]);
+             $Reg_Gasto->save();
+            
+            }
 
         }
       return response()->json(["data"=>$Reg_Gasto->toArray()]);

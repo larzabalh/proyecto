@@ -105,18 +105,18 @@ class IngresosController extends Controller
         $honorarios=$datos['honorarios'];
         $comentarios=$datos['comentarios'];
 
-
-        $CtaCteCliente = new CtaCteCliente([
-                'fecha' =>$fecha,
-                'cliente_id' =>$cliente_id,
-                'debe' => $honorarios,
-                'haber' => 0,
-                'comentario' => $comentarios,
-                'user_id' => auth()->user()->id,
-                'masivo' => 1,
-              ]);
-         $CtaCteCliente->save();
-
+        if ($honorarios!=0) {//esto lo hago para no ingresar los registros con importe $0
+            $CtaCteCliente = new CtaCteCliente([
+                    'fecha' =>$fecha,
+                    'cliente_id' =>$cliente_id,
+                    'debe' => $honorarios,
+                    'haber' => 0,
+                    'comentario' => $comentarios,
+                    'user_id' => auth()->user()->id,
+                    'masivo' => 1,
+                  ]);
+             $CtaCteCliente->save();
+          }
         }
       return response()->json(["data"=>$CtaCteCliente->toArray()]);
     }
