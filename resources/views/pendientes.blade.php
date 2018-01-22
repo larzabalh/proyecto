@@ -29,3 +29,4 @@ Liquidador:
 	* En algun lado, se tiene que visualizar que empresa esta seleccionada para cargar los comprobantes
 
 
+Reportes de libros IVA COMPRAS Y VENTAS: Que salga con el formato para imprimir los libros societarios, que acumule en menos campos todos los campos del informe.
