@@ -38,7 +38,7 @@
                   </form>
                 @endif
             <!-- ahora si genero el header del div -->
-                  <div class="row"><center><h3>{{$forma_pago}}</h3></center></div>
+                  <div class="row"><center><h3>{{$forma_pago}}<span class="subtotal" data="{{$data->forma_de_pagos_id}}"></span></h3></center></div>
             @endif
                         <table id="tabla" class="table table-responsive table-hover table-bordered">
                           <tbody>
@@ -68,7 +68,7 @@
                                 </select>
                               </td>
                               <td> 
-                                <input type="number" class="sumar form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" name="importe[{{$data->id}}]" value="{{$data->importe}}">
+                                <input type="number" class="sumar form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" name="importe[{{$data->id}}]" data="{{$data->forma_de_pagos_id}}" value="{{$data->importe}}">
                               </td>
                               <td><input type="decimal" class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" name="comentarios[{{$data->id}}]" value="{{$data->comentario}}">
                               </td>

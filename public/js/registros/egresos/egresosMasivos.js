@@ -3,8 +3,12 @@ var token = $('#token').val();
 
 document.getElementById('fecha').value = new Date().toDateInputValue();
 
+var input = $('.sumar');
+
   function init(){
-    listar();      
+    listar();
+    subtotales();
+
   }
 
   function listar()
@@ -24,7 +28,8 @@ document.getElementById('fecha').value = new Date().toDateInputValue();
 
 
 $(".sumar").change(function(e){
-     suma()
+     suma();
+     subtotales();
 });
 
 function suma() {
@@ -36,6 +41,7 @@ function suma() {
       });
         $('#total').html(numeral(total).format('$0,0.00'));
   };
+
 
 /*2- Aprieto el boton ASIGNAR*/
 /* Primero Verifico que no haya ingresado otro periodo en forma masiva */
@@ -130,6 +136,66 @@ function grabar_masivo(data,fecha) {
    
 
   };
+
+function subtotales(){
+
+    var formas =input.map(function(){
+
+      return $(this).attr('data');
+    }).get();
+
+    var importes =input.map(function(){
+
+      return $(this).val();
+    }).get();
+
+    var data = [];
+    for (var i = 0; i < importes.length; i++) {
+        data.push({
+            forma: formas[i],
+            importes: parseFloat(importes[i]),
+        });
+      }
+
+
+
+    var groupBy = function (miarray, prop) {
+    return miarray.reduce(function(groups, item) {
+        var val = item[prop];
+        groups[val] = groups[val] || {forma: item.forma, importes: 0};
+        groups[val].importes += item.importes;
+        return groups;
+        }, {});
+    
+    }
+    var nuevo = groupBy(data,'forma');
+
+      $.each( groupBy(data,'forma'), function( key, value,data ) {
+        $('span').html(numeral(this.importes).format('$0,0.00'));
+         
+      });
+
+      $('span[data]').each(function( ) {
+        var total =0;
+          var uno= $(this).attr('data');
+          console.log('uno:',uno)
+      
+          $('.sumar').each(function( ) {
+
+              var dos= $(this).attr('data');
+              console.log('dos:',dos)
+
+              if (uno==dos) {
+                
+                if (!isNaN($(this).val())) {
+                  /*console.log('estpy')*/
+                  total += Number($(this).val());
+                }
+              }
+          });
+              $('span[data='+uno+']').html(numeral(total).format('$0,0.00'));
+      });
+}
 
 
 
