@@ -328,14 +328,16 @@ function update_data(data_edit)
 $("#pagados").change(function(e){
     var periodo = document.getElementById("periodo").value;
      $('#gasto_filtro').val(0)
+    pagado =1;
     var url = 'http://localhost:8000/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+'/'+pagado+''
 
-    pagado =1;
+    
     dataTable.destroy()
     crearDataTable(periodo,gasto_filtro,pagado);   
 
       ajax(url, function (err, response) {
           //Le pongo al select, todas las cuentas de Gastos que tiene en ese periodo
+          console.log('pagados:',response)
           $("#gasto_filtro").empty();
           $('#gasto_filtro').append('<option value=0 selected="selected">TODOS</option>');
                 $.each(response, function(i, value) {
@@ -349,14 +351,37 @@ $("#pagados").change(function(e){
 $("#impagos").change(function(e){
     var periodo = document.getElementById("periodo").value;
      $('#gasto_filtro').val(0)
+     pagado =0;
     var url = 'http://localhost:8000/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+'/'+pagado+''
 
-    pagado =0;
+    
     dataTable.destroy()
     crearDataTable(periodo,gasto_filtro,pagado);   
 
       ajax(url, function (err, response) {
           //Le pongo al select, todas las cuentas de Gastos que tiene en ese periodo
+          console.log('impagos:',response)
+          /*var cosa =response.data
+
+          var select =[];
+
+          $.each( response.data, function( index, value ){
+              
+              select.push ({
+                'forma_de_pagos_id':value.forma_de_pagos_id,
+                'caja':value.caja
+                });
+          });
+          function unique(select) {
+              var result = [];
+              $.each(select, function(i, e) {
+                  if ($.inArray(e, result) == -1) result.push(e);
+              });
+              return result;
+          }
+          console.log(unique(select))*/
+
+          
           $("#gasto_filtro").empty();
           $('#gasto_filtro').append('<option value=0 selected="selected">TODOS</option>');
                 $.each(response, function(i, value) {
