@@ -393,7 +393,67 @@ $("#impagos").change(function(e){
 });
 
 
+//PASAR A PAGADOS!!!
 
+$('#btnpagados').on('click',function(){
+  $("#conceptos_pasar_pagados").empty();
+  $("#periodo_pasar_a_pagados").val($('#periodo').val());
+  periodo = $('#periodo_pasar_a_pagados').val()
+  console.log(periodo)
+  
+  pagado =0;
+  var url = 'http://localhost:8000/registros/registrodegastos/listar_pasar_pagados/'+periodo+'/'+pagado+''
+
+  ajax(url, function (err, response) {
+          //Le pongo al select, todas las cuentas de Gastos que tiene en ese periodo
+          //
+          console.log(response)
+                $.each(response, function(i, value) {
+                  for (var i = 0; i < value.length; i++) {
+                      $("#conceptos_pasar_pagados").append('<li><input type="checkbox" value="'+response.data[i].forma_de_pagos_id+'" class="seleccionados" name="pasarAPagados"> '+response.data[i].caja+' ' +numeral(response.data[i].importe).format('$0,0.00')+'</li>');
+                  };
+                });
+
+      });
+
+
+  $('#conceptos_pasar_pagados')
+  $('#ModalPagados').modal('show')
+
+});
+
+$('body').on('click','#btnpasarpagados',function(e){
+  e.preventDefault();
+  var checkboxes= $('.seleccionados');
+  var seleccionados =checkboxes.filter(':checked').map(function(){
+
+      return $(this).val();
+    }).get();
+
+  console.log(seleccionados)
+  var data = {
+                'fecha':$('#periodo_pasar_a_pagados').val(),
+                'forma_de_pagos_id':seleccionados,
+                };
+  var url = 'http://localhost:8000/registros/registrodegastos/pasar_pagados/'
+  console.log(data)
+  $.ajax({
+    url: url,
+    method:"POST",
+    data:data,
+    headers: {'X-CSRF-TOKEN':token},
+    success:function(response)
+    {
+      console.log(response)
+
+      $('#ModalPagados').modal('hide')
+      $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registrado Correctamente!</strong</div>');
+     
+    },
+   });
+
+$('#tabla_datos').DataTable().ajax.reload();    
+});
 
 
 

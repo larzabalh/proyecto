@@ -86,6 +86,49 @@
     </div>
 </div>
 
+{{-- PASAR A PAGADOS--}}
+<div class="modal fade" id="ModalPagados"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div id="alert_modal"></div>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title"">PASAR A PAGADOS</h4>
+        </div>
+        <div class="modal-body" id="">
+              <div id="formularioregistros">
+                    <div class="panel panel-default">
+                      <div class="panel-body" >
+                          <form name="" id="" method="POST">
+                            <input type="hidden" id="token" value="{{ csrf_token() }}">
+                            <input type="hidden" class="form-control" id="id_editar">
+                            <div class="row">
+                              <div class="col-lg-12" id="fecha">
+                                <label>FECHA:</label><br>
+                                <input type="text" class="form-control" id="periodo_pasar_a_pagados" disabled>
+                              </div>
+                              <div class="col-lg-12" >
+                                <ol id="conceptos_pasar_pagados">
+                                  
+                                </ol>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button class="btn btn-primary" type="submit" id="btnpasarpagados"><i class="fa fa-save"></i> Pasar Pagados</button>
+                              <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-arrow-circle-left"></i> VOLVER</button>
+                            </div>
+                          </form>
+                        </div>
+                    </div>
+                      <!-- /.panel-body -->
+                </div>
+        </div>
+      </div>
+    </div>
+</div>
+
 {{-- ELIMINACION DE REGISTROS --}}
     {{-- Alarma de ELIMINACION BOOTSTRAP --}}
 <div class="modal fade" id="exito_eliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -168,6 +211,9 @@
             <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
               <label>TOTAL DE GASTOS DEL PERIODO:</label><br>
               <h4 id="gasto"></h4>
+            </div>
+            <div class="form-group col-lg-1 col-md-3 col-sm-3 col-xs-12">
+              <button type="button" name="add" id="btnpagados" class="btn btn-primary">PASAR A PAGADOS</button>
             </div>
           </form>
         </div>

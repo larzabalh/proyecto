@@ -71,20 +71,32 @@
                                             </li>
                                             <li><a href="#gastos_tercero" data-toggle="tab">MEDIOS DE PAGO</a>
                                             </li>
+                                            <li><a href="#gastos_cuarto" data-toggle="tab">PAGADOS</a>
+                                            </li>
+                                            <li><a href="#gastos_quinto" data-toggle="tab">IMPAGOS</a>
+                                            </li>
                                         </ul>
                                         <!-- Tab panes -->
                                         <div class="tab-content">
                                             <div class="tab-pane fade in active" id="gastos_primero">
                                                 <h4>Tipos de Gastos</h4>
-                                                <p id="tipos"></p>
+                                                <p id="tiposGastos"></p>
                                             </div>
                                             <div class="tab-pane fade" id="gastos_segundo">
                                                 <h4>Detalle de Gastos</h4>
-                                                <p id="gastos"></p>
+                                                <p id="detalleGastos"></p>
                                             </div>
                                             <div class="tab-pane fade" id="gastos_tercero">
                                                 <h4>Medios de Pagos</h4>
-                                                <p id="bancos"></p>
+                                                <p id="mediosdepagosGastos"></p>
+                                            </div>
+                                            <div class="tab-pane fade" id="gastos_cuarto">
+                                                <h4 id="titulo_GastosPagados">Pagados</h4>
+                                                <p id="GastosPagados"></p>
+                                            </div>
+                                            <div class="tab-pane fade" id="gastos_quinto">
+                                                <h4 id="titulo_GastosImpagos">Impagos</h4>
+                                                <p id="GastosImpagos"></p>
                                             </div>
                                         </div>
                                     </div>

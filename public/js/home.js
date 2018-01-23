@@ -9,6 +9,8 @@
       var year = currentTime.getFullYear()
       var periodo = year+"-"+month
       $("#periodo").append("<option selected value='"+periodo+"'>"+periodo+"</option>");
+      
+
 
   function init(){
     listar(periodo);
@@ -23,9 +25,13 @@
     $("#ingresos_todos").empty();
     $("#ingresos_impagos").empty();
     $("#saldosBancarios").empty();
-    $("#tipos").empty();
-    $("#gastos").empty();
-    $("#bancos").empty();
+    $("#tiposGastos").empty();
+    $("#detalleGastos").empty();
+    $("#mediosdepagosGastos").empty();
+    $("#GastosPagados").empty();
+    $("#GastosImpagos").empty();
+    $("#titulo_GastosPagados").empty();
+    $("#titulo_GastosImpagos").empty();
     
       var url = '/home/listar/'+periodo+''
 
@@ -43,6 +49,7 @@
                 +numeral(response.ingresos_todos[i].debe).format('$0,0.00')+
                 "</div>");
             }
+            console.log(response)
 
           //ingresos impagos
           var ingresos_impagos = response.ingresos_impagos.reduce(function (accum, current) {
@@ -75,20 +82,40 @@
               return accum + current.importe
             }, 0)
            $('#total_egresos').html('<div><strong>TOTAL EGRESOS:'+numeral(total_egresos).format('$0,0.00')+'</strong></div>');
-            for (var i = 0; i < response.tipos.length; i++) {
-              $("#tipos").append("<div>"+response.tipos[i].tipo+"="
-                +numeral(response.tipos[i].importe).format('$0,0.00')+
+            for (var i = 0; i < response.tiposGastos.length; i++) {
+              $("#tiposGastos").append("<div>"+response.tiposGastos[i].tipo+"="
+                +numeral(response.tiposGastos[i].importe).format('$0,0.00')+
                 "</div>");
             }
-            for (var i = 0; i < response.gastos.length; i++) {
-              $("#gastos").append("<div>"+response.gastos[i].gasto+"="
-                +numeral(response.gastos[i].importe).format('$0,0.00')+
+            for (var i = 0; i < response.detalleGastos.length; i++) {
+              $("#detalleGastos").append("<div>"+response.detalleGastos[i].gasto+"="
+                +numeral(response.detalleGastos[i].importe).format('$0,0.00')+
                 "</div>");
             }
 
-            for (var i = 0; i < response.bancos.length; i++) {
-              $("#bancos").append("<div>"+response.bancos[i].banco+"="
-                +numeral(response.bancos[i].importe).format('$0,0.00')+
+            for (var i = 0; i < response.mediosdepagosGastos.length; i++) {
+              $("#mediosdepagosGastos").append("<div>"+response.mediosdepagosGastos[i].banco+"="
+                +numeral(response.mediosdepagosGastos[i].importe).format('$0,0.00')+
+                "</div>");
+            }
+
+            var ImporteGastosPagados = response.GastosPagados.reduce(function (accum, current) {
+              return accum + current.importe
+              }, 0)
+            $('#titulo_GastosPagados').append('<div><strong>'+numeral(ImporteGastosPagados).format('$0,0.00')+'</strong></div>');
+            for (var i = 0; i < response.GastosPagados.length; i++) {
+              $("#GastosPagados").append("<div>"+response.GastosPagados[i].gasto+"="
+                +numeral(response.GastosPagados[i].importe).format('$0,0.00')+
+                "</div>");
+            }
+
+            var ImporteGastosImpagos = response.GastosImpagos.reduce(function (accum, current) {
+              return accum + current.importe
+              }, 0)
+            $('#titulo_GastosImpagos').append('<div><strong>'+numeral(ImporteGastosImpagos).format('$0,0.00')+'</strong></div>');
+            for (var i = 0; i < response.GastosImpagos.length; i++) {
+              $("#GastosImpagos").append("<div>"+response.GastosImpagos[i].gasto+"="
+                +numeral(response.GastosImpagos[i].importe).format('$0,0.00')+
                 "</div>");
             }
 

@@ -83,6 +83,35 @@ class RegistrodeGastosController extends Controller
         return response()->json(["data"=>$reg_gastos->toArray()]);
     }
 
+    public function listar_pasar_pagados($periodo,$pagado=null)
+    {
+
+      $pagado = ($pagado==0) ? $pagado=null : $pagado;
+      $array = explode('-', $periodo);
+      $reg_gastos =DB::table('reg_gastos')
+          ->select(
+            DB::raw("concat(medios.nombre,'-',forma_de_pagos.nombre)as caja"),
+            DB::raw("concat(year(fecha), '-', month(fecha)) as periodo"),
+            DB::raw('sum(reg_gastos.importe) as importe'),
+            'reg_gastos.forma_de_pagos_id')
+          ->join('forma_de_pagos', 'reg_gastos.forma_de_pagos_id', '=', 'forma_de_pagos.id')
+          ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
+          ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
+          ->join('users', 'reg_gastos.user_id', '=', 'users.id')
+          ->where(DB::raw('users.id'),auth()->user()->id )
+          ->where(DB::raw('year(reg_gastos.fecha)'), $array[0])
+          ->where(DB::raw('month(reg_gastos.fecha)'), $array[1])
+          ->where('reg_gastos.pagado',"=",$pagado)
+          ->groupBy('caja')
+          ->groupBy('forma_de_pagos_id')
+          ->groupBy('periodo')
+          ->get();
+
+        return response()->json(["data"=>$reg_gastos->toArray()]);
+    }
+
+
+
     public function store(Request $request)
     {
       $reg_gastos = new Reg_Gasto([
@@ -114,6 +143,54 @@ class RegistrodeGastosController extends Controller
       }
 
       return response()->json(["data"=> $reg_gastos->toArray()]);
+    }
+
+    public function pasar_pagados(Request $request)
+    {
+
+      
+      $array = explode('-', $request->fecha);
+      $formas = $request->forma_de_pagos_id;
+      For($i=0; $i<count($request->forma_de_pagos_id);$i++){
+
+      //1- Listo todos los registros que cumplen la condicion, para encontrar el ID y luego actualizarlos!
+        $busco_ids =DB::table('reg_gastos')
+            ->select('reg_gastos.*')
+            ->join('users', 'reg_gastos.user_id', '=', 'users.id')
+            ->where(DB::raw('users.id'),auth()->user()->id )
+            ->where(DB::raw('year(reg_gastos.fecha)'), $array[0])
+            ->where(DB::raw('month(reg_gastos.fecha)'), $array[1])
+            ->where('reg_gastos.forma_de_pagos_id',"=",$request->forma_de_pagos_id[$i])
+            ->get();
+
+      //2- Busco esos IDs y los actualizo!
+            For($j=0; $j<count($busco_ids);$j++){
+              $datos = $busco_ids[$j];
+              $id=$datos->id;
+            $actualizo = Reg_Gasto::find($id);
+            $actualizo->pagado = 1;
+            $actualizo->save();
+            }
+          }
+      
+
+      
+
+
+      /*$reg_gastos = new Reg_Gasto([
+        'fecha' => $request->input('fecha'),
+        'gasto_id' => $request->input('gasto_id'),
+        'forma_de_pagos_id' => $request->input('forma_de_pagos_id'),
+        'importe' => $request->input('importe'),
+        'pagado' => $request->input('pagado'),
+        'comentario' => $request->input('comentario'),
+        'user_id' => auth()->user()->id,
+      ]);
+      $reg_gastos->save();*/
+
+      
+
+      return response()->json(["data"=> $busco_ids->toArray()]);
     }
 
     public function editar(Request $request, $id)
