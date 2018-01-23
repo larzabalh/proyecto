@@ -152,8 +152,6 @@ class HomeController extends Controller
             ->join('disponibilidades', 'cta_cte_disponibilidades.disponibilidad_id', '=', 'disponibilidades.id')
             ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
             ->where(DB::raw('cta_cte_disponibilidades.user_id'),auth()->user()->id )
-            ->where(DB::raw('year(cta_cte_disponibilidades.fecha)'), $array[0])
-            ->where(DB::raw('month(cta_cte_disponibilidades.fecha)'), $array[1])
             ->groupBy('banco')
             ->orderBy('banco','asc')
             ->get();

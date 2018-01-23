@@ -74,6 +74,8 @@
                 +numeral(response.saldosBancarios[i].saldo).format('$0,0.00')+
                 "</div>");
           }
+
+          
           
 
 

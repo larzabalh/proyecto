@@ -39,6 +39,7 @@
             						<li class="active"><a data-toggle="tab" href="#home">TODOS</a></li>
             						<li><a data-toggle="tab" href="#menu1">IMPAGOS</a></li>
             						<li><a data-toggle="tab" href="#menu2">BANCOS</a></li>
+                                    <li><a data-toggle="tab" href="#menu3">BANCOS PROYECTADOS</a></li>
             					</ul>
             					<div class="tab-content">
             						<div id="home" class="tab-pane fade in active">
@@ -53,6 +54,10 @@
             							<h3 id="titulo_saldosBancarios"></h3>
             							<p id="saldosBancarios"></p>
             						</div>
+                                    <div id="menu3" class="tab-pane fade">
+                                        <h3 id="titulo_saldosBancariosProyectado"></h3>
+                                        <p id="saldosBancariosProyectado"></p>
+                                    </div>
             					</div>
             			</div>
             		</div>
