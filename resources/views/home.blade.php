@@ -186,19 +186,45 @@
                                 <h3><CENTER id="total_ingresos">OTRA COSA</CENTER></h3>
                             </div>
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a data-toggle="tab" href="#home3">TODOS</a></li>
-                                    <li><a data-toggle="tab" href="#menu31">IMPAGOS</a></li>
-                                    <li><a data-toggle="tab" href="#menu32">BANCOS</a></li>
+                                    <li class="active"><a data-toggle="tab" href="#home3">ACTIVIDAD 1</a></li>
+                                    <li><a data-toggle="tab" href="#menu31">ACTIVIDAD 2</a></li>
+                                    <li><a data-toggle="tab" href="#menu32">ACTIVIDAD 3</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div id="home3" class="tab-pane fade in active">
-                                        <h3 id="titulo_ingresos_todos"></h3>
-                                        <p id="ingresos_todos"></p>
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a data-toggle="tab" href="#home31">OP RESP. INSCRIPTOS</a></li>
+                                            <li><a data-toggle="tab" href="#menu31">CONS. FINAL</a></li>
+                                            <li><a data-toggle="tab" href="#menu32">OP. NO GRAV</a></li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div id="home31" class="tab-pane fade in active">
+                                                <h3 id="titulo_ingresos_todos">RESPONSABLES INSCRIPTOS</h3>
+                                                <p id="ingresos_todos">Gravado al 2.50%</p>
+                                                <p id="ingresos_todos">Gravado al 5%</p>
+                                                <p id="ingresos_todos">Gravado al 10.5%</p>
+                                                <p id="ingresos_todos">Gravado al 21%</p>
+                                                <p id="ingresos_todos">Gravado al 27%</p>
+                                            </div>
+                                            <div id="menu31" class="tab-pane fade">
+                                                <h3 id="titulo_ingresos_todos">CONSUMIDORES FINALES</h3>
+                                                <p id="ingresos_todos">Gravado al 2.50%</p>
+                                                <p id="ingresos_todos">Gravado al 5%</p>
+                                                <p id="ingresos_todos">Gravado al 10.5%</p>
+                                                <p id="ingresos_todos">Gravado al 21%</p>
+                                                <p id="ingresos_todos">Gravado al 27%</p>
+                                            </div>
+                                            <div id="menu32" class="tab-pane fade">
+                                                <h3 id="titulo_ingresos_todos">NO GRAVADOS</h3>
+                                                <p id="ingresos_todos">NO GRAVADO</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div id="menu31" class="tab-pane fade">
-                                        <h3 id="titulo_ingresos_impagos"></h3>
-                                        <p id="ingresos_impagos"></p>
-                                    </div>
+                                    
+
+
+
+                                    
                                     <div id="menu32" class="tab-pane fade">
                                         <h3 id="titulo_saldosBancarios"></h3>
                                         <p id="saldosBancarios"></p>
