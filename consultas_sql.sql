@@ -73,3 +73,34 @@ select id, gasto from gastos
 
 -- operacion matematica
 select (debe-haber) as deuda from cta_cte_clientes
+
+select concat(medios.nombre,'-',disponibilidades.nombre)as banco, sum(cta_cte_disponibilidades.debe - cta_cte_disponibilidades.haber) as saldo 
+from `cta_cte_disponibilidades` 
+inner join `users` on `cta_cte_disponibilidades`.`user_id` = `users`.`id` 
+inner join `disponibilidades` on `cta_cte_disponibilidades`.`disponibilidad_id` = `disponibilidades`.`id` 
+inner join `medios` on `disponibilidades`.`medio_id` = `medios`.`id` 
+where cta_cte_disponibilidades.user_id = '1' 
+group by `banco` 
+order by `banco` asc
+
+SELECT banco, Suma
+FROM
+(select concat(medios.nombre,'-',disponibilidades.nombre)as banco, sum(cta_cte_disponibilidades.debe - cta_cte_disponibilidades.haber) as Suma
+from `cta_cte_disponibilidades` 
+inner join `users` on `cta_cte_disponibilidades`.`user_id` = `users`.`id` 
+inner join `disponibilidades` on `cta_cte_disponibilidades`.`disponibilidad_id` = `disponibilidades`.`id` 
+inner join `medios` on `disponibilidades`.`medio_id` = `medios`.`id` 
+where cta_cte_disponibilidades.user_id = '1' 
+group by `banco`) as t
+UNION
+select concat(medios.nombre,'-',forma_de_pagos.nombre)as banco, sum(reg_gastos.importe) as Suma
+from `reg_gastos` 
+inner join `gastos` on `reg_gastos`.`gasto_id` = `gastos`.`id` 
+inner join `forma_de_pagos` on `reg_gastos`.`forma_de_pagos_id` = `forma_de_pagos`.`id` 
+inner join `disponibilidades` on `forma_de_pagos`.`disponibilidad_id` = `disponibilidades`.`id` 
+inner join `medios` on `disponibilidades`.`medio_id` = `medios`.`id` 
+inner join `tipos_de_gastos` on `gastos`.`tipo_de_gasto_id` = `tipos_de_gastos`.`id` 
+inner join `users` on `gastos`.`user_id` = `users`.`id` 
+where reg_gastos.pagado is null and  users.id = '1' and year(reg_gastos.fecha) = '2018' and month(reg_gastos.fecha) = '1' 
+group by `banco`
+GROUP BY banco
