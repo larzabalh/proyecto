@@ -43,6 +43,22 @@ class HomeController extends Controller
           ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
           ->join('users', 'gastos.user_id', '=', 'users.id')
           ->where(DB::raw('users.id'),auth()->user()->id )
+          ->where(DB::raw('reg_gastos.pagado'),'=', null )
+          ->where(DB::raw('year(reg_gastos.fecha)'), $array[0])
+          ->where(DB::raw('month(reg_gastos.fecha)'), $array[1])
+          ->groupBy('banco')
+          ->get();
+
+        $mediosdepagosGastosPagados =DB::table('reg_gastos')
+          ->select(DB::raw("concat(medios.nombre,'-',forma_de_pagos.nombre)as banco"),DB::raw('sum(reg_gastos.importe) as importe'))
+          ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
+          ->join('forma_de_pagos', 'reg_gastos.forma_de_pagos_id', '=', 'forma_de_pagos.id')
+          ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
+          ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
+          ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
+          ->join('users', 'gastos.user_id', '=', 'users.id')
+          ->where(DB::raw('users.id'),auth()->user()->id )
+          ->where(DB::raw('reg_gastos.pagado'),'=', 1 )
           ->where(DB::raw('year(reg_gastos.fecha)'), $array[0])
           ->where(DB::raw('month(reg_gastos.fecha)'), $array[1])
           ->groupBy('banco')
@@ -145,7 +161,7 @@ class HomeController extends Controller
             ->get();
 
       $saldosBancarios =DB::table('cta_cte_disponibilidades')
-            ->select(
+            ->select('disponibilidades.id as cuenta',
                     DB::raw("concat(medios.nombre,'-',disponibilidades.nombre)as banco"),
                     DB::raw('sum(cta_cte_disponibilidades.debe - cta_cte_disponibilidades.haber) as saldo'))
             ->join('users', 'cta_cte_disponibilidades.user_id', '=', 'users.id')
@@ -153,19 +169,39 @@ class HomeController extends Controller
             ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
             ->where(DB::raw('cta_cte_disponibilidades.user_id'),auth()->user()->id )
             ->groupBy('banco')
+            ->groupBy('cuenta')
             ->orderBy('banco','asc')
             ->get();
+
+      $saldosBancariosProyectado =DB::table('reg_gastos')
+          ->select('reg_gastos.forma_de_pagos_id as tarjeta', 'forma_de_pagos.disponibilidad_id as cuenta','forma_de_pagos.nombre',DB::raw('sum(reg_gastos.importe) as importe'))
+          ->join('gastos', 'reg_gastos.gasto_id', '=', 'gastos.id')
+          ->join('forma_de_pagos', 'reg_gastos.forma_de_pagos_id', '=', 'forma_de_pagos.id')
+          ->join('disponibilidades', 'forma_de_pagos.disponibilidad_id', '=', 'disponibilidades.id')
+          ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
+          ->join('tipos_de_gastos', 'gastos.tipo_de_gasto_id', '=', 'tipos_de_gastos.id')
+          ->join('users', 'gastos.user_id', '=', 'users.id')
+          ->where(DB::raw('reg_gastos.pagado'),'=', null )
+          ->where(DB::raw('users.id'),auth()->user()->id )
+          ->where(DB::raw('year(reg_gastos.fecha)'), $array[0])
+          ->where(DB::raw('month(reg_gastos.fecha)'), $array[1])
+          ->groupBy('tarjeta')
+          ->groupBy('cuenta')
+          ->groupBy('forma_de_pagos.nombre')
+          ->get();
 
         return response()->json([
                                 "reg_gastos"=>$reg_gastos->toArray(),
                                 "detalleGastos"=>$detalleGastos->toArray(),
                                 "tiposGastos"=>$tiposGastos->toArray(),
                                 "mediosdepagosGastos"=>$mediosdepagosGastos->toArray(),
+                                "mediosdepagosGastosPagados"=>$mediosdepagosGastosPagados->toArray(),
                                 "GastosPagados"=>$GastosPagados->toArray(),
                                 "GastosImpagos"=>$GastosImpagos->toArray(),
                                 "ingresos_todos"=>$ingresos_todos->toArray(),
                                 "ingresos_impagos"=>$ingresos_impagos->toArray(),
                                 "saldosBancarios"=>$saldosBancarios->toArray(),
+                                "saldosBancariosProyectado"=>$saldosBancariosProyectado->toArray(),
                                 ]);
     }
 

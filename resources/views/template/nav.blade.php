@@ -78,7 +78,7 @@
               <li><a href="{{ route('gastos_mensuales.index')}}"><i class="fa fa-circle-o"></i> Gastos Mensuales</a></li>
               <li><a href="{{route ('clientes.index')}}"><i class="fa fa-circle-o"></i> Clientes</a></li>
               <li><a href="{{route ('medios.index')}}"><i class="fa fa-circle-o"></i> Medios</a></li>
-              <li><a href="{{route ('disponibilidades.index')}}"><i class="fa fa-circle-o"></i> Disponibilidades</a></li>
+              <li><a href="{{'/configuracion/disponibilidades'}}"><i class="fa fa-circle-o"></i> Disponibilidades</a></li>
               <li><a href="{{route ('forma_pagos.index')}}"><i class="fa fa-circle-o"></i> Formas de Pagos</a></li>
             </ul>
           </li>

@@ -32,12 +32,18 @@
     $("#GastosImpagos").empty();
     $("#titulo_GastosPagados").empty();
     $("#titulo_GastosImpagos").empty();
+    $("#saldosBancariosProyectado").empty();
+    $("#titulo_mediosdepagosGastos").empty();
+    $("#titulo_mediosdepagosGastosPagados").empty();
+
+    
     
       var url = '/home/listar/'+periodo+''
 
         ajax(url, function (err, response) {
           if (err) return console.error(err)
 
+            console.log(response)
           //INGRESOS
           //todos los ingresos
           var ingresos_todos = response.ingresos_todos.reduce(function (accum, current) {
@@ -49,7 +55,6 @@
                 +numeral(response.ingresos_todos[i].debe).format('$0,0.00')+
                 "</div>");
             }
-            console.log(response)
 
           //ingresos impagos
           var ingresos_impagos = response.ingresos_impagos.reduce(function (accum, current) {
@@ -75,7 +80,31 @@
                 "</div>");
           }
 
+          //BANCOS PROYECTADOS
+          var impagos = response.saldosBancariosProyectado.reduce(function (accum, current) {
+              return accum + current.importe
+            }, 0)
+          var saldosBancarios = response.saldosBancarios.reduce(function (accum, current) {
+              return accum + current.saldo
+            }, 0)
+          $('#titulo_saldosBancariosProyectado').html('<div><strong>'+numeral(saldosBancarios-impagos).format('$0,0.00')+'</strong></div>');
           
+          for (var i = 0; i < response.saldosBancarios.length; i++) {
+              for (var j = 0; j < response.saldosBancariosProyectado.length; j++) {
+
+                 
+                  if (response.saldosBancarios[i].cuenta==response.saldosBancariosProyectado[j].cuenta) {
+                    response.saldosBancarios[i].saldo= response.saldosBancarios[i].saldo-response.saldosBancariosProyectado[j].importe;
+
+                  }
+                  
+              }
+              
+              $("#saldosBancariosProyectado").append("<div>"+response.saldosBancarios[i].banco+"="
+                    +numeral(response.saldosBancarios[i].saldo).format('$0,0.00')+
+                    "</div>");
+         
+          }
           
 
 
@@ -95,9 +124,24 @@
                 "</div>");
             }
 
+            var ImporteGastos = response.mediosdepagosGastos.reduce(function (accum, current) {
+              return accum + current.importe
+              }, 0)
+            $('#titulo_mediosdepagosGastos').append('<div><strong>'+numeral(ImporteGastos).format('$0,0.00')+'</strong></div>');            
             for (var i = 0; i < response.mediosdepagosGastos.length; i++) {
               $("#mediosdepagosGastos").append("<div>"+response.mediosdepagosGastos[i].banco+"="
                 +numeral(response.mediosdepagosGastos[i].importe).format('$0,0.00')+
+                "</div>");
+            }
+
+
+            var ImporteGastosPagados = response.mediosdepagosGastosPagados.reduce(function (accum, current) {
+              return accum + current.importe
+              }, 0)
+            $('#titulo_mediosdepagosGastosPagados').append('<div><strong>'+numeral(ImporteGastosPagados).format('$0,0.00')+'</strong></div>');            
+            for (var i = 0; i < response.mediosdepagosGastosPagados.length; i++) {
+              $("#mediosdepagosGastosPagados").append("<div>"+response.mediosdepagosGastosPagados[i].banco+"="
+                +numeral(response.mediosdepagosGastosPagados[i].importe).format('$0,0.00')+
                 "</div>");
             }
 

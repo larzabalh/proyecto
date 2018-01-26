@@ -92,8 +92,12 @@
                                                 <p id="detalleGastos"></p>
                                             </div>
                                             <div class="tab-pane fade" id="gastos_tercero">
-                                                <h4>Medios de Pagos</h4>
-                                                <p id="mediosdepagosGastos"></p>
+                                                <div class="row">
+                                                    <h4 class="col-lg-6" id="titulo_mediosdepagosGastos">Impagos</h4>
+                                                    <h4 class="col-lg-6" id="titulo_mediosdepagosGastosPagados">Pagados</h4>
+                                                    <div class="col-lg-6" id="mediosdepagosGastos"></div>
+                                                    <div class="col-lg-6" id="mediosdepagosGastosPagados"></div>
+                                                </div>
                                             </div>
                                             <div class="tab-pane fade" id="gastos_cuarto">
                                                 <h4 id="titulo_GastosPagados">Pagados</h4>
