@@ -190,6 +190,13 @@ class HomeController extends Controller
           ->groupBy('forma_de_pagos.nombre')
           ->get();
 
+
+      $cajas =DB::table('efectivos')
+            ->select('efectivos.*')
+            ->join('users', 'efectivos.user_id', '=', 'users.id')
+            ->where(DB::raw('efectivos.user_id'),auth()->user()->id )
+            ->get();
+
         return response()->json([
                                 "reg_gastos"=>$reg_gastos->toArray(),
                                 "detalleGastos"=>$detalleGastos->toArray(),
@@ -202,39 +209,39 @@ class HomeController extends Controller
                                 "ingresos_impagos"=>$ingresos_impagos->toArray(),
                                 "saldosBancarios"=>$saldosBancarios->toArray(),
                                 "saldosBancariosProyectado"=>$saldosBancariosProyectado->toArray(),
+                                "cajas"=>$cajas->toArray(),
                                 ]);
     }
 
-    public function store(Request $request)
+
+
+    public function actualizar_cajas($data)
     {
-      $reg_gastos = new Reg_Gasto([
-        'fecha' => $request->input('fecha'),
-        'gasto_id' => $request->input('gasto_id'),
-        'forma_de_pagos_id' => $request->input('forma_de_pagos_id'),
-        'importe' => $request->input('importe'),
-        'comentario' => $request->input('comentario'),
-        'user_id' => auth()->user()->id,
-      ]);
-      $reg_gastos->save();
+  
 
-    /*  $reg_gastos ='ok';*/
 
-      return response()->json(["data"=> $reg_gastos->toArray()]);
+        For($i=0; $i<count($data);$i++){
+
+        dd($data);
+        $id=$data.[$i]['id'];
+        $importe=$data['importe'];
+        
+
+      
+            
+            $cajas = new efectivos([
+                    'id' =>$id,
+                    'importe' =>$importe,
+                    'user_id' => auth()->user()->id,
+                  ]);
+             $cajas->save();
+            
+     
+
+        }
+      return response()->json(["data"=>$cajas->toArray()]);
     }
 
-    public function editar(Request $request, $id)
-    {
-      $reg_gastos = Reg_Gasto::find($id);
-      $reg_gastos->fecha =  $request['fecha'];
-      $reg_gastos->gasto_id =  $request['gasto_id'];
-      $reg_gastos->forma_de_pagos_id =  $request['forma_de_pagos_id'];
-      $reg_gastos->importe =  $request['importe'];
-      $reg_gastos->comentario =  $request['comentario'];
-
-      $reg_gastos->save();
-
-      return response()->json(["data" => $reg_gastos]);
-    }
 
     public function eliminar($id)
     {

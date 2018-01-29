@@ -73,6 +73,7 @@
               <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
+              <li><a href="{{ route('efectivo.index')}}"><i class="fa fa-circle-o"></i> Cajas y Deudas</a></li>
               <li><a href="{{ route('tipos_de_gastos.index')}}"><i class="fa fa-circle-o"></i> Tipos de Gastos</a></li>
               <li><a href="{{ route('gasto.index')}}"><i class="fa fa-circle-o"></i> Gastos</a></li>
               <li><a href="{{ route('gastos_mensuales.index')}}"><i class="fa fa-circle-o"></i> Gastos Mensuales</a></li>

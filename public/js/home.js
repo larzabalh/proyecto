@@ -1,3 +1,5 @@
+var token = $('#token').val();
+
 /*   LE PONGO AL SELECT DE PERIODO EL PERIODO ACTUAL!!!*/
       // Return today's date and time
       var currentTime = new Date()
@@ -13,7 +15,8 @@
 
 
   function init(){
-    listar(periodo);
+    
+    listar(periodo)
   }
 
 
@@ -35,6 +38,8 @@
     $("#saldosBancariosProyectado").empty();
     $("#titulo_mediosdepagosGastos").empty();
     $("#titulo_mediosdepagosGastosPagados").empty();
+    $("#titulo_cajas").empty();
+    $("#cajas").empty();
 
     
     
@@ -165,12 +170,59 @@
                 "</div>");
             }
 
+            //CAJAS
+            for (var i = 0; i < response.cajas.length; i++) {
+              /*$("#cajas").append("<div>"+response.cajas[i].nombre+"="+numeral(response.cajas[i].importe).format('$0,0.00')+"</div>");*/
+
+              $("#cajas").append("<div class='form-group col-lg-12 col-md-12 col-sm-12 col-xs-12'><strong>"+response.cajas[i].nombre+"</strong><input type='text' class='sumar form-group col-lg-4 col-md-4 col-sm-4 col-xs-4' name="+response.cajas[i].id+" value="+response.cajas[i].importe+"></div>");
+            };
+
 
             $('#resultado').html('<div><strong>'+numeral(ingresos_todos-total_egresos).format('$0,0.00')+'</strong></div>');
 
         });
 
 }
+
+
+$(".sumar").numeric("."); // No lo esta ejecutando!!!!! no funcion!!!
+ 
+
+
+
+$('#btnActualizar').on("click", function (e){
+    e.preventDefault();
+var id= [];$("input[class^='sumar']").each(function() {id.push ($(this).attr('name'));});
+var importe= [];$("input[class^='sumar']").each(function() {importe.push ($(this).val());});
+
+console.log('id',id)
+console.log('importe',importe)
+
+var data = [];
+  var len = id.length;
+  for (var i = 0; i < len; i++) {
+      data.push({
+          id: id[i],
+          importe: importe[i],
+      });
+    }
+
+  console.log('data:',data);
+  var url = "/home/actualizar_cajas/"+data+''//con esta ruta entro en el STORE, si es por POST!  
+
+  $.ajax({
+        url:url,
+        headers: {'X-CSRF-TOKEN':token},
+        method:"POST",
+        data:data,
+        success:function(response)
+          { 
+            console.log(response)
+            
+          }
+        });
+
+});
 
   $("#periodo").change(function(e){
     var periodo = document.getElementById("periodo").value;

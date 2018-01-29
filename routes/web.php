@@ -54,6 +54,13 @@ Route::post('/configuracion/forma_pagos/eliminar/{id}', 'Forma_PagoController@el
 Route::resource('/configuracion/forma_pagos', 'Forma_PagoController');
 
 
+Route::get('/configuracion/registros/CtaCte/efectivo/listar', 'EfectivoController@listar');
+Route::post('/configuracion/registros/CtaCte/efectivo/editar/{id}', 'EfectivoController@editar');
+Route::post('/configuracion/registros/CtaCte/efectivo/eliminar/{id}', 'EfectivoController@eliminar');
+Route::resource('/configuracion/registros/CtaCte/efectivo', 'EfectivoController');
+
+
+
 //Egresos Individuales
 Route::get('/registros/registrodegastos/listar/{periodo}/{gasto_filtro}/{pagado}', 'RegistrodeGastosController@listar');
 Route::get('/registros/registrodegastos/listar_pasar_pagados/{periodo}/{pagado}', 'RegistrodeGastosController@listar_pasar_pagados');
@@ -118,4 +125,5 @@ Route::get('/', function () {
 });
 
 Route::get('/home/listar/{periodo}', 'HomeController@listar');
+Route::post('/home/actualizar_cajas/{data}', 'HomeController@actualizar_cajas');
 Route::get('/home', 'HomeController@index')->name('home');

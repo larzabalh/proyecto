@@ -23,8 +23,8 @@
 		</div>
 
         <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#reales">REALES</a></li>
-            <li><a data-toggle="tab" href="#menuprincipal1">PROYECTADO</a></li>
+            <li class="active"><a data-toggle="tab" href="#reales">Ingresos - Egresos</a></li>
+            <li><a data-toggle="tab" href="#menuprincipal1">Cajas</a></li>
             <li><a data-toggle="tab" href="#menuprincipal2">OTRO</a></li>
         </ul>
         <div class="tab-content">
@@ -120,17 +120,23 @@
                     <div class="col-lg-6"><br>
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3><CENTER id="total_ingresos">INGRESOS</CENTER></h3>
+                                <h3><CENTER id="total_ingresos">CAJAS</CENTER></h3>
                             </div>
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a data-toggle="tab" href="#home2">TODOS</a></li>
+                                    <li class="active"><a data-toggle="tab" href="#home2">CAJAS</a></li>
                                     <li><a data-toggle="tab" href="#menu21">IMPAGOS</a></li>
                                     <li><a data-toggle="tab" href="#menu22">BANCOS</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div id="home2" class="tab-pane fade in active">
-                                        <h3 id="titulo_ingresos_todos"></h3>
-                                        <p id="ingresos_todos"></p>
+                                        <button class="btn btn-primary" name="actualizar" type="submit" id="btnActualizar"><i class="fa fa-save"></i> Actualizar</button>
+                                        <form name="" id="" method="POST">
+                                            <input type="hidden" id="token" value="{{ csrf_token() }}">
+                                            
+                                            <h3 id="titulo_cajas"></h3>
+                                            <div id="cajas"></div>
+                                        
+                                        </form>
                                     </div>
                                     <div id="menu21" class="tab-pane fade">
                                         <h3 id="titulo_ingresos_impagos"></h3>
@@ -147,7 +153,7 @@
                     <div class="col-lg-6"><br>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h3><CENTER id="total_egresos">EGRESOS 2</CENTER></h3>
+                                        <h3><CENTER id="total_egresos">CHEQUES</CENTER></h3>
                                     </div>
                                     <!-- /.panel-heading -->
                                     <div class="panel-body">

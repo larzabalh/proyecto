@@ -10,7 +10,7 @@ var token = $('#token').val();
 
   function crearDataTable()
   {  	
-  		var url = 'http://localhost:8000/configuracion/tipos_de_gastos/listar'
+  		var url = '/configuracion/registros/CtaCte/efectivo/listar'
 		dataTable = $('#tabla_datos').DataTable({
 		    "aProcessing": true,//Activamos el procesamiento del datatables
             "aServerSide": true,//Paginación y filtrado realizados por el servidor
@@ -24,7 +24,7 @@ var token = $('#token').val();
           ajax: url,
           type : "get",
           columnDefs: [
-              { data: 'tipo',"targets": 0 },
+              { data: 'nombre',"targets": 0 },
               { 'defaultContent': "<button id='editar' type='button' class='editar btn btn-primary' data-target='#modalEditar'><i class='fa fa-pencil-square-o'></i></button>	<button id='eliminar' type='button'class='eliminar btn btn-danger' data-target='#modalEliminar' ><i class='fa fa-trash-o'></i></button>","targets": 1},
         				],
         select: {
@@ -50,18 +50,18 @@ $('#add').click(function(){
 
 /*2- Aprieto el boton INSERTAR*/
   $(document).on('click', '#insert', function(){
-	var url = "/configuracion/tipos_de_gastos"//con esta ruta entro en el STORE, si es por POST!
-	var tipo = $('#data1').text();
-	if(tipo != '')
+	var url = "/configuracion/registros/CtaCte/efectivo"//con esta ruta entro en el STORE, si es por POST!
+	var nombre = $('#data1').text();
+	if(nombre != '')
 	{
 		$.ajax({
 				url:url,
 				headers: {'X-CSRF-TOKEN':token},
 				method:"POST",
-				data:{tipo:tipo},
+				data:{nombre:nombre},
 				success:function(data)
 				{
-					$('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>'+data.data.tipo+'</strong</div>');
+					$('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>'+data.data.nombre+'</strong</div>');
 					$('#tabla_datos').DataTable().ajax.reload();
 				}
 				});
@@ -84,7 +84,7 @@ $(tabla_datos).on("click", "button.eliminar", function (e){
     e.preventDefault();
         $('#modalEliminar').modal('show')
     var data = dataTable.row( $(this).parents("tr") ).data();
-    document.getElementById('gasto_eliminar').innerText =data.tipo;
+    document.getElementById('gasto_eliminar').innerText =data.nombre;
     $('#id_eliminar').val(data.id);
   })
 
@@ -92,7 +92,7 @@ document.getElementById("form_eliminar").addEventListener("submit",function(e){
   e.preventDefault();
   $('#modalEliminar').modal('hide');
   var data = {'id':$('#id_eliminar').val()};
-  var url = "http://localhost:8000/configuracion/tipos_de_gastos/eliminar/"+$('#id_eliminar').val()+""
+  var url = "/configuracion/registros/CtaCte/efectivo/eliminar/"+$('#id_eliminar').val()+""
 
   $.ajax({
     url: url,
@@ -108,7 +108,7 @@ document.getElementById("form_eliminar").addEventListener("submit",function(e){
 	        $('#exito_eliminar').modal('hide');
 	        $('#tabla_datos').DataTable().ajax.reload();
         },1500);
-        $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>El Registro: '+data.data.tipo+' fue Eliminado!</strong></div>');
+        $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>El Registro fue Eliminado!</strong></div>');
       },
     error: function(response) {
         $('#error').modal('show');
@@ -126,16 +126,16 @@ $(tabla_datos).on("click", "button.editar", function (e){
 	e.preventDefault();
 	var data = dataTable.row( $(this).parents("tr") ).data();
 	$('#id_edicion').val(data.id);
-	$("#tipo_edicion").val(data.tipo);
+	$("#tipo_edicion").val(data.nombre);
 });
 
 /*2- Aprieto el boton editar del formulario modal de editar*/
 document.getElementById("form_edit").addEventListener("submit",function(e){
     e.preventDefault();
     var id = $('#id_edicion').val();
-    var tipo = $("#tipo_edicion").val();
-    if(tipo != '')
-		update_data(id,tipo);
+    var nombre = $("#tipo_edicion").val();
+    if(nombre != '')
+		update_data(id,nombre);
 	else
    {	
 		$('#message_edit').html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Faltan Campos Obligatorios!!!</strong></div>');
@@ -147,19 +147,19 @@ document.getElementById("form_edit").addEventListener("submit",function(e){
   });
 
 /*3- AJAX para editar */
-function update_data(id, tipo)
+function update_data(id, nombre)
   {
-  	var url = "http://localhost:8000/configuracion/tipos_de_gastos/editar/"+id+""
+  	var url = "/configuracion/registros/CtaCte/efectivo/editar/"+id+""
 
    $.ajax({
     url: url,
     method:"POST",
-    data:{id:id,tipo:tipo},
+    data:{id:id,nombre:nombre},
     headers: {'X-CSRF-TOKEN':token},
     success:function(data)
     {
 		console.log(data)
-	    $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>El Registro: '+data.data.tipo+' fue Editado correctamente!!!</strong></div>');
+	    $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>El Registro: '+data.data.nombre+' fue Editado correctamente!!!</strong></div>');
 	    $('#tabla_datos').DataTable().ajax.reload();
 	    $('#modalEditar').modal('hide')
     },
