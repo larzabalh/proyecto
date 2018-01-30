@@ -9,6 +9,7 @@
         "components/jquery": "^3.2",
         "fideloper/proxy": "~3.3",
         "fzaninotto/faker": "^1.7",
+        "igorescobar/jquery-mask-plugin": "^1.14",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "laraveles/spanish": "^1.0",

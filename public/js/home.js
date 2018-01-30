@@ -184,8 +184,8 @@ var token = $('#token').val();
 
 }
 
-
-$(".sumar").numeric("."); // No lo esta ejecutando!!!!! no funcion!!!
+$(".sumar").mask('00/00/0000')
+/*$(".sumar").numeric("."); */// No lo esta ejecutando!!!!! no funcion!!!
  
 
 
@@ -208,19 +208,24 @@ var data = [];
     }
 
   console.log('data:',data);
-  var url = "/home/actualizar_cajas/"+data+''//con esta ruta entro en el STORE, si es por POST!  
 
-  $.ajax({
+  var url = "/home"
+  {
+    $.ajax({
         url:url,
         headers: {'X-CSRF-TOKEN':token},
         method:"POST",
-        data:data,
-        success:function(response)
-          { 
-            console.log(response)
-            
+        data:{data},
+        success:function(data)
+          {
+            console.log(data)
+            $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Actualizado Correctamente!</strong</div>');
           }
         });
+    setInterval(function(){
+    $('#alert_message').html('');
+    }, 2000);
+  }
 
 });
 

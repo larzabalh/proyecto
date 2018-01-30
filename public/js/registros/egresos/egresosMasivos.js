@@ -80,7 +80,7 @@ document.getElementById("btnAsignar").addEventListener("click",function(e){
       });
     }
 
-  console.log(data);
+  console.log('data:',data);
 
   if(fecha != '')
   {

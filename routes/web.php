@@ -127,3 +127,4 @@ Route::get('/', function () {
 Route::get('/home/listar/{periodo}', 'HomeController@listar');
 Route::post('/home/actualizar_cajas/{data}', 'HomeController@actualizar_cajas');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/home', 'HomeController@store');

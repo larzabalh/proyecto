@@ -7,6 +7,9 @@
 <!-- jQuery -->
 <script src="/plugins/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="/plugins/js/jquery.numeric.js"></script>
+
+
+
 <!-- Bootstrap 3.3.5 -->
 <script src="/plugins/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->

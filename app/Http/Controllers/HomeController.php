@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use DB;
 use App\Reg_Gasto;
 use App\Forma_de_Pagos;
 use App\Gasto;
+use App\efectivo;
 
 class HomeController extends Controller
 {
@@ -215,30 +217,23 @@ class HomeController extends Controller
 
 
 
-    public function actualizar_cajas($data)
+    public function store(Request $request)
     {
+      $lstData=$request->data;
   
 
+        For($i=0; $i<count($lstData);$i++){
+        $datos = $lstData[$i];
+        $id=$datos['id'];
+        $importe=$datos['importe'];
 
-        For($i=0; $i<count($data);$i++){
-
-        dd($data);
-        $id=$data.[$i]['id'];
-        $importe=$data['importe'];
-        
-
-      
             
-            $cajas = new efectivos([
-                    'id' =>$id,
-                    'importe' =>$importe,
-                    'user_id' => auth()->user()->id,
-                  ]);
+            $cajas = efectivo::find($id);
+            $cajas->importe= $importe;
+                 
              $cajas->save();
-            
-     
-
         }
+        
       return response()->json(["data"=>$cajas->toArray()]);
     }
 

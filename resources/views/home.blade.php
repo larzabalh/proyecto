@@ -21,6 +21,7 @@
                 </div>
 			</div>
 		</div>
+        <div id="alert_message"></div>
 
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#reales">Ingresos - Egresos</a></li>
@@ -134,7 +135,9 @@
                                             <input type="hidden" id="token" value="{{ csrf_token() }}">
                                             
                                             <h3 id="titulo_cajas"></h3>
-                                            <div id="cajas"></div>
+                                                <input type="text" name="" class="sumar">
+                                            <div id="cajas">
+                                            </div>
                                         
                                         </form>
                                     </div>
