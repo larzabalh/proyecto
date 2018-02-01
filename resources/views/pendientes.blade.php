@@ -12,6 +12,8 @@ Cta Cte Disponibilidades:
 * Tachar las facturas que estan pagas con CSS
 * Tabla de Periodos? Como hacer para que pueda diferencia la fecha de los periodos? Quiero registrar una cobranza en el periodo 2017-12, pero que me quede registrado que se pago el 12/01/2018!!
 * Home: Cajas: porque aparece primero el input y luego el nombre de las cajas? No funciona jquery numeric!!!!
+* No funcionan las mascaras de jquery. Home ->cajas
+* Como hago para reemplar la palabra "caja" de la linea 45 de Egresos.js de registros/egresos/egresos, por un parametro que se lo quiera pasar?
 
 
 	

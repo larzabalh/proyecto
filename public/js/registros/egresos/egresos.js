@@ -16,7 +16,9 @@ var token = $('#token').val();
       var gasto_filtro = document.getElementById("gasto_filtro").value;
       $("#periodo").append("<option selected value='"+periodo+"'>"+periodo+"</option>");
       var pagado =0;
-      
+
+
+ 
 
   function init(){
     //Le pongo al select, todas las cuentas de Gastos que tiene en ese periodo
@@ -24,14 +26,30 @@ var token = $('#token').val();
     ajax(url, function (err, response) {
           $("#gasto_filtro").empty();
           $('#gasto_filtro').append('<option value=0 selected="selected">TODOS</option>');
-                $.each(response, function(i, value) {
-                  for (var i = 0; i < value.length; i++) {
-                      $("#gasto_filtro").append("<option value='"+response.data[i].forma_de_pagos_id+"'>"+response.data[i].caja+"</option>");
-                    };
-          });
+
+              var nuevo =eliminarDuplicados(response.data)
+
+                $.each(nuevo, function(i, value) {
+                    console.log(i)
+                      $("#gasto_filtro").append("<option value='"+nuevo[i].forma_de_pagos_id+"'>"+nuevo[i].caja+"</option>");
+                });
       });
-    crearDataTable(periodo,gasto_filtro,pagado);      
+    crearDataTable(periodo,gasto_filtro,pagado);
+
   }
+
+  function eliminarDuplicados(arrayAnalizar){
+  console.log(arrayAnalizar)
+    var hash = {};
+        var nuevo = arrayAnalizar.filter(function(current) {
+          var exists = !hash[current.caja] || false;
+          hash[current.caja] = true;
+          console.log(exists)
+          return exists;
+        });
+        console.log('nuevo:',nuevo)
+    return nuevo;
+}     
 
   function crearDataTable(periodo, gasto_filtro,pagado)
   { 
@@ -308,11 +326,13 @@ function update_data(data_edit)
           //Le pongo al select, todas las cuentas de Gastos que tiene en ese periodo
           $("#gasto_filtro").empty();
           $('#gasto_filtro').append('<option value=0 selected="selected">TODOS</option>');
-                $.each(response, function(i, value) {
-                  for (var i = 0; i < value.length; i++) {
-                      $("#gasto_filtro").append("<option value='"+response.data[i].forma_de_pagos_id+"'>"+response.data[i].caja+"</option>");
-                    };
-          });
+                
+                var nuevo =eliminarDuplicados(response.data)
+
+                $.each(nuevo, function(i, value) {
+                    console.log(i)
+                      $("#gasto_filtro").append("<option value='"+nuevo[i].forma_de_pagos_id+"'>"+nuevo[i].caja+"</option>");
+                });
       });
 });
 
@@ -340,11 +360,12 @@ $("#pagados").change(function(e){
           console.log('pagados:',response)
           $("#gasto_filtro").empty();
           $('#gasto_filtro').append('<option value=0 selected="selected">TODOS</option>');
-                $.each(response, function(i, value) {
-                  for (var i = 0; i < value.length; i++) {
-                      $("#gasto_filtro").append("<option value='"+response.data[i].forma_de_pagos_id+"'>"+response.data[i].caja+"</option>");
-                    };
-          });
+                var nuevo =eliminarDuplicados(response.data)
+
+                $.each(nuevo, function(i, value) {
+                    console.log(i)
+                      $("#gasto_filtro").append("<option value='"+nuevo[i].forma_de_pagos_id+"'>"+nuevo[i].caja+"</option>");
+                });
       });
 });
 
@@ -384,11 +405,12 @@ $("#impagos").change(function(e){
           
           $("#gasto_filtro").empty();
           $('#gasto_filtro').append('<option value=0 selected="selected">TODOS</option>');
-                $.each(response, function(i, value) {
-                  for (var i = 0; i < value.length; i++) {
-                      $("#gasto_filtro").append("<option value='"+response.data[i].forma_de_pagos_id+"'>"+response.data[i].caja+"</option>");
-                    };
-          });
+                var nuevo =eliminarDuplicados(response.data)
+
+                $.each(nuevo, function(i, value) {
+                    console.log(i)
+                      $("#gasto_filtro").append("<option value='"+nuevo[i].forma_de_pagos_id+"'>"+nuevo[i].caja+"</option>");
+                });
       });
 });
 

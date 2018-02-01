@@ -184,7 +184,7 @@ var token = $('#token').val();
 
 }
 
-$(".sumar").mask('00/00/0000')
+/*$(".sumar").mask('00/00/0000')*/
 /*$(".sumar").numeric("."); */// No lo esta ejecutando!!!!! no funcion!!!
  
 
