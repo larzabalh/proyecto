@@ -25,10 +25,9 @@
 
     <link rel="stylesheet" type="text/css" href="/plugins/css/bootstrap-select.min.css">
 
-
-
-
-
+    <!-- DATEPICKER -->
+    <link rel="stylesheet" type="text/css" href="/plugins/plugins/pickdate/themes/default.css">
+    <link rel="stylesheet" type="text/css" href="/plugins/plugins/pickdate/themes/default.date.css">
 
 
   </head>

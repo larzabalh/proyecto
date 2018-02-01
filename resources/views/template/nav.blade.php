@@ -91,9 +91,20 @@
                <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{route ('ingresos.index')}}"><i class="fa fa-circle-o"></i> Ingresos</a></li>
+              <li><a href="{{route ('ingresos.index')}}"><i class="fa fa-circle-o"></i> Ingresos Masivos</a></li>
               <li><a href="{{route ('egresosMasivos.index')}}"><i class="fa fa-circle-o"></i> Egresos Masivos</a></li>
+            </ul>
+          </li>
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-folder"></i> <span>CTAS CTES</span>
+              <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="{{'/registros/ctacte/clientes'}}"><i class="fa fa-circle-o"></i> Clientes</a></li>
               <li><a href="{{route ('registrodegastos.index')}}"><i class="fa fa-circle-o"></i> Egresos Individuales</a></li>
+              <li><a href="{{'/registros/ctacte/disponibilidades'}}"><i class="fa fa-circle-o"></i> Bancos</a></li>
+              <li><a href="{{'/registros/ctacte/cheques'}}"><i class="fa fa-circle-o"></i> Cheques</a></li>
             </ul>
           </li>
           <li class="treeview">
@@ -128,17 +139,6 @@
                   <li><a href="cliente.php"><i class="fa fa-circle-o"></i> Clientes</a></li>
                 </ul>
               </li>
-            </ul>
-          </li>
-          <li class="treeview">
-            <a href="#">
-              <i class="fa fa-folder"></i> <span>CTAS CTES</span>
-              <i class="fa fa-angle-left pull-right"></i>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href="{{'/registros/ctacte/clientes'}}"><i class="fa fa-circle-o"></i> Clientes</a></li>
-              <li><a href="{{'/registros/ctacte/disponibilidades'}}"><i class="fa fa-circle-o"></i> Bancos</a></li>
-
             </ul>
           </li>
           <li class="treeview">

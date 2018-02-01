@@ -90,6 +90,14 @@ Route::post('/registros/ctacte/disponibilidades/grabar', 'Cta_Cte_Disponibilidad
 Route::resource('/registros/ctacte/disponibilidades', 'Cta_Cte_DisponibilidadesController');
 
 
+Route::get('/registros/ctacte/cheques/listar/{estado}', 'ChequeController@listar');
+Route::get('/registros/ctacte/cheques/listar_uno/{id}', 'ChequeController@listar_uno');
+Route::post('/registros/ctacte/cheques/editar/{id}', 'ChequeController@editar');
+Route::post('/registros/ctacte/cheques/eliminar/{id}', 'ChequeController@eliminar');
+Route::post('/registros/ctacte/cheques/grabar', 'ChequeController@grabar');
+Route::resource('/registros/ctacte/cheques', 'ChequeController');
+
+
 Route::resource('/ingresos/mensual', 'IngresoMensualController');
 Route::get('/registros/ingresos/ingresos/listar', 'IngresosController@listar');
 Route::get('/registros/ingresos/ingresos/verificar', 'IngresosController@verificarUnSoloIngresoMasivo');

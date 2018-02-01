@@ -14,6 +14,7 @@ Cta Cte Disponibilidades:
 * Home: Cajas: porque aparece primero el input y luego el nombre de las cajas? No funciona jquery numeric!!!!
 * No funcionan las mascaras de jquery. Home ->cajas
 * Como hago para reemplar la palabra "caja" de la linea 45 de Egresos.js de registros/egresos/egresos, por un parametro que se lo quiera pasar?
+* Poner el proyecto del Sistema en GIT para que tenga acceso por ahi.
 
 
 	

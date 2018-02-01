@@ -7,6 +7,8 @@
 <!-- jQuery -->
 <script src="/plugins/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="/plugins/js/jquery.numeric.js"></script>
+<script type="text/javascript" src="/plugins/plugins/pickdate/picker.js"></script>
+<script type="text/javascript" src="/plugins/plugins/pickdate/picker.date.js"></script>
 
 
 
