@@ -4,16 +4,16 @@
     </div>
     <strong>Copyright &copy; 2013-2017 <a href="www.tucontadorpublico.com.ar">FINANZAS</a>.</strong> All rights reserved.
 </footer>
+
 <!-- jQuery -->
 <script src="/plugins/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="/plugins/js/jquery.numeric.js"></script>
-<script type="text/javascript" src="/plugins/plugins/pickdate/picker.js"></script>
-<script type="text/javascript" src="/plugins/plugins/pickdate/picker.date.js"></script>
-
 
 
 <!-- Bootstrap 3.3.5 -->
 <script src="/plugins/js/bootstrap.min.js"></script>
+
+
 <!-- AdminLTE App -->
 <script src="/plugins/js/app.min.js"></script>
 
