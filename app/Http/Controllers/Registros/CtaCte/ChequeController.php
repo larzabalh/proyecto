@@ -29,49 +29,17 @@ class ChequeController extends Controller
     public function index()
     {
 
-        $disponibilidades =DB::table('disponibilidades')
-          ->select('disponibilidades.*')
-            ->where('disponibilidades.user_id',"=",auth()->user()->id )
-            ->where('disponibilidades.condicion',"=",1)
-            ->orderBy('nombre','ASC')
-            ->get();
-
-        $periodos =DB::table('cta_cte_disponibilidades')
-        ->select(DB::raw("distinct (concat(year(fecha), '-', month(fecha))) as fecha"))
-        ->where(DB::raw('user_id'),auth()->user()->id )
-        ->orderby('fecha','ASC')
-        ->get();
-
-        $cliente_id =DB::table('cta_cte_disponibilidades')
-          ->select(DB::raw("distinct(clientes.cliente)as clientes"),'cta_cte_disponibilidades.cliente_id as id')
-            ->join('clientes', 'cta_cte_disponibilidades.cliente_id', '=', 'clientes.id')
-            ->join('users', 'cta_cte_disponibilidades.user_id', '=', 'users.id')
+        $cliente_id =DB::table('clientes')
+          ->select('clientes.*')
+            ->join('users', 'clientes.user_id', '=', 'users.id')
             ->where(DB::raw('users.id'),auth()->user()->id )
-            ->orderBy('clientes','ASC')
-            ->get();
-
-        $conceptos =DB::table('view_conceptos')
-            ->select('view_conceptos.*')
-            ->where('view_conceptos.user_id',"=",auth()->user()->id )
+            ->where('clientes.condicion','=', 1 )
+            ->orderBy('cliente','ASC')
             ->get();
 
 
-        $disponibilidad_id =DB::table('cta_cte_disponibilidades')
-          ->select(DB::raw("distinct(concat(medios.nombre,'-',disponibilidades.nombre))as bancos"),'cta_cte_disponibilidades.disponibilidad_id as id')
-            ->join('disponibilidades', 'cta_cte_disponibilidades.disponibilidad_id', '=', 'disponibilidades.id')
-            ->join('medios', 'disponibilidades.medio_id', '=', 'medios.id')
-            ->join('users', 'cta_cte_disponibilidades.user_id', '=', 'users.id')
-            ->where(DB::raw('users.id'),auth()->user()->id )
-            ->orderBy('bancos','ASC')
-            ->get();
-
-
-        return view('registros.CtaCte.cheques')
-        ->with('disponibilidades', $disponibilidades)
-        ->with('cliente_id', $cliente_id)
-        ->with('periodos',$periodos)
-        ->with('conceptos',$conceptos)
-        ->with('disponibilidad_id', $disponibilidad_id);
+        return  view('registros.CtaCte.cheques')
+                ->with('cliente_id', $cliente_id);
 
     }
 
@@ -81,7 +49,10 @@ class ChequeController extends Controller
       $estado = ($estado==0) ? $estado=null : $estado;
       
       $cheques =DB::table('cheques')
-          ->select('cheques.*','clientes.cliente')
+          ->select('cheques.*','clientes.cliente',
+            DB::raw("DATE_FORMAT(cheques.fecha,'%d/%m/%Y') as fecha"),
+            DB::raw("DATE_FORMAT(cheques.fecha_cobrar,'%d/%m/%Y') as fecha_cobrar"))
+            
           ->join('clientes', 'cheques.cliente_id', '=', 'clientes.id')
           ->join('users', 'cheques.user_id', '=', 'users.id')
           ->where(DB::raw('users.id'),auth()->user()->id )
@@ -109,7 +80,21 @@ class ChequeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cheque = new Cheque([
+        'fecha' => $request['fecha'],
+        'fecha_cobrar' => $request['fecha_cobrar'],
+        'importe' => $request['importe'],
+        'banco' => $request['banco'],
+        'numero' => $request['numero'],
+        'tipo' => $request['tipo'],
+        'cliente_id' => $request['cliente_id'],
+        'titular' => $request['titular'],
+        'destino' => $request['destino'],
+        'user_id' => auth()->user()->id,
+      ]);
+      $cheque->save();
+      // return redirect()->route('gasto.index');
+      return response()->json(["data"=> $cheque->toArray()]);
     }
 
     /**
@@ -118,9 +103,11 @@ class ChequeController extends Controller
      * @param  \App\Cheque  $cheque
      * @return \Illuminate\Http\Response
      */
-    public function show(Cheque $cheque)
+    public function eliminar($id)
     {
-        //
+      $cheque = Cheque::find($id);
+      $cheque->delete();
+      return response()->json(["data" => $cheque]);
     }
 
     /**

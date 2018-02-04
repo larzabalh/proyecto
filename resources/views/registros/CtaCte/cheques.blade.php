@@ -23,48 +23,69 @@
                             <input type="hidden" id="token" value="{{ csrf_token() }}">
                             <input type="hidden" class="form-control" id="id_editar">
                             <div class="row">
-                              <div class="col-lg-12" id="fecha">
-                                <label>FECHA</label><br>
-                                <input type="text" class="fecha form-control" name="gasto" id="fecha_alta">
+                              <div class="col-lg-6">
+                                <label>FECHA de Registro</label><br>
+                                <input type="text" class="fecha form-control" name="gasto" id="fecha">
                               </div>
-                              <div class="col-lg-12">
-                                <label>GASTO:</label><br>
-                                <select class="form-control" name="tipo" id="selectGasto">
+                              <div class="col-lg-6">
+                                <label>FECHA a COBRAR</label><br>
+                                <input type="date" class="fecha form-control" name="gasto" id="fecha_cobrar">
+                              </div>
+                              <div class="col-lg-6">
+                                <label>IMPORTE:</label>
+                                <input type="number" class="form-control" id="importe" maxlength="50">
+                              </div>
+                              <div class="col-lg-6">
+                                  <label>BANCO</label><br>
+                                  <input type="text" class="form-control" id="banco">
+                              </div>
+                              <div class="col-lg-6">
+                                  <label>Nº CH</label><br>
+                                  <input type="number" class="form-control" id="numero">
+                              </div>
+                              <div class="col-lg-6">
+                                <label>TIPO:</label><br>
+                                <select class="form-control" name="tipo" id="tipo">
                                   <option selected></option>
-                               
+                                  <option value="abierto">ABIERTO</option>
+                                  <option value="cruzado">CRUZADO</option>
                                 </select>
                               </div>
-                            </div>
-                            <div>
-                              <label>FORMA DE PAGO:</label><br>
-                              <select class="form-control" name="tipo" id="selectBanco">
-                                <option selected></option>
-                                
-                              </select>
-                            </div>
-                            <div >
-                              <label>IMPORTE:</label>
-                              <input type="number" class="form-control" name="gasto" id="importe_alta" maxlength="50" placeholder="1000">
-                            </div>
-                             <div>
-                                <label>COMENTARIO</label><br>
-                                <input type="text" class="form-control" name="gasto" id="comentario_alta">
-                            </div>
-                            <fieldset>
-                                <label>
-                                    <input type="radio" name="pagar" id="impago" value="" checked="checked"> IMPAGO
-                                </label>
-                                <label>
-                                    <input type="radio" name="pagar" id="pagado" value="1"> PAGADO
-                                </label>
-                                <label style='display:none;' id="chek_banco">
-                                <input type="checkbox" name="banco" value="1" id="banco"> Registrar en el Banco<br>
-                                </label>
-                            </fieldset>
-                            <div class="modal-footer">
-                              <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
-                              <button class="btn btn-primary" type="submit" id="btnEditar" style='display:none;'><i class="fa fa-edit"></i> editar</button>
-                              <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-arrow-circle-left"></i> VOLVER</button>
+                              <div class="col-lg-6">
+                                  <label>CLIENTE:</label><br>
+                                  <select class="form-control" id="cliente_id">
+                                    <option selected></option>
+                                      @foreach ($cliente_id as $key => $value)
+                                    <option value={{$value->id}}>{{$value->cliente}}</option>
+                                      @endforeach
+                                  </select>
+                              </div>
+                              <div class="col-lg-6">
+                                  <label>TITULAR</label><br>
+                                  <input type="text" class="form-control" id="titular">
+                              </div>
+                              <div class="col-lg-6">
+                                  <label>DESTINO</label><br>
+                                  <input type="text" class="form-control" id="destino">
+                              </div>
+                              <div class="col-lg-6">
+                              <fieldset>
+                                  <label>
+                                      <input type="radio" name="pagar" id="impago" value="" checked="checked"> PENDIENTE
+                                  </label>
+                                  <label>
+                                      <input type="radio" name="pagar" id="pagado" value="1"> COBRADO
+                                  </label>
+                                  <label style='display:none;' id="chek_banco">
+                                  <input type="checkbox" name="banco" value="1" id="banco"> Registrar en el Banco<br>
+                                  </label>
+                              </fieldset>
+                              </div>
+                              <div class="modal-footer">
+                                <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
+                                <button class="btn btn-primary" type="submit" id="btnEditar" style='display:none;'><i class="fa fa-edit"></i> editar</button>
+                                <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-arrow-circle-left"></i> VOLVER</button>
+                              </div>
                             </div>
                           </form>
                         </div>
@@ -81,7 +102,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <div id="alert_modal"></div>
+          <div id="alert_modal_pagados"></div>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -148,10 +169,10 @@
             <h4 class="modal-title" id="modalEliminarLabel">Eliminar</h4>
           </div>
           <div class="modal-body">
-            ¿Está seguro de eliminar:" <strong id="gasto_eliminar"></strong> "?
+            ¿Está seguro de eliminar:" <strong id="registro_eliminar"></strong> "?
           </div>
           <div class="modal-footer">
-            <button type="submit" id="eliminar" class="btn btn-primary">Aceptar</button>
+            <button type="submit" id="btneliminar" class="btn btn-primary">Aceptar</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
           </div>
         </div>
@@ -198,7 +219,7 @@
      <thead>
       <tr>
         <th>FECHA</th>
-        <th>FECHA POR COBRAR</th>
+        <th>COBRAR EL</th>
         <th>IMPORTE</th>
         <th>BANCO</th>
         <th>NUMERO</th>
