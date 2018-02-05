@@ -19,7 +19,7 @@
               <div id="formularioregistros">
                     <div class="panel panel-default">
                       <div class="panel-body" >
-                          <form name="" id="" method="POST">
+                          <form name="" id="formulario" method="POST">
                             <input type="hidden" id="token" value="{{ csrf_token() }}">
                             <input type="hidden" class="form-control" id="id_editar">
                             <div class="row">
@@ -29,7 +29,7 @@
                               </div>
                               <div class="col-lg-6">
                                 <label>FECHA a COBRAR</label><br>
-                                <input type="date" class="fecha form-control" name="gasto" id="fecha_cobrar">
+                                <input type="text" class="fecha form-control" name="gasto" id="fecha_cobrar">
                               </div>
                               <div class="col-lg-6">
                                 <label>IMPORTE:</label>

@@ -1,8 +1,8 @@
 
 var dataTable
 var token = $('#token').val();
-$('#fecha').datepicker();
-/*$('#fecha').val(new Date().toDateInputValue());*/
+$('.fecha').datepicker({ dateFormat: 'dd-mm-yy' });
+
  
 
 
@@ -80,7 +80,9 @@ $('#fecha').datepicker();
 
 $('#btnAgregar').on("click", function (e){
     e.preventDefault();
- $('#altaModal').modal('show')
+    $('#formulario').trigger("reset");
+    $('#fecha').val(new Date().toDateInputValue());
+    $('#altaModal').modal('show')
 });
 
 
@@ -186,18 +188,32 @@ $('#btneliminar').on("click", function (e){
   });
 });
 
+function getFormattedDate(date) {
+  var year = date.getFullYear();
+
+  var month = (1 + date.getMonth()).toString();
+  month = month.length > 1 ? month : '0' + month;
+
+  var day = date.getDate().toString();
+  day = day.length > 1 ? day : '0' + day;
+  
+  return month + '/' + day + '/' + year;
+}
+
 /*EDICION!!!*/
 $('#tabla_datos').on("click", "button.editar", function (e){
     e.preventDefault();
+    $('#formulario').trigger("reset");
     $('#altaModal').modal('show');
 
   var data = dataTable.row( $(this).parents("tr") ).data();
-  console.log(data)
   $('#id_eliminar').val(data.id);
-  var d=new Date(data.fecha);
-  console.log(d)
-  $('#fecha').val(d);
-  /*$('#fecha_cobrar').val(parseDate("dd-mm-yy", data.fecha_cobrar));*/
+  var fecha=new Date(data.fecha); //Primero convierto el String en date
+      fecha = getFormattedDate(fecha);//Se lo paso a la funcion y lo devuelve con el formato que quiero
+      var d=new Date(data.fecha_cobrar); //Primero convierto el String en date
+      fecha_cobrar = getFormattedDate(d);//Se lo paso a la funcion y lo devuelve con el formato que quiero
+  $('#fecha').val(fecha);
+  $('#fecha_cobrar').val(fecha_cobrar);
   $('#importe').val(data.importe);
   $('#banco').val(data.banco);
   $('#numero').val(data.numero);

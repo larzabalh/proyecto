@@ -15,7 +15,8 @@ Cta Cte Disponibilidades:
 * No funcionan las mascaras de jquery. Home ->cajas
 * Como hago para reemplar la palabra "caja" de la linea 45 de Egresos.js de registros/egresos/egresos, por un parametro que se lo quiera pasar?
 * Poner el proyecto del Sistema en GIT para que tenga acceso por ahi.
-* DATEPICKER: no puedo hacer que ande
+* DATEPICKER: no puedo hacer que ande, ahora me sale este error en la parte de Cheques, cuando edito: f.getClientRects is not a function
+* 
 
 
 	
