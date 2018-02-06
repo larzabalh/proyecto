@@ -7,19 +7,13 @@ $('.fecha').datepicker({ dateFormat: 'dd-mm-yy' });
 
 
   function init(){
-    //Le pongo al select, todas las cuentas de Gastos que tiene en ese periodo
-/*    var url = '/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+'/'+pagado+''
-    ajax(url, function (err, response) {
-          $("#gasto_filtro").empty();
-          $('#gasto_filtro').append('<option value=0 selected="selected">TODOS</option>');
 
-              var nuevo =eliminarDuplicados(response.data)
+    $('#probandofechas').pickadate({
+          format: 'dd/mm/yyyy',
+          formatSubmit: 'yyyy/mm/dd',
+          hiddenName: true
+        });
 
-                $.each(nuevo, function(i, value) {
-                    console.log(i)
-                      $("#gasto_filtro").append("<option value='"+nuevo[i].forma_de_pagos_id+"'>"+nuevo[i].caja+"</option>");
-                });
-      });*/
     crearDataTable(pagado);
 
   }

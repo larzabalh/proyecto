@@ -175,8 +175,11 @@ var token = $('#token').val();
               /*$("#cajas").append("<div>"+response.cajas[i].nombre+"="+numeral(response.cajas[i].importe).format('$0,0.00')+"</div>");*/
 
               $("#cajas").append("<div class='form-group col-lg-12 col-md-12 col-sm-12 col-xs-12'><strong>"+response.cajas[i].nombre+"</strong><input type='text' class='sumar form-group col-lg-4 col-md-4 col-sm-4 col-xs-4' name="+response.cajas[i].id+" value="+response.cajas[i].importe+"></div>");
+            
+                
             };
 
+            $(".sumar").numeric(".");
 
             $('#resultado').html('<div><strong>'+numeral(ingresos_todos-total_egresos).format('$0,0.00')+'</strong></div>');
 
@@ -185,7 +188,7 @@ var token = $('#token').val();
 }
 
 /*$(".sumar").mask('00/00/0000')*/
-/*$(".sumar").numeric("."); */// No lo esta ejecutando!!!!! no funcion!!!
+$(".sumar").numeric("."); // No lo esta ejecutando!!!!! no funcion!!!
  
 
 

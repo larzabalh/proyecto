@@ -26,6 +26,11 @@
     <link rel="stylesheet" type="text/css" href="/plugins/css/bootstrap-select.min.css">
     
     <link rel="stylesheet" href="/plugins/plugins/datepicker/jquery-ui-1.9.2.custom.min.css">
+
+ 
+    <link rel="stylesheet" href="/plugins/plugins/pickdate/themes/default.css">
+    <link rel="stylesheet" href="/plugins/plugins/pickdate/themes/default.date.css">
+<!--     <link rel="stylesheet" href="/plugins/plugins/pickdate/themes/rtl.css"> -->
     
   </head>
   <?php // NOTE: hold-transition skin-blue-light sidebar-mini ?>

@@ -135,8 +135,8 @@
                                             <input type="hidden" id="token" value="{{ csrf_token() }}">
                                             
                                             <h3 id="titulo_cajas"></h3>
-                                                <!-- <input type="text" name="" class="sumar"> -->
-                                            <div id="cajas">
+                                                <input type="text" name="" class="sumar">
+                                            <div id="cajas" style="overflow: hidden">
                                             </div>
                                         
                                         </form>

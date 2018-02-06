@@ -196,6 +196,7 @@
               {{ csrf_field() }}
             <div class="form-group col-lg-2 col-md-3 col-sm-3 col-xs-12">
               <button type="button" name="add" id="btnAgregar" class="btn btn-info">AGREGAR</button>
+              <input type="text" id="probandofechas">
             </div>
             <fieldset>
                 <label>

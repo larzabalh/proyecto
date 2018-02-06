@@ -27,7 +27,7 @@ var token = $('#token').val();
           $("#gasto_filtro").empty();
           $('#gasto_filtro').append('<option value=0 selected="selected">TODOS</option>');
 
-              var nuevo =eliminarDuplicados(response.data)
+              var nuevo =eliminarDuplicados(response.data,"caja")
 
                 $.each(nuevo, function(i, value) {
                     console.log(i)
@@ -38,12 +38,12 @@ var token = $('#token').val();
 
   }
 
-  function eliminarDuplicados(arrayAnalizar){
-  console.log(arrayAnalizar)
+  function eliminarDuplicados(arrayAnalizar,otro){
+  console.log('acae estoy:',arrayAnalizar)
     var hash = {};
         var nuevo = arrayAnalizar.filter(function(current) {
-          var exists = !hash[current.caja] || false;
-          hash[current.caja] = true;
+          var exists = !hash[current[otro]] || false;
+          hash[current[otro]] = true;
           console.log(exists)
           return exists;
         });

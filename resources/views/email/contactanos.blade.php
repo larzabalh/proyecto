@@ -28,9 +28,6 @@
 	</div>
 </div>					
 
-
-<script src="{{ asset('/js/email/contactanos.js')}}"></script>
-
 @endsection
 
 @section('script')

@@ -29,7 +29,12 @@
 <script src="/plugins/js/bootbox.min.js"></script>
 <script src="/plugins/js/bootstrap-select.min.js"></script>
 
-<script src="/plugins/plugins/datepicker/jquery-ui-1.9.2.custom.min.js"></script>
+<!-- <script src="/plugins/plugins/datepicker/jquery-ui-1.9.2.custom.min.js"></script> -->
+
+<script src="/plugins/plugins/pickdate/picker.js"></script>
+<script src="/plugins/plugins/pickdate/picker.date.js"></script>
+<script src="/plugins/plugins/pickdate/translations/es_ES.js"></script>
+
 
 <!-- LO HAGO PARA DEFINIR LA FECHA ACTUAL A TODOS LOS INPUT DEL TIPO DATE -->
 <script type="text/javascript">
