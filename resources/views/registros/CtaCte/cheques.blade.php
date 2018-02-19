@@ -116,7 +116,7 @@
                             <input type="hidden" id="token" value="{{ csrf_token() }}">
                             <input type="hidden" class="form-control" id="id_editar">
                             <div class="row">
-                              <div class="col-lg-12" id="fecha">
+                              <div class="col-lg-12">
                                 <label>FECHA:</label><br>
                                 <input type="text" class="form-control" id="periodo_pasar_a_pagados" disabled>
                               </div>
@@ -196,7 +196,6 @@
               {{ csrf_field() }}
             <div class="form-group col-lg-2 col-md-3 col-sm-3 col-xs-12">
               <button type="button" name="add" id="btnAgregar" class="btn btn-info">AGREGAR</button>
-              <input type="text" id="probandofechas">
             </div>
             <fieldset>
                 <label>

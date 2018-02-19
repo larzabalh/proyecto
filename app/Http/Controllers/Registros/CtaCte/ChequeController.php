@@ -14,6 +14,7 @@ use App\CtaCteCliente;
 use App\cta_cte_disponibilidades;
 use App\View_Conceptos;
 use Illuminate\Support\Facades\Auth;
+use Carbon;
 
 class ChequeController extends Controller
 {
@@ -80,9 +81,11 @@ class ChequeController extends Controller
      */
     public function store(Request $request)
     {
+
+        $fecha = Carbon::createFromFormat('Y-m-d', $request['fecha']);
         $cheque = new Cheque([
-        'fecha' => $request['fecha'],
-        'fecha_cobrar' => $request['fecha_cobrar'],
+        'fecha' => $fecha,
+        'fecha_cobrar' => $fecha,
         'importe' => $request['importe'],
         'banco' => $request['banco'],
         'numero' => $request['numero'],

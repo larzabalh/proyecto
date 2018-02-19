@@ -1,24 +1,13 @@
 
 var dataTable
 var token = $('#token').val();
-$('.fecha').datepicker({ dateFormat: 'dd-mm-yy' });
-
- 
-
+$('.fecha').datepicker();
 
   function init(){
-
-    $('#probandofechas').pickadate({
-          format: 'dd/mm/yyyy',
-          formatSubmit: 'yyyy/mm/dd',
-          hiddenName: true
-        });
 
     crearDataTable(pagado);
 
   }
-
-   
 
   function crearDataTable(estado)
   { 
@@ -75,7 +64,7 @@ $('.fecha').datepicker({ dateFormat: 'dd-mm-yy' });
 $('#btnAgregar').on("click", function (e){
     e.preventDefault();
     $('#formulario').trigger("reset");
-    $('#fecha').val(new Date().toDateInputValue());
+    $("#fecha").datepicker("setDate", "0");
     $('#altaModal').modal('show')
 });
 
@@ -215,7 +204,6 @@ $('#tabla_datos').on("click", "button.editar", function (e){
   $('#cliente_id').val(data.cliente_id);
   $('#titular').val(data.titular);
   $('#destino').val(data.destino);
-
 
 });
 

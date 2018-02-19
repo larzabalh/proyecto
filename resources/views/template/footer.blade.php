@@ -6,7 +6,9 @@
 </footer>
 
 <!-- jQuery -->
-<script src="/plugins/js/jquery-3.1.1.min.js"></script>
+<!-- <script src="/plugins/js/jquery-3.1.1.min.js"></script> -->
+<script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+<script src="/plugins/plugins/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/plugins/js/jquery.numeric.js"></script>
 
 
@@ -29,7 +31,7 @@
 <script src="/plugins/js/bootbox.min.js"></script>
 <script src="/plugins/js/bootstrap-select.min.js"></script>
 
-<!-- <script src="/plugins/plugins/datepicker/jquery-ui-1.9.2.custom.min.js"></script> -->
+
 
 <script src="/plugins/plugins/pickdate/picker.js"></script>
 <script src="/plugins/plugins/pickdate/picker.date.js"></script>
