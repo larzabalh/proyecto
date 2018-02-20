@@ -14,7 +14,6 @@ use App\CtaCteCliente;
 use App\cta_cte_disponibilidades;
 use App\View_Conceptos;
 use Illuminate\Support\Facades\Auth;
-use Carbon;
 
 class ChequeController extends Controller
 {
@@ -82,10 +81,9 @@ class ChequeController extends Controller
     public function store(Request $request)
     {
 
-        $fecha = Carbon::createFromFormat('Y-m-d', $request['fecha']);
         $cheque = new Cheque([
-        'fecha' => $fecha,
-        'fecha_cobrar' => $fecha,
+        'fecha' =>  date("Y-m-d", strtotime($request['fecha'])),
+        'fecha_cobrar' => date("Y-m-d", strtotime($request['fecha_cobrar'])),
         'importe' => $request['importe'],
         'banco' => $request['banco'],
         'numero' => $request['numero'],
@@ -119,9 +117,22 @@ class ChequeController extends Controller
      * @param  \App\Cheque  $cheque
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cheque $cheque)
+    public function editar(Request $request)
     {
-        //
+  
+
+    $cheque = Cheque::find($request['id']);
+    $cheque->fecha =  date("Y-m-d", strtotime($request['fecha']));
+    $cheque->fecha_cobrar =  date("Y-m-d", strtotime($request['fecha_cobrar']));
+    $cheque->importe =  $request['importe'];
+    $cheque->banco =  $request['banco'];
+    $cheque->numero =  $request['numero'];
+    $cheque->tipo =  $request['tipo'];
+    $cheque->cliente_id =  $request['cliente_id'];
+    $cheque->titular =  $request['titular'];
+    $cheque->destino =  $request['destino'];
+
+    $cheque->save();
     }
 
     /**

@@ -1,7 +1,7 @@
 
 var dataTable
 var token = $('#token').val();
-$('.fecha').datepicker();
+$('.fecha').datepicker({ dateFormat: 'dd-mm-yy' });
 
   function init(){
 
@@ -64,7 +64,9 @@ $('.fecha').datepicker();
 $('#btnAgregar').on("click", function (e){
     e.preventDefault();
     $('#formulario').trigger("reset");
-    $("#fecha").datepicker("setDate", "0");
+    $('#btnGuardar').show();
+    $('#btnEditar').hide();
+    $("#fecha").datepicker({ dateFormat: "yy-mm-dd"}).datepicker("setDate", "0");
     $('#altaModal').modal('show')
 });
 
@@ -72,6 +74,16 @@ $('#btnAgregar').on("click", function (e){
 $('#btnGuardar').on("click", function (e){
   e.preventDefault();
 
+  var url = '/registros/ctacte/cheques'
+
+datos(url);
+
+});
+
+  function datos(url,metodo){
+
+
+  
   var fecha = $('#fecha').val();
   var fecha_cobrar = $('#fecha_cobrar').val();
   var importe = $('#importe').val();
@@ -81,8 +93,6 @@ $('#btnGuardar').on("click", function (e){
   var cliente_id = $('#cliente_id').val();
   var titular = $('#titular').val();
   var destino = $('#destino').val();
-
-
 
   var contabilidad = $('input[name=contabilidad]:checked').val();
 
@@ -98,18 +108,27 @@ $('#btnGuardar').on("click", function (e){
                 'destino':destino
                 };
 
+  if (metodo=='editar') {
+
+    var id = $('#id_editar').val();
+    console.log(id)
+    data['id']=id;
+  }
+
+  console.log(data)
+
   if(fecha != '' && fecha_cobrar != '' && importe != '' && banco != '' && numero != '' && tipo != '' && cliente_id != '' && titular != '')
   {
-    var url = '/registros/ctacte/cheques'
+    
     AjaxGuardar(data,url)
-    console.log(data)
+
   }
    else
    {
     $('#alert_modal').html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Faltan Campos Obligatorios!!!</strong></div>');
    }
 
-});
+};
 
 
 function AjaxGuardar(data,url){
@@ -187,16 +206,18 @@ function getFormattedDate(date) {
 $('#tabla_datos').on("click", "button.editar", function (e){
     e.preventDefault();
     $('#formulario').trigger("reset");
+    $('#btnGuardar').hide();
+    $('#btnEditar').show();
     $('#altaModal').modal('show');
 
   var data = dataTable.row( $(this).parents("tr") ).data();
-  $('#id_eliminar').val(data.id);
+  $('#id_editar').val(data.id);
   var fecha=new Date(data.fecha); //Primero convierto el String en date
       fecha = getFormattedDate(fecha);//Se lo paso a la funcion y lo devuelve con el formato que quiero
       var d=new Date(data.fecha_cobrar); //Primero convierto el String en date
       fecha_cobrar = getFormattedDate(d);//Se lo paso a la funcion y lo devuelve con el formato que quiero
-  $('#fecha').val(fecha);
-  $('#fecha_cobrar').val(fecha_cobrar);
+  $('#fecha').val(data.fecha);
+  $('#fecha_cobrar').val(data.fecha_cobrar);
   $('#importe').val(data.importe);
   $('#banco').val(data.banco);
   $('#numero').val(data.numero);
@@ -205,6 +226,19 @@ $('#tabla_datos').on("click", "button.editar", function (e){
   $('#titular').val(data.titular);
   $('#destino').val(data.destino);
 
+
 });
+
+$('#btnEditar').on("click", function (e){
+  e.preventDefault();
+
+  var url = '/registros/ctacte/cheques/editar'
+  var metodo ='editar'
+  datos(url,'editar');
+
+
+
+});
+
 
 init();
