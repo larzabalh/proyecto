@@ -10,7 +10,7 @@ var token = $('#token').val();
 
   function crearDataTable()
   {  	
-  		var url = 'http://localhost:8000/configuracion/disponibilidades/listar'
+  		var url = '/configuracion/disponibilidades/listar'
 		dataTable = $('#tabla_datos').DataTable({
 		    "aProcessing": true,//Activamos el procesamiento del datatables
             "aServerSide": true,//Paginación y filtrado realizados por el servidor
@@ -48,7 +48,7 @@ $('#add').click(function(){
 /*2- Aprieto el boton GUARDAR del modal*/
 document.getElementById("btnGuardar").addEventListener("click",function(e){
   e.preventDefault();
-	var url = "http://localhost:8000/configuracion/disponibilidades"//con esta ruta entro en el STORE, si es por POST!
+	var url = "/configuracion/disponibilidades"//con esta ruta entro en el STORE, si es por POST!
 	var nombre = $('#gasto_alta').val();
 	var medio_id = $('#tipo_alta').val();
 	if(nombre != '' && medio_id != '')
@@ -92,7 +92,7 @@ document.getElementById("form_eliminar").addEventListener("submit",function(e){
   e.preventDefault();
   $('#modalEliminar').modal('hide');
   var data = {'id':$('#id_eliminar').val()};
-  var url = "http://localhost:8000/configuracion/disponibilidades/eliminar/"+$('#id_eliminar').val()+""
+  var url = "/configuracion/disponibilidades/eliminar/"+$('#id_eliminar').val()+""
 
   $.ajax({
     url: url,
@@ -151,7 +151,7 @@ document.getElementById("form_edit").addEventListener("submit",function(e){
 /*3- AJAX para editar */
 function update_data(id, nombre, medio_id)
   {
-  	var url = "http://localhost:8000/configuracion/disponibilidades/editar/"+id+""
+  	var url = "/configuracion/disponibilidades/editar/"+id+""
 
    $.ajax({
     url: url,

@@ -10,7 +10,7 @@ var token = $('#token').val();
 
   function crearDataTable()
   {  	
-  		var url = 'http://localhost:8000/configuracion/medios/listar'
+  		var url = '/configuracion/medios/listar'
 		dataTable = $('#tabla_datos').DataTable({
 		    "aProcessing": true,//Activamos el procesamiento del datatables
             "aServerSide": true,//Paginación y filtrado realizados por el servidor
@@ -50,7 +50,7 @@ $('#add').click(function(){
 
 /*2- Aprieto el boton INSERTAR*/
   $(document).on('click', '#insert', function(){
-	var url = "http://localhost:8000/configuracion/medios"//con esta ruta entro en el STORE, si es por POST!
+	var url = "/configuracion/medios"//con esta ruta entro en el STORE, si es por POST!
 	var nombre = $('#data1').text();
 	if(nombre != '')
 	{
@@ -92,7 +92,7 @@ document.getElementById("form_eliminar").addEventListener("submit",function(e){
   e.preventDefault();
   $('#modalEliminar').modal('hide');
   var data = {'id':$('#id_eliminar').val()};
-  var url = "http://localhost:8000/configuracion/medios/eliminar/"+$('#id_eliminar').val()+""
+  var url = "/configuracion/medios/eliminar/"+$('#id_eliminar').val()+""
 
   $.ajax({
     url: url,
@@ -149,7 +149,7 @@ document.getElementById("form_edit").addEventListener("submit",function(e){
 /*3- AJAX para editar */
 function update_data(id, nombre)
   {
-  	var url = "http://localhost:8000/configuracion/medios/editar/"+id+""
+  	var url = "/configuracion/medios/editar/"+id+""
 
    $.ajax({
     url: url,

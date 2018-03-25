@@ -10,7 +10,7 @@ var token = $('#token').val();
 
   function crearDataTable()
   {  	
-  		var url = 'http://localhost:8000/configuracion/tipos_de_gastos/listar'
+  		var url = '/configuracion/tipos_de_gastos/listar'
 		dataTable = $('#tabla_datos').DataTable({
 		    "aProcessing": true,//Activamos el procesamiento del datatables
             "aServerSide": true,//Paginación y filtrado realizados por el servidor
@@ -92,7 +92,7 @@ document.getElementById("form_eliminar").addEventListener("submit",function(e){
   e.preventDefault();
   $('#modalEliminar').modal('hide');
   var data = {'id':$('#id_eliminar').val()};
-  var url = "http://localhost:8000/configuracion/tipos_de_gastos/eliminar/"+$('#id_eliminar').val()+""
+  var url = "/configuracion/tipos_de_gastos/eliminar/"+$('#id_eliminar').val()+""
 
   $.ajax({
     url: url,
@@ -149,7 +149,7 @@ document.getElementById("form_edit").addEventListener("submit",function(e){
 /*3- AJAX para editar */
 function update_data(id, tipo)
   {
-  	var url = "http://localhost:8000/configuracion/tipos_de_gastos/editar/"+id+""
+  	var url = "/configuracion/tipos_de_gastos/editar/"+id+""
 
    $.ajax({
     url: url,
