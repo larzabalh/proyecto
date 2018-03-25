@@ -63,6 +63,7 @@ $('.fecha').datepicker({ dateFormat: 'dd-mm-yy' });
 
 $('#btnAgregar').on("click", function (e){
     e.preventDefault();
+    $('#alert_modal').html('');
     $('#formulario').trigger("reset");
     $('#btnGuardar').show();
     $('#btnEditar').hide();
