@@ -33,7 +33,7 @@
                               </div>
                               <div class="col-lg-6">
                                 <label>IMPORTE:</label>
-                                <input type="number" class="form-control" id="importe" maxlength="50">
+                                <input type="text" class="number form-control" id="importe" maxlength="50" min="0">
                               </div>
                               <div class="col-lg-6">
                                   <label>BANCO</label><br>
@@ -41,7 +41,7 @@
                               </div>
                               <div class="col-lg-6">
                                   <label>Nº CH</label><br>
-                                  <input type="number" class="form-control" id="numero">
+                                  <input type="text" class="integer form-control" id="numero" min="0">
                               </div>
                               <div class="col-lg-6">
                                 <label>TIPO:</label><br>
@@ -71,7 +71,7 @@
                               <div class="col-lg-6">
                               <fieldset>
                                   <label>
-                                      <input type="radio" name="pagar" id="impago" value="" checked="checked"> PENDIENTE
+                                      <input type="radio" name="pagar" id="impago" value="0" checked="checked"> PENDIENTE
                                   </label>
                                   <label>
                                       <input type="radio" name="pagar" id="pagado" value="1"> COBRADO
@@ -156,6 +156,7 @@
       </div>
     </div>
 </div>
+
 <div>
   <form id="form_eliminar" action="" method="POST">
     <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_eliminar">
@@ -199,17 +200,14 @@
             </div>
             <fieldset>
                 <label>
-                    <input type="radio" name="estado" id="cobrados" value="si"> COBRADOS
+                    <input type="radio" name="estado" id="cobrados" value="1"> COBRADOS
                 </label>
                 <label>
-                    <input type="radio" name="estado" id="pendientes" value="no" checked="checked"> PENDIENTES
+                    <input type="radio" name="estado" id="pendientes" value="0" checked="checked"> PENDIENTES
                 </label>
             </fieldset>
             <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-              <h4 id="total">TOTAL: </h4>
-            </div>
-            <div class="form-group col-lg-1 col-md-3 col-sm-3 col-xs-12">
-              <button type="button" name="add" id="btnpagados" class="btn btn-primary">PASAR A PAGADOS</button>
+              <h4 id="total"></h4>
             </div>
           </form>
         </div>
@@ -218,6 +216,7 @@
     <table id="tabla_datos" class="table table-bordered table-striped">
      <thead>
       <tr>
+        <th>ID</th>
         <th>FECHA</th>
         <th>COBRAR EL</th>
         <th>IMPORTE</th>

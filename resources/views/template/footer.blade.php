@@ -37,6 +37,9 @@
 <script src="/plugins/plugins/pickdate/picker.date.js"></script>
 <script src="/plugins/plugins/pickdate/translations/es_ES.js"></script>
 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+
+
 
 <!-- LO HAGO PARA DEFINIR LA FECHA ACTUAL A TODOS LOS INPUT DEL TIPO DATE -->
 <script type="text/javascript">

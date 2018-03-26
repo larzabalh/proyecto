@@ -225,7 +225,7 @@ class HomeController extends Controller
         For($i=0; $i<count($lstData);$i++){
         $datos = $lstData[$i];
         $id=$datos['id'];
-        $importe=$datos['importe'];
+        $importe= str_replace(',', '.', $datos['importe']);
 
             
             $cajas = efectivo::find($id);

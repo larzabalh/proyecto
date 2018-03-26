@@ -133,9 +133,7 @@
                                         <button class="btn btn-primary" name="actualizar" type="submit" id="btnActualizar"><i class="fa fa-save"></i> Actualizar</button>
                                         <form name="" id="" method="POST">
                                             <input type="hidden" id="token" value="{{ csrf_token() }}">
-                                            
                                             <h3 id="titulo_cajas"></h3>
-                                                <input type="text" name="" class="sumar">
                                             <div id="cajas" style="overflow: hidden">
                                             </div>
                                         

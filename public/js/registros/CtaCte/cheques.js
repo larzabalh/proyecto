@@ -1,11 +1,19 @@
-
 var dataTable
 var token = $('#token').val();
 $('.fecha').datepicker({ dateFormat: 'dd-mm-yy' });
 
-  function init(){
+$(".number").mask('99999999,99',
+   { reverse : true, placeholder: "$ 0,00",
+    'translation': {9: {pattern: /[0-9]/} } } )
+    .attr({ maxLength : 12 });
 
-    crearDataTable(pagado);
+$(".integer").mask('9999999999',
+   { reverse : true, placeholder: "0123456789",
+    'translation': {9: {pattern: /[0-9]/} } } )
+    .attr({ maxLength : 12 });
+
+function init(){
+    crearDataTable(estado=0);
 
   }
 
@@ -26,17 +34,27 @@ $('.fecha').datepicker({ dateFormat: 'dd-mm-yy' });
           ajax: url,
           type : "get",
           columnDefs: [
-              { data: 'fecha',"targets": 0 },
-              { data: 'fecha_cobrar',"targets": 1 },
-              { data: 'importe',render: $.fn.dataTable.render.number( ',', '.', 2 ),"targets": 2},
-              { data: 'banco',"targets": 3},
-              { data: 'numero',"targets": 4},
-              { data: 'tipo',"targets": 5},
-              { data: 'cliente_id',"targets": 6},
-              { data: 'titular',"targets": 7},
-              { data: 'destino',"targets": 8},
-              { data: 'estado',"targets": 9},
-              { 'defaultContent': "<button id='editar' type='button' class='editar btn btn-primary' data-target='#modalEditar'><i class='fa fa-pencil-square-o'></i></button> <button id='eliminar' type='button'class='eliminar btn btn-danger' data-target='#modalEliminar' ><i class='fa fa-trash-o'></i></button>","targets": 10}
+              { data: 'id',"targets": 0 },
+              { data: 'fecha',"targets": 1 },
+              { data: 'fecha_cobrar',"targets": 2 },
+              { data: 'importe',render: $.fn.dataTable.render.number( ',', '.', 2 ),"targets": 3},
+              { data: 'banco',"targets": 4},
+              { data: 'numero',"targets": 5},
+              { data: 'tipo',"targets": 6},
+              { data: 'cliente',"targets": 7},
+              { data: 'titular',"targets": 8},
+              { data: 'destino',"targets": 9},
+              { data: 'estado',
+                  "render": function ( data ) {
+                    if (data == "1") {
+                       data = "PAGADO";
+                    } else {
+                       data = "PENDIENTES";
+                    }
+                  return data;
+                  },
+                "targets": 10},
+              { 'defaultContent': "<button id='editar' type='button' class='editar btn btn-primary' data-target='#modalEditar'><i class='fa fa-pencil-square-o'></i></button> <button id='eliminar' type='button'class='eliminar btn btn-danger' data-target='#modalEliminar' ><i class='fa fa-trash-o'></i></button>","targets": 11}
                 ],
         select: {
             style: 'os',
@@ -53,10 +71,7 @@ $('.fecha').datepicker({ dateFormat: 'dd-mm-yy' });
           var saldo = response.data.reduce(function (accum, current) {
             return accum + current.importe
           }, 0)
-          $('#total').append(numeral(saldo).format('$0,0.00'));
-          console.log(response)
-
-
+          $('#total').html('TOTAL: '+ numeral(saldo).format('$0,0.00'));
         });
 
 }
@@ -94,8 +109,7 @@ datos(url);
   var cliente_id = $('#cliente_id').val();
   var titular = $('#titular').val();
   var destino = $('#destino').val();
-
-  var contabilidad = $('input[name=contabilidad]:checked').val();
+  var estado = $('input:radio[name=pagar]:checked').val()
 
   var data = {
                 'fecha':fecha,
@@ -106,7 +120,8 @@ datos(url);
                 'tipo':tipo,
                 'cliente_id':cliente_id,
                 'titular':titular,
-                'destino':destino
+                'destino':destino,
+                'estado':estado
                 };
 
   if (metodo=='editar') {
@@ -176,11 +191,14 @@ $('#btneliminar').on("click", function (e){
     dataType: 'json',
     data: data,
     success:function(data){
-        setTimeout(function(){
-          $('#exito_eliminar').modal('hide');
+              var estado = $('input:radio[name=estado]:checked').val()
+              dataTable.destroy()
+              crearDataTable(estado);
           $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registrado Eliminado Correctamente!</strong</div>');
-          $('#tabla_datos').DataTable().ajax.reload();
-        },1500);
+          $('#exito_eliminar').modal('hide');
+        setTimeout(function(){
+          $('#alert_message').html('');
+        },2500);
       },
     error: function(response) {
         $('#error').modal('show');
@@ -191,42 +209,38 @@ $('#btneliminar').on("click", function (e){
   });
 });
 
-function getFormattedDate(date) {
-  var year = date.getFullYear();
-
-  var month = (1 + date.getMonth()).toString();
-  month = month.length > 1 ? month : '0' + month;
-
-  var day = date.getDate().toString();
-  day = day.length > 1 ? day : '0' + day;
-  
-  return month + '/' + day + '/' + year;
-}
-
 /*EDICION!!!*/
 $('#tabla_datos').on("click", "button.editar", function (e){
     e.preventDefault();
     $('#formulario').trigger("reset");
-    $('#btnGuardar').hide();
-    $('#btnEditar').show();
-    $('#altaModal').modal('show');
 
   var data = dataTable.row( $(this).parents("tr") ).data();
   $('#id_editar').val(data.id);
-  var fecha=new Date(data.fecha); //Primero convierto el String en date
-      fecha = getFormattedDate(fecha);//Se lo paso a la funcion y lo devuelve con el formato que quiero
-      var d=new Date(data.fecha_cobrar); //Primero convierto el String en date
-      fecha_cobrar = getFormattedDate(d);//Se lo paso a la funcion y lo devuelve con el formato que quiero
-  $('#fecha').val(data.fecha);
-  $('#fecha_cobrar').val(data.fecha_cobrar);
-  $('#importe').val(data.importe);
-  $('#banco').val(data.banco);
-  $('#numero').val(data.numero);
-  $('#tipo').val(data.tipo);
-  $('#cliente_id').val(data.cliente_id);
-  $('#titular').val(data.titular);
-  $('#destino').val(data.destino);
 
+  var url = '/registros/ctacte/cheques/listar_uno/'+$('#id_editar').val()+''
+  $.ajax({
+          url:url,
+          headers: {'X-CSRF-TOKEN':token},
+          method:"GET",
+          data:data,
+          success:function(data)
+          {
+            $('#fecha').val(data.data[0].fecha);
+            $('#fecha_cobrar').val(data.data[0].fecha_cobrar);
+            $('#importe').val(data.data[0].importe);
+            $('#banco').val(data.data[0].banco);
+            $('#numero').val(data.data[0].numero);
+            $('#tipo').val(data.data[0].tipo);
+            $('#cliente_id').val(data.data[0].cliente_id);
+            $('#titular').val(data.data[0].titular);
+            $('#destino').val(data.data[0].destino);
+            (data.data[0].estado==0)? $('#impago').prop('checked',true) : $('#pagado').prop('checked',true);
+          }
+          });
+
+    $('#btnGuardar').hide();
+    $('#btnEditar').show();
+    $('#altaModal').modal('show');
 
 });
 
@@ -237,8 +251,17 @@ $('#btnEditar').on("click", function (e){
   var metodo ='editar'
   datos(url,'editar');
 
+});
 
 
+$('input:radio[name=estado]').change(function(e){
+    e.preventDefault();
+
+    var estado = $('input:radio[name=estado]:checked').val()
+    dataTable.destroy()
+    crearDataTable(estado);   
+
+      console.log('adentro')
 });
 
 

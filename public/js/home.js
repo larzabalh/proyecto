@@ -179,7 +179,11 @@ var token = $('#token').val();
                 
             };
 
-            $(".sumar").numeric(".");
+            $(".sumar").mask('99999999,99',
+               { reverse : true, placeholder: "$ 0,00",
+                'translation': {9: {pattern: /[0-9]/} } } )
+                .attr({ maxLength : 12 });
+
 
             $('#resultado').html('<div><strong>'+numeral(ingresos_todos-total_egresos).format('$0,0.00')+'</strong></div>');
 

@@ -45,8 +45,6 @@ class ChequeController extends Controller
 
     public function listar($estado=null)
     {
-
-      $estado = ($estado==0) ? $estado=null : $estado;
       
       $cheques =DB::table('cheques')
           ->select('cheques.*','clientes.cliente',
@@ -67,10 +65,20 @@ class ChequeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+        public function listar_uno($id)
+            {
+              $cheques =DB::table('cheques')
+                  ->select('cheques.*','clientes.cliente',
+                    DB::raw("DATE_FORMAT(cheques.fecha,'%d-%m-%Y') as fecha"),
+                    DB::raw("DATE_FORMAT(cheques.fecha_cobrar,'%d-%m-%Y') as fecha_cobrar"))
+                  ->join('clientes', 'cheques.cliente_id', '=', 'clientes.id')
+                  ->join('users', 'cheques.user_id', '=', 'users.id')
+                  ->where(DB::raw('users.id'),auth()->user()->id )
+                  ->where('cheques.id',"=",$id)
+                  ->get();
+
+                return response()->json(["data"=>$cheques->toArray()]);
+            }
 
     /**
      * Store a newly created resource in storage.
@@ -84,13 +92,14 @@ class ChequeController extends Controller
         $cheque = new Cheque([
         'fecha' =>  date("Y-m-d", strtotime($request['fecha'])),
         'fecha_cobrar' => date("Y-m-d", strtotime($request['fecha_cobrar'])),
-        'importe' => $request['importe'],
+        'importe' => str_replace(',', '.', $request['importe']),
         'banco' => $request['banco'],
         'numero' => $request['numero'],
         'tipo' => $request['tipo'],
         'cliente_id' => $request['cliente_id'],
         'titular' => $request['titular'],
         'destino' => $request['destino'],
+        'estado' => $request['estado'],
         'user_id' => auth()->user()->id,
       ]);
       $cheque->save();
@@ -131,6 +140,7 @@ class ChequeController extends Controller
     $cheque->cliente_id =  $request['cliente_id'];
     $cheque->titular =  $request['titular'];
     $cheque->destino =  $request['destino'];
+    $cheque->estado =  $request['estado'];
 
     $cheque->save();
     }
