@@ -104,7 +104,8 @@
               <li><a href="{{'/registros/ctacte/clientes'}}"><i class="fa fa-circle-o"></i> Clientes</a></li>
               <li><a href="{{route ('registrodegastos.index')}}"><i class="fa fa-circle-o"></i> Egresos Individuales</a></li>
               <li><a href="{{'/registros/ctacte/disponibilidades'}}"><i class="fa fa-circle-o"></i> Bancos</a></li>
-              <li><a href="{{'/registros/ctacte/cheques'}}"><i class="fa fa-circle-o"></i> Cheques</a></li>
+              <!-- <li><a href="{{'/registros/ctacte/cheques'}}"><i class="fa fa-circle-o"></i> Cheques</a></li> -->
+              <li><a href="{{route ('cheques.index')}}"><i class="fa fa-circle-o"></i> Cheques</a></li>
             </ul>
           </li>
           <li class="treeview">

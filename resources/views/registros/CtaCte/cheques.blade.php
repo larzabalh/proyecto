@@ -83,52 +83,12 @@
                               </div>
                               <div class="modal-footer">
                                 <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
+                                <input type="text" id="route-cheques-store" name="no-use" value="{{ route('cheques.store')}}">
                                 <button class="btn btn-primary" type="submit" id="btnEditar" style='display:none;'><i class="fa fa-edit"></i> editar</button>
+                                <input type="text" id="route-cheques-editar" name="no-use" value="{{ route('cheques.editar') }}">
+                                <input type="text" id="route-cheques-listar_uno" name="no-use" value="{{ route('cheques.listar_uno', ['param' => '&param']) }}">
                                 <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-arrow-circle-left"></i> VOLVER</button>
                               </div>
-                            </div>
-                          </form>
-                        </div>
-                    </div>
-                      <!-- /.panel-body -->
-                </div>
-        </div>
-      </div>
-    </div>
-</div>
-
-{{-- PASAR A PAGADOS--}}
-<div class="modal fade" id="ModalPagados"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div id="alert_modal_pagados"></div>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h4 class="modal-title"">PASAR A PAGADOS</h4>
-        </div>
-        <div class="modal-body" id="">
-              <div id="formularioregistros">
-                    <div class="panel panel-default">
-                      <div class="panel-body" >
-                          <form name="" id="" method="POST">
-                            <input type="hidden" id="token" value="{{ csrf_token() }}">
-                            <input type="hidden" class="form-control" id="id_editar">
-                            <div class="row">
-                              <div class="col-lg-12">
-                                <label>FECHA:</label><br>
-                                <input type="text" class="form-control" id="periodo_pasar_a_pagados" disabled>
-                              </div>
-                              <div class="col-lg-12" >
-                                <ol id="conceptos_pasar_pagados">
-                                  
-                                </ol>
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button class="btn btn-primary" type="submit" id="btnpasarpagados"><i class="fa fa-save"></i> Pasar Pagados</button>
-                              <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-arrow-circle-left"></i> VOLVER</button>
                             </div>
                           </form>
                         </div>
@@ -174,6 +134,7 @@
           </div>
           <div class="modal-footer">
             <button type="submit" id="btneliminar" class="btn btn-primary">Aceptar</button>
+            <input type="text" id="route-cheques-eliminar" name="no-use" value="{{ route('cheques.eliminar', ['param' => '&param']) }}">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
           </div>
         </div>
@@ -205,6 +166,7 @@
                 <label>
                     <input type="radio" name="estado" id="pendientes" value="0" checked="checked"> PENDIENTES
                 </label>
+                <input type="text" id="route-cheques-listar" name="no-use" value="{{ route('cheques.listar', ['param' => '&param'])}}">
             </fieldset>
             <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
               <h4 id="total"></h4>

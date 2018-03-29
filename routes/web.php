@@ -90,12 +90,16 @@ Route::post('/registros/ctacte/disponibilidades/grabar', 'Cta_Cte_Disponibilidad
 Route::resource('/registros/ctacte/disponibilidades', 'Cta_Cte_DisponibilidadesController');
 
 
-Route::get('/registros/ctacte/cheques/listar/{estado}', 'ChequeController@listar');
-Route::get('/registros/ctacte/cheques/listar_uno/{id}', 'ChequeController@listar_uno');
-Route::post('/registros/ctacte/cheques/editar', 'ChequeController@editar');
-Route::post('/registros/ctacte/cheques/eliminar/{id}', 'ChequeController@eliminar');
-Route::post('/registros/ctacte/cheques/grabar', 'ChequeController@grabar');
-Route::resource('/registros/ctacte/cheques', 'ChequeController');
+Route::prefix('/registros/ctacte/cheques')->group(function () {
+
+	Route::get('/listar/{estado}', 'ChequeController@listar')->name('cheques.listar');
+	Route::get('/listar_uno/{id}', 'ChequeController@listar_uno')->name('cheques.listar_uno');
+	Route::post('/editar', 'ChequeController@editar')->name('cheques.editar');
+	Route::post('/eliminar/{id}', 'ChequeController@eliminar')->name('cheques.eliminar');
+	Route::post('/store', 'ChequeController@store')->name('cheques.store');
+	Route::get('/', 'ChequeController@index')->name('cheques.index');
+  });
+
 
 
 Route::resource('/ingresos/mensual', 'IngresoMensualController');

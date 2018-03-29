@@ -19,8 +19,10 @@ function init(){
 
   function crearDataTable(estado)
   { 
-
-    var url = '/registros/ctacte/cheques/listar/'+estado+''
+/*    var estado = this.value;
+    console.log(estado);*/
+    /*var url = '/registros/ctacte/cheques/listar/'+estado+''*/
+    var url = $("#route-cheques-listar").val().trim().replace('&param', estado);
     dataTable = $('#tabla_datos').DataTable({
         "aProcessing": true,//Activamos el procesamiento del datatables
             "aServerSide": true,//Paginación y filtrado realizados por el servidor
@@ -90,7 +92,9 @@ $('#btnAgregar').on("click", function (e){
 $('#btnGuardar').on("click", function (e){
   e.preventDefault();
 
-  var url = '/registros/ctacte/cheques'
+/*  var url = '/registros/ctacte/cheques'*/
+  var url = $("#route-cheques-store").val().trim();
+
 
 datos(url);
 
@@ -181,7 +185,8 @@ $('#btneliminar').on("click", function (e){
 
   $('#modalEliminar').modal('hide');
   var data = {'id':$('#id_eliminar').val()};
-  var url = '/registros/ctacte/cheques/eliminar/'+$('#id_eliminar').val()+''
+/*  var url = '/registros/ctacte/cheques/eliminar/'+$('#id_eliminar').val()+''*/
+    var url = $("#route-cheques-eliminar").val().trim().replace('&param', $('#id_eliminar').val());
 
   $.ajax({
     url: url,
@@ -217,7 +222,8 @@ $('#tabla_datos').on("click", "button.editar", function (e){
   var data = dataTable.row( $(this).parents("tr") ).data();
   $('#id_editar').val(data.id);
 
-  var url = '/registros/ctacte/cheques/listar_uno/'+$('#id_editar').val()+''
+/*  var url = '/registros/ctacte/cheques/listar_uno/'+$('#id_editar').val()+''*/
+var url = $("#route-cheques-listar_uno").val().trim().replace('&param', $('#id_editar').val());
   $.ajax({
           url:url,
           headers: {'X-CSRF-TOKEN':token},
@@ -247,7 +253,8 @@ $('#tabla_datos').on("click", "button.editar", function (e){
 $('#btnEditar').on("click", function (e){
   e.preventDefault();
 
-  var url = '/registros/ctacte/cheques/editar'
+/*  var url = '/registros/ctacte/cheques/editar'*/
+  var url = $("#route-cheques-editar").val().trim();
   var metodo ='editar'
   datos(url,'editar');
 
@@ -259,9 +266,7 @@ $('input:radio[name=estado]').change(function(e){
 
     var estado = $('input:radio[name=estado]:checked').val()
     dataTable.destroy()
-    crearDataTable(estado);   
-
-      console.log('adentro')
+    crearDataTable(estado);
 });
 
 

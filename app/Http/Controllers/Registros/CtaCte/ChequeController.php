@@ -133,7 +133,7 @@ class ChequeController extends Controller
     $cheque = Cheque::find($request['id']);
     $cheque->fecha =  date("Y-m-d", strtotime($request['fecha']));
     $cheque->fecha_cobrar =  date("Y-m-d", strtotime($request['fecha_cobrar']));
-    $cheque->importe =  $request['importe'];
+    $cheque->importe =  str_replace(',', '.', $request['importe']);
     $cheque->banco =  $request['banco'];
     $cheque->numero =  $request['numero'];
     $cheque->tipo =  $request['tipo'];
