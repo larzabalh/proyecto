@@ -48,8 +48,24 @@
             							<p id="ingresos_todos"></p>
             						</div>
             						<div id="menu1" class="tab-pane fade">
-            							<h3 id="titulo_ingresos_impagos"></h3>
-            							<p id="ingresos_impagos"></p>
+                                        <form name="" id="" method="POST">
+                                            <button class="btn btn-primary" name="sendEmail" type="submit" id="btnSendEmail"><i class="fab fa-telegram-plane"></i> ENVIAR MAILs</button>
+                                            <input type="hidden" id="token" value="{{ csrf_token() }}">
+                                                <div id="alert_message"></div>
+                        							<h3 id="titulo_ingresos_impagos" align="center"></h3>
+                                                <table class="table table-hover">
+                                                  <thead>
+                                                    <tr>
+                                                      <th scope="col">CLIENTE</th>
+                                                      <th scope="col">IMPORTE</th>
+                                                      <th scope="col">SELECCIONAR</th>
+                                                    </tr>
+                                                  </thead>
+                                                  <tbody id="tablaDeudor">
+                                                    <!-- la tabla va por jquery -->
+                                                  </tbody>
+                                                </table>
+                                        </form>
             						</div>
             						<div id="menu2" class="tab-pane fade">
             							<h3 id="titulo_saldosBancarios"></h3>

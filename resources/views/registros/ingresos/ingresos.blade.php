@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-lg-12">
           <div class="container box">
-              <h1 align="center">REGISTRACION DE INGRESOS</h1><br />
+              <h1 align="center">REGISTRACION DE INGRESOS MASIVOS</h1><br />
                 <div class="row">
                   <div class="form-group col-lg-2 col-md-3 col-sm-3 col-xs-12">
                     <button class="btn btn-primary" type="submit" id="btnAsignar"><i class="fa fa-save"></i> Asignar</button>

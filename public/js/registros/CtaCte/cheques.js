@@ -19,9 +19,6 @@ function init(){
 
   function crearDataTable(estado)
   { 
-/*    var estado = this.value;
-    console.log(estado);*/
-    /*var url = '/registros/ctacte/cheques/listar/'+estado+''*/
     var url = $("#route-cheques-listar").val().trim().replace('&param', estado);
     dataTable = $('#tabla_datos').DataTable({
         "aProcessing": true,//Activamos el procesamiento del datatables
@@ -91,8 +88,6 @@ $('#btnAgregar').on("click", function (e){
 
 $('#btnGuardar').on("click", function (e){
   e.preventDefault();
-
-/*  var url = '/registros/ctacte/cheques'*/
   var url = $("#route-cheques-store").val().trim();
 
 
@@ -145,7 +140,12 @@ datos(url);
   }
    else
    {
-    $('#alert_modal').html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Faltan Campos Obligatorios!!!</strong></div>');
+      $('#alert_modal').html(
+        $.DivNotificacion({
+          texto:'Faltan Campos Obligatorios!!!',
+          class: 'alert alert-warning'
+          })
+        )
    }
 
 };
@@ -160,7 +160,12 @@ function AjaxGuardar(data,url){
         success:function(data)
         {
           $('#altaModal').modal('hide') 
-          $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registrado Correctamente!</strong</div>');
+           $('#alert_message').html(
+              $.DivNotificacion({
+                texto:'Registrado Correctamente!!!!',
+                class: 'alert alert-success'
+                })
+              )
           $('#tabla_datos').DataTable().ajax.reload();
         }
         });
@@ -185,8 +190,7 @@ $('#btneliminar').on("click", function (e){
 
   $('#modalEliminar').modal('hide');
   var data = {'id':$('#id_eliminar').val()};
-/*  var url = '/registros/ctacte/cheques/eliminar/'+$('#id_eliminar').val()+''*/
-    var url = $("#route-cheques-eliminar").val().trim().replace('&param', $('#id_eliminar').val());
+  var url = $("#route-cheques-eliminar").val().trim().replace('&param', $('#id_eliminar').val());
 
   $.ajax({
     url: url,
@@ -199,7 +203,13 @@ $('#btneliminar').on("click", function (e){
               var estado = $('input:radio[name=estado]:checked').val()
               dataTable.destroy()
               crearDataTable(estado);
-          $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registrado Eliminado Correctamente!</strong</div>');
+          $('#alert_message').html(
+              $.DivNotificacion({
+                texto:'Registro Eliminado Correctamente!!!',
+                class: 'alert alert-success'
+                })
+              )
+
           $('#exito_eliminar').modal('hide');
         setTimeout(function(){
           $('#alert_message').html('');
@@ -216,44 +226,41 @@ $('#btneliminar').on("click", function (e){
 
 /*EDICION!!!*/
 $('#tabla_datos').on("click", "button.editar", function (e){
-    e.preventDefault();
-    $('#formulario').trigger("reset");
+      e.preventDefault();
+        $('#formulario').trigger("reset");
 
-  var data = dataTable.row( $(this).parents("tr") ).data();
-  $('#id_editar').val(data.id);
+        var data = dataTable.row( $(this).parents("tr") ).data();
+        $('#id_editar').val(data.id);
 
-/*  var url = '/registros/ctacte/cheques/listar_uno/'+$('#id_editar').val()+''*/
-var url = $("#route-cheques-listar_uno").val().trim().replace('&param', $('#id_editar').val());
-  $.ajax({
-          url:url,
-          headers: {'X-CSRF-TOKEN':token},
-          method:"GET",
-          data:data,
-          success:function(data)
-          {
-            $('#fecha').val(data.data[0].fecha);
-            $('#fecha_cobrar').val(data.data[0].fecha_cobrar);
-            $('#importe').val(data.data[0].importe);
-            $('#banco').val(data.data[0].banco);
-            $('#numero').val(data.data[0].numero);
-            $('#tipo').val(data.data[0].tipo);
-            $('#cliente_id').val(data.data[0].cliente_id);
-            $('#titular').val(data.data[0].titular);
-            $('#destino').val(data.data[0].destino);
-            (data.data[0].estado==0)? $('#impago').prop('checked',true) : $('#pagado').prop('checked',true);
-          }
-          });
+        var url = $("#route-cheques-listar_uno").val().trim().replace('&param', $('#id_editar').val());
+        $.ajax({
+                url:url,
+                headers: {'X-CSRF-TOKEN':token},
+                method:"GET",
+                data:data,
+                success:function(data)
+                {
+                  $('#fecha').val(data.data[0].fecha);
+                  $('#fecha_cobrar').val(data.data[0].fecha_cobrar);
+                  $('#importe').val(data.data[0].importe);
+                  $('#banco').val(data.data[0].banco);
+                  $('#numero').val(data.data[0].numero);
+                  $('#tipo').val(data.data[0].tipo);
+                  $('#cliente_id').val(data.data[0].cliente_id);
+                  $('#titular').val(data.data[0].titular);
+                  $('#destino').val(data.data[0].destino);
+                  (data.data[0].estado==0)? $('#impago').prop('checked',true) : $('#pagado').prop('checked',true);
+                }
+                });
 
-    $('#btnGuardar').hide();
-    $('#btnEditar').show();
-    $('#altaModal').modal('show');
+          $('#btnGuardar').hide();
+          $('#btnEditar').show();
+          $('#altaModal').modal('show');
 
 });
 
 $('#btnEditar').on("click", function (e){
   e.preventDefault();
-
-/*  var url = '/registros/ctacte/cheques/editar'*/
   var url = $("#route-cheques-editar").val().trim();
   var metodo ='editar'
   datos(url,'editar');
@@ -269,5 +276,7 @@ $('input:radio[name=estado]').change(function(e){
     crearDataTable(estado);
 });
 
-
 init();
+
+
+  

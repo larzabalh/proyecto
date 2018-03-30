@@ -118,6 +118,29 @@ function ajax (url, callback) {
   request.send()
 };
 
+
+//Este Plugin/Componente es un ALERT de BOOTSTRAP para mostrar notificaciones!!! Para llamarlo:
+        /*$.DivNotificacion({
+          texto:'Registro Eliminado Correctamente!!!',
+          class: 'alert alert-success'
+        })*/
+(function(){
+$.DivNotificacion = function( opciones ){
+    opciones = $.extend({
+      texto: "vacio",
+      class:"",
+    }, opciones );
+
+    // Creo el Div y el texto!!!!
+    contenido  = "";
+    contenido+='<div class="'+opciones.class+' alert-dismissable">'
+    contenido+='  <button type="button" class="close" data-dismiss="alert">&times;</button>'
+    contenido+='  <strong>'+opciones.texto+'</strong>'
+    contenido+='</div>'
+    return contenido;
+  };
+})();
+
 </script>
 </body>
 </html>

@@ -72,7 +72,12 @@ document.getElementById("btnAsignar").addEventListener("click",function(e){
               }
             else
              {
-              $('#alert_message').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Ya se registro una carga masiva en este periodo!!!</strong></div>');
+              $('#alert_message').html(
+                   $.DivNotificacion({
+                texto:'Ya se registro una carga masiva en este periodo!!!',
+                class: 'alert alert-danger'
+                })
+              )
              }
           }
         });
@@ -83,11 +88,13 @@ document.getElementById("btnAsignar").addEventListener("click",function(e){
   }
   else
    {
-    $('#alert_message').html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Faltan Campos Obligatorios!!!</strong></div>');
+    $('#alert_message').html(
+                   $.DivNotificacion({
+                texto:'Faltan Campos Obligatorios!!!',
+                class: 'alert alert-warning'
+                })
+              )
    }
-
-  
-
   });
 
 function grabar_masivo(data,fecha) {
@@ -101,7 +108,12 @@ function grabar_masivo(data,fecha) {
         data:{data,fecha},
         success:function(data)
           {
-            $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Registrado Correctamente!</strong</div>');
+           $('#alert_message').html(
+                   $.DivNotificacion({
+                texto:'Registrado Correctamente!!!',
+                class: 'alert alert-success'
+                })
+              )
           }
         });
     setInterval(function(){

@@ -83,10 +83,10 @@
                               </div>
                               <div class="modal-footer">
                                 <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
-                                <input type="text" id="route-cheques-store" name="no-use" value="{{ route('cheques.store')}}">
+                                <input type="hidden" id="route-cheques-store" name="no-use" value="{{ route('cheques.store')}}">
                                 <button class="btn btn-primary" type="submit" id="btnEditar" style='display:none;'><i class="fa fa-edit"></i> editar</button>
-                                <input type="text" id="route-cheques-editar" name="no-use" value="{{ route('cheques.editar') }}">
-                                <input type="text" id="route-cheques-listar_uno" name="no-use" value="{{ route('cheques.listar_uno', ['param' => '&param']) }}">
+                                <input type="hidden" id="route-cheques-editar" name="no-use" value="{{ route('cheques.editar') }}">
+                                <input type="hidden" id="route-cheques-listar_uno" name="no-use" value="{{ route('cheques.listar_uno', ['param' => '&param']) }}">
                                 <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-arrow-circle-left"></i> VOLVER</button>
                               </div>
                             </div>
@@ -134,7 +134,7 @@
           </div>
           <div class="modal-footer">
             <button type="submit" id="btneliminar" class="btn btn-primary">Aceptar</button>
-            <input type="text" id="route-cheques-eliminar" name="no-use" value="{{ route('cheques.eliminar', ['param' => '&param']) }}">
+            <input type="hidden" id="route-cheques-eliminar" name="no-use" value="{{ route('cheques.eliminar', ['param' => '&param']) }}">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
           </div>
         </div>
@@ -166,7 +166,7 @@
                 <label>
                     <input type="radio" name="estado" id="pendientes" value="0" checked="checked"> PENDIENTES
                 </label>
-                <input type="text" id="route-cheques-listar" name="no-use" value="{{ route('cheques.listar', ['param' => '&param'])}}">
+                <input type="hidden" id="route-cheques-listar" name="no-use" value="{{ route('cheques.listar', ['param' => '&param'])}}">
             </fieldset>
             <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
               <h4 id="total"></h4>

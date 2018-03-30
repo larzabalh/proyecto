@@ -152,13 +152,13 @@ class HomeController extends Controller
             ->get();
 
       $ingresos_impagos =DB::table('cta_cte_clientes')
-            ->select('clientes.cliente',DB::raw('sum(cta_cte_clientes.debe - cta_cte_clientes.haber) as deuda'))
+            ->select('clientes.id','clientes.cliente',DB::raw('sum(cta_cte_clientes.debe - cta_cte_clientes.haber) as deuda'))
             ->join('users', 'cta_cte_clientes.user_id', '=', 'users.id')
             ->join('clientes', 'cta_cte_clientes.cliente_id', '=', 'clientes.id')
             ->where(DB::raw('cta_cte_clientes.user_id'),auth()->user()->id )
             ->where(DB::raw('year(cta_cte_clientes.fecha)'), $array[0])
             ->where(DB::raw('month(cta_cte_clientes.fecha)'), $array[1])
-            ->groupBy('clientes.cliente')
+            ->groupBy('clientes.id','clientes.cliente')
             ->orderBy('clientes.cliente','asc')
             ->get();
 

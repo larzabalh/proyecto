@@ -11,8 +11,6 @@ var token = $('#token').val();
       var year = currentTime.getFullYear()
       var periodo = year+"-"+month
       $("#periodo").append("<option selected value='"+periodo+"'>"+periodo+"</option>");
-      
-
 
   function init(){
     
@@ -65,14 +63,33 @@ var token = $('#token').val();
           var ingresos_impagos = response.ingresos_impagos.reduce(function (accum, current) {
               return accum + current.deuda
             }, 0)
-          $('#titulo_ingresos_impagos').html('<div><strong>'+numeral(ingresos_impagos).format('$0,0.00')+'</strong></div>');
-          for (var i = 0; i < response.ingresos_impagos.length; i++) {
-            if (response.ingresos_impagos[i].deuda!=0) {
-              $("#ingresos_impagos").append("<div>"+response.ingresos_impagos[i].cliente+"="
-                +numeral(response.ingresos_impagos[i].deuda).format('$0,0.00')+
-                "</div>");
-            } 
-          }
+          $('#titulo_ingresos_impagos').html(numeral(ingresos_impagos).format('$0,0.00'));
+          $.each(response.ingresos_impagos,function(index,impago){
+            if (impago.deuda!=0) {
+              var tabla="";
+                  tabla+='<tr>'              
+                  tabla+='<td>'+impago.cliente+'</td>'
+                  tabla+='<td><input type="text" class="number form-control deudaImpago" min="0" value="'+numeral(impago.deuda).format('$0,0.00')+'" placeholder="$0,00"></td>'
+                  tabla+='<td><input type="checkbox" name="" class="check" value="'+impago.deuda+'" id="'+impago.id+'"></td>'
+                  tabla+='</tr>'
+              $("#tablaDeudor").append(tabla)  
+            }
+          })
+              //Si cambia algun input de los impago, se actualiza el total
+                $(".deudaImpago").change(function(e){
+                  console.log(parseFloat(this.value.replace(',', '.')))
+                  console.log(parseFloat(this.value).toFixed(2))
+                  
+                     var total = 0;
+                      $('.deudaImpago').each(function() {
+                            console.log('adentro del each')
+                            this.value= this.value=="" ? 0 : this.value;
+                             total += parseFloat(this.value.replace(',', '.'))
+                      });
+                        console.log(total)
+                        $('#titulo_ingresos_impagos').html(numeral(total).format('$0,0.00'));
+                });
+
 
           //BANCOS
           var saldo = response.saldosBancarios.reduce(function (accum, current) {
@@ -171,15 +188,11 @@ var token = $('#token').val();
             }
 
             //CAJAS
-            for (var i = 0; i < response.cajas.length; i++) {
-              /*$("#cajas").append("<div>"+response.cajas[i].nombre+"="+numeral(response.cajas[i].importe).format('$0,0.00')+"</div>");*/
+              $.each(response.cajas,function(index,caja){
+                $("#cajas").append("<div class='form-group col-lg-12 col-md-12 col-sm-12 col-xs-12'><strong>"+caja.nombre+"</strong><input type='text' class='sumar form-group col-lg-4 col-md-4 col-sm-4 col-xs-4' name="+caja.id+" value="+caja.importe+"></div>");
+            });
 
-              $("#cajas").append("<div class='form-group col-lg-12 col-md-12 col-sm-12 col-xs-12'><strong>"+response.cajas[i].nombre+"</strong><input type='text' class='sumar form-group col-lg-4 col-md-4 col-sm-4 col-xs-4' name="+response.cajas[i].id+" value="+response.cajas[i].importe+"></div>");
-            
-                
-            };
-
-            $(".sumar").mask('99999999,99',
+            $(".sumar,.number").mask('99999999,99',
                { reverse : true, placeholder: "$ 0,00",
                 'translation': {9: {pattern: /[0-9]/} } } )
                 .attr({ maxLength : 12 });
@@ -191,12 +204,23 @@ var token = $('#token').val();
 
 }
 
-/*$(".sumar").mask('00/00/0000')*/
-$(".sumar").numeric("."); // No lo esta ejecutando!!!!! no funcion!!!
- 
 
 
+//BOTON DE ENVIAR MAIL
+$("#btnSendEmail").click(function(event){
+    event.preventDefault();
+    var ids = [];
+    $("input:checkbox:checked").each(function(){
+          ids.push({
+            'id':this.id,
+            'deuda':this.value,
+            })
+    }).toArray();
+    console.log(ids);
+});
 
+
+//Boton de actualizar las CAJAS 
 $('#btnActualizar').on("click", function (e){
     e.preventDefault();
 var id= [];$("input[class^='sumar']").each(function() {id.push ($(this).attr('name'));});
@@ -226,7 +250,12 @@ var data = [];
         success:function(data)
           {
             console.log(data)
-            $('#alert_message').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Actualizado Correctamente!</strong</div>');
+            $('#alert_message').html(
+              $.DivNotificacion({
+                  texto:'Cajas Actualizadas!!!',
+                  class: 'alert alert-success'
+                  })
+            )
           }
         });
     setInterval(function(){
