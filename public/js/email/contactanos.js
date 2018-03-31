@@ -18,7 +18,7 @@ document.getElementById("enviar").addEventListener("click",function(e){
 
           $.ajax({
             url:url,
-            headers: {'X-CSRF-TOKEN':token},
+            /*headers: {'X-CSRF-TOKEN':token},*/
             method:"POST",
             data:data,
             success:function(data)

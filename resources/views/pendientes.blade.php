@@ -21,6 +21,44 @@
 * Cuando hago un edit? Traigo de la base de datos o de la tabla? todo lo que es datatable, lo estoy trayendo de la tabla, por eso las fechas vienen con formato texto!
 
 
+NO ME ANDUVO!!!!
+/*=============================================
+Pluggin para recorrer todo los input y mostrarlos en un id- HOME!!!!
+    $.SumarInputs ({selectorInputs: ".deudaImpagos"})
+=============================================*/
+
+(function(){
+
+  $.SumarInputs = function ( opciones ){
+
+      opciones = $.extend({
+        selectorInputs:"",
+      }, opciones );
+      console.log (opciones.selectorInputs)
+
+      var total = recorrer(opciones.selectorInputs)
+  
+      console.log(total)
+  }
+
+    function recorrer(selectorInputs){
+      
+      return $(selectorInputs).change(function(e){
+                      console.log('acaestoy adentro')
+                         var total = 0;
+                       
+                        $(selectorInputs).each(function() {
+                              this.value= this.value=="" ? 0 : this.value;
+                               total += parseFloat(this.value.replace(',', '.'))
+                        });
+                          return total
+                  });
+    }
+
+})();
+/*=====  End of Section comment block  ======*/
+
+
 	
 	
 

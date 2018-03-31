@@ -53,11 +53,27 @@ var token = $('#token').val();
               return accum + current.debe
             }, 0)
           $('#titulo_ingresos_todos').html('<div><strong>'+numeral(ingresos_todos).format('$0,0.00')+'</strong></div>');
-          for (var i = 0; i < response.ingresos_todos.length; i++) {
-              $("#ingresos_todos").append("<div>"+response.ingresos_todos[i].cliente+"="
-                +numeral(response.ingresos_todos[i].debe).format('$0,0.00')+
-                "</div>");
-            }
+            $.each(response.ingresos_todos,function(index,ingreso){
+              var tabla="";
+                  tabla+='<tr>'              
+                  tabla+='<td>'+ingreso.cliente+'</td>'
+                  tabla+='<td><input type="text" class="number form-control totalIngresos" min="0" value="'+numeral(ingreso.debe).format('$0,0.00')+'" placeholder="$0,00"></td>'
+                  tabla+='<td><input type="hidden" name="" class="check" value="'+ingreso.debe+'" id="'+ingreso.id+'"></td>'
+                  tabla+='</tr>'
+              $("#tablaIngresos").append(tabla)
+          })
+          //Si cambia algun input de los INGRESOS, se actualiza el total
+                $(".totalIngresos").change(function(e){                  
+                     var total = 0;
+                      $('.totalIngresos').each(function() {
+                            console.log('adentro del each')
+                            this.value= this.value=="" ? 0 : this.value;
+                             total += parseFloat(this.value.replace(',', '.'))
+                      });
+                        console.log(total)
+                        $('#titulo_ingresos_todos').html(numeral(total).format('$0,0.00'));
+                });
+
 
           //ingresos impagos
           var ingresos_impagos = response.ingresos_impagos.reduce(function (accum, current) {
@@ -203,6 +219,12 @@ var token = $('#token').val();
         });
 
 }
+/*========================================
+=            EXPORTAR A EXCEL            =
+========================================*/
+
+
+/*=====  End of EXPORTAR A EXCEL  ======*/
 
 
 

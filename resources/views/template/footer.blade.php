@@ -119,11 +119,14 @@ function ajax (url, callback) {
 };
 
 
-//Este Plugin/Componente es un ALERT de BOOTSTRAP para mostrar notificaciones!!! Para llamarlo:
+/*=============================================
+=            Este Plugin/Componente es un ALERT de BOOTSTRAP para mostrar notificaciones!!! Para llamarlo:
         /*$.DivNotificacion({
           texto:'Registro Eliminado Correctamente!!!',
           class: 'alert alert-success'
-        })*/
+        })
+=============================================*/
+//
 (function(){
 $.DivNotificacion = function( opciones ){
     opciones = $.extend({
@@ -140,6 +143,7 @@ $.DivNotificacion = function( opciones ){
     return contenido;
   };
 })();
+
 
 </script>
 </body>

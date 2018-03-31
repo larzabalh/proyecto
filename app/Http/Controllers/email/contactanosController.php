@@ -39,17 +39,17 @@ class contactanosController extends Controller
      */
     public function store(Request $request)
     {
-         
-        Mail::send('email.plantilla_mensaje',
-            [ 'request' => $request->all() ]
-            ,function($msj){
-            $msj->subject('Correo de Contacto');
-            $msj->to('larzabalh@gmail.com');
 
-        });
+        Mail::send('email.plantilla_mensaje',
+            [ 'request' => $request->all() ],
+                function($msj){
+                    $msj->subject('Correo de Contacto');
+                    $msj->to('larzabalh@gmail.com');
+
+                });
 
         Session::flash('message','Mensaje Enviado Correctamente');
-        //return Redirect::to('/contactanos');
+        return Redirect::to('/contactanos');
 
     }
 

@@ -28,8 +28,8 @@ return [
     | the Mailgun mail service which will provide reliable deliveries.
     |
     */
-    /*'host' => env('MAIL_HOST', 'smtp.mailgun.org'),*/
-    'host' => env('MAIL_HOST', 'mail.tucontadorpublico.com.ar'),
+    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
+    /*'host' => env('MAIL_HOST', 'mail.tucontadorpublico.com.ar'),*/
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return [
     |
     */
     /*'port' => env('MAIL_PORT', 587),*/
-    'port' => env('MAIL_PORT', 25),
+    'port' => env('MAIL_PORT', 465),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hernan@tucontadorpublico.com.ar'),
+        'address' => env('MAIL_FROM_ADDRESS', 'larzabalh@gmail.com'),
         'name' => env('MAIL_FROM_NAME', 'HERNAN'),
     ],
 
@@ -71,7 +71,7 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', false),
+    /*'encryption' => env('MAIL_ENCRYPTION', ssl),*/
 
     /*
     |--------------------------------------------------------------------------
@@ -84,9 +84,9 @@ return [
     |
     */
 
-    'username' => env('MAIL_USERNAME', 'hernan@tucontadorpublico.com.ar'),
+    /*'username' => env('MAIL_USERNAME', 'hernan@tucontadorpublico.com.ar'),
 
-    'password' => env('MAIL_PASSWORD', '321654987'),
+    'password' => env('MAIL_PASSWORD', '321654987'),*/
 
     /*
     |--------------------------------------------------------------------------

@@ -7,7 +7,7 @@
       <div class="col-lg-12">
           <div class="container box">
 
-				<form name="" id="" method="POST">
+				<form action="/contactanos/store" id="" method="POST">
 					<input type="hidden" id="token" value="{{ csrf_token() }}">
 					<div class="row">
 						<label for="name">Tu nombre:</label><br />
@@ -21,7 +21,7 @@
 						<label for="message">Tu mensaje:</label><br />
 						<textarea id="message" class="input" name="message" rows="7" cols="30"></textarea><br />
 					</div>
-					<input id="enviar" type="submit" value="Send email" />
+					<input id="enviarwedw" type="submit" value="Send email" />
 				</form>
 			</div>
 		</div>

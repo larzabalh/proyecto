@@ -44,8 +44,19 @@
             					</ul>
             					<div class="tab-content">
             						<div id="home" class="tab-pane fade in active">
-            							<h3 id="titulo_ingresos_todos"></h3>
-            							<p id="ingresos_todos"></p>
+            							<h3 id="titulo_ingresos_todos" align="center"></h3>
+                                        <table class="table table-hover">
+                                                  <thead>
+                                                    <tr>
+                                                      <th scope="col">CLIENTE</th>
+                                                      <th scope="col">IMPORTE</th>
+
+                                                    </tr>
+                                                  </thead>
+                                                  <tbody id="tablaIngresos">
+                                                    <!-- la tabla va por jquery -->
+                                                  </tbody>
+                                                </table>
             						</div>
             						<div id="menu1" class="tab-pane fade">
                                         <form name="" id="" method="POST">

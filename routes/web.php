@@ -16,7 +16,8 @@ return $user;
   echo "<pre>{$query->sql}</pre>";
 });*/
 
-Route::resource('/contactanos', 'contactanosController');
+Route::post('/contactanos/store', 'contactanosController@store')->name('contactanos.store');
+Route::get('/contactanos', 'contactanosController@index');
 
 
 Route::get('/configuracion/egresos/gastos_mensuales/listar/{gasto_filtro}', 'GastosMensualesController@listar');
