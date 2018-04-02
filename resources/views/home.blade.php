@@ -79,8 +79,18 @@
                                         </form>
             						</div>
             						<div id="menu2" class="tab-pane fade">
-            							<h3 id="titulo_saldosBancarios"></h3>
-            							<p id="saldosBancarios"></p>
+            							<h3 id="titulo_saldosBancarios" align="center"></h3>
+                                        <table class="table table-hover">
+                                          <thead>
+                                            <tr>
+                                              <th scope="col">CLIENTE</th>
+                                              <th scope="col">IMPORTE</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody id="tablaSaldosBancarios">
+                                            <!-- la tabla va por jquery -->
+                                          </tbody>
+                                        </table>
             						</div>
                                     <div id="menu3" class="tab-pane fade">
                                         <h3 id="titulo_saldosBancariosProyectado"></h3>
@@ -160,9 +170,18 @@
                                         <button class="btn btn-primary" name="actualizar" type="submit" id="btnActualizar"><i class="fa fa-save"></i> Actualizar</button>
                                         <form name="" id="" method="POST">
                                             <input type="hidden" id="token" value="{{ csrf_token() }}">
-                                            <h3 id="titulo_cajas"></h3>
-                                            <div id="cajas" style="overflow: hidden">
-                                            </div>
+                                            <h3 id="titulo_cajas" align="center"></h3>
+                                            <table class="table table-hover">
+                                                  <thead>
+                                                    <tr>
+                                                      <th scope="col">CONCEPTO</th>
+                                                      <th scope="col">IMPORTE</th>
+                                                    </tr>
+                                                  </thead>
+                                                  <tbody id="tablaCajas">
+                                                    <!-- la tabla va por jquery -->
+                                                  </tbody>
+                                                </table>
                                         
                                         </form>
                                     </div>
@@ -172,7 +191,7 @@
                                     </div>
                                     <div id="menu22" class="tab-pane fade">
                                         <h3 id="titulo_saldosBancarios"></h3>
-                                        <p id="saldosBancarios"></p>
+                                        <p id="saldosBancarios"></p>                                    
                                     </div>
                                 </div>
                         </div>

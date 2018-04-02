@@ -21,7 +21,7 @@
                 </div>
             <div id="alert_message"></div>
 
-
+            <input type="hidden" name="" value= "{{$gastos_mensuales}}" placeholder="">
             <!-- Abro el form e inicializo la logica de la tabla -->
             <form name="" id="" method="POST">
                 <input type="hidden" id="token" value="{{ csrf_token() }}">
@@ -60,12 +60,13 @@
                                 {{$data->gasto}}
                               </td>
                               <td>
-                                <select name="tipo_gasto[{{$x}}]" id="tipo_gasto{{$x}}" disabled>
+                                <p value="{{$data->id_tipo}}"selected="selected">{{$data->tipo}}</p>
+                                <!-- <select name="tipo_gasto[{{$x}}]" id="tipo_gasto{{$x}}">
                                     <option value="{{$data->id_tipo}}"selected="selected">{{$data->tipo}}</option>
                                     @foreach ($tipos_de_gastos as $value)
                                     <option value="{{$value->id}}">{{$value->tipo}}</option>
                                     @endforeach
-                                </select>
+                                </select> -->
                               </td>
                               <td> 
                                 <input type="number" class="sumar form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" name="importe[{{$data->id}}]" data="{{$data->forma_de_pagos_id}}" value="{{$data->importe}}">

@@ -38,6 +38,10 @@ var token = $('#token').val();
     $("#titulo_mediosdepagosGastosPagados").empty();
     $("#titulo_cajas").empty();
     $("#cajas").empty();
+    $("#tablaIngresos").empty();
+    $("#tablaDeudor").empty();
+    $("#tablaSaldosBancarios").empty();
+
 
     
     
@@ -48,7 +52,6 @@ var token = $('#token').val();
 
             console.log(response)
           //INGRESOS
-          //todos los ingresos
           var ingresos_todos = response.ingresos_todos.reduce(function (accum, current) {
               return accum + current.debe
             }, 0)
@@ -112,11 +115,21 @@ var token = $('#token').val();
               return accum + current.saldo
             }, 0)
           $('#titulo_saldosBancarios').html('<div><strong>'+numeral(saldo).format('$0,0.00')+'</strong></div>');
-          for (var i = 0; i < response.saldosBancarios.length; i++) {
+          /*for (var i = 0; i < response.saldosBancarios.length; i++) {
               $("#saldosBancarios").append("<div>"+response.saldosBancarios[i].banco+"="
                 +numeral(response.saldosBancarios[i].saldo).format('$0,0.00')+
                 "</div>");
-          }
+          }*/
+
+          $.each(response.saldosBancarios,function(index,banco){
+              var tabla="";
+                  tabla+='<tr>'              
+                  tabla+='<td>'+banco.banco+'</td>'
+                  tabla+='<td><input type="text" disabled class="form-control" min="0" value="'+numeral(banco.saldo).format('$0,0.00')+'" placeholder="$0,00"></td>'
+                  tabla+='</tr>'
+              $("#tablaSaldosBancarios").append(tabla)
+          })
+
 
           //BANCOS PROYECTADOS
           var impagos = response.saldosBancariosProyectado.reduce(function (accum, current) {
@@ -204,9 +217,43 @@ var token = $('#token').val();
             }
 
             //CAJAS
-              $.each(response.cajas,function(index,caja){
+             /* $.each(response.cajas,function(index,caja){
                 $("#cajas").append("<div class='form-group col-lg-12 col-md-12 col-sm-12 col-xs-12'><strong>"+caja.nombre+"</strong><input type='text' class='sumar form-group col-lg-4 col-md-4 col-sm-4 col-xs-4' name="+caja.id+" value="+caja.importe+"></div>");
-            });
+            });*/
+
+            var cajas = response.cajas.reduce(function (accum, current) {
+              return accum + current.importe
+            }, 0)
+          $('#titulo_cajas').html(numeral(cajas).format('$0,0.00'));
+          $.each(response.cajas,function(index,caja){
+            if (caja.deuda!=0) {
+              var tabla="";
+                  tabla+='<tr>'              
+                  tabla+='<td>'+caja.nombre+'</td>'
+                  tabla+='<td><input type="text" class="number form-control cajas sumar" data-id="'+caja.id+'" min="0" value="'+numeral(caja.importe).format('$0,0.00')+'" placeholder="$0,00"></td>'
+                  tabla+='<td><input type="hidden" name="" class="check" value="'+caja.importe+'" id="'+caja.id+'"></td>'
+                  tabla+='</tr>'
+              $("#tablaCajas").append(tabla)  
+            }
+          })
+              //Si cambia algun input de los impago, se actualiza el total
+                $(".cajas").change(function(e){
+                  console.log(parseFloat(this.value.replace(',', '.')))
+                  console.log(parseFloat(this.value).toFixed(2))
+                  
+                     var total = 0;
+                      $('.cajas').each(function() {
+                            console.log('adentro del each')
+                            this.value= this.value=="" ? 0 : this.value;
+                             total += parseFloat(this.value.replace(',', '.'))
+                      });
+                        console.log(total)
+                        $('#titulo_cajas').html(numeral(total).format('$0,0.00'));
+                });
+
+
+
+
 
             $(".sumar,.number").mask('99999999,99',
                { reverse : true, placeholder: "$ 0,00",
@@ -245,8 +292,9 @@ $("#btnSendEmail").click(function(event){
 //Boton de actualizar las CAJAS 
 $('#btnActualizar').on("click", function (e){
     e.preventDefault();
-var id= [];$("input[class^='sumar']").each(function() {id.push ($(this).attr('name'));});
-var importe= [];$("input[class^='sumar']").each(function() {importe.push ($(this).val());});
+/*var id= [];$("input[class^='sumar']").each(function() {id.push ($(this).attr('name'));});*/
+var id= [];$(".sumar").each(function() {id.push ($(this).data('id'));});
+var importe= [];$(".sumar").each(function() {importe.push ($(this).val());});
 
 console.log('id',id)
 console.log('importe',importe)
