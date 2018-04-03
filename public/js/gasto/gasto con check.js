@@ -54,7 +54,7 @@ function suscribirEventos () {
           });
           console.log(checkeados,checkeados.length)
 
-          var url = "http://localhost:8000/configuracion/gasto/eliminar_masivos/"+checkeados+""
+          var url = "/configuracion/gasto/eliminar_masivos/"+checkeados+""
           var token = $('#token_eliminar_masivos').val();
 
           var data = {checkeados}
@@ -100,7 +100,7 @@ function crearDataTable()
                         'csvHtml5',
                         'pdf',
                     ],
-          ajax: 'http://localhost:8000/configuracion/gasto-listar',
+          ajax: '/configuracion/gasto-listar',
           type : "get",
           columnDefs: [
               { data: 'gasto',"targets": 0 },
@@ -138,7 +138,7 @@ document.getElementById("btnGuardar").addEventListener("click",function(e){
             'gasto':$('#gasto').val(),
             'tipo': $('#tipo').val(),
               }
-  var url = "http://localhost:8000/configuracion/gasto/crear"
+  var url = "/configuracion/gasto/crear"
   var token = $('#token').val();
 
   $.ajax({
@@ -182,7 +182,7 @@ document.getElementById("form_eliminar").addEventListener("submit",function(e){
   e.preventDefault();
   $('#modalEliminar').modal('hide');
   var data = {'id':$('#id_eliminar').val()};
-  var url = "http://localhost:8000/configuracion/gasto/eliminar/"+$('#id_eliminar').val()+""
+  var url = "/configuracion/gasto/eliminar/"+$('#id_eliminar').val()+""
   var token = $('#token_eliminar').val();
 
   $.ajax({
@@ -231,7 +231,7 @@ var editar_data_id = function (tabla_datos) {
               'gasto':$('#gasto_edicion').val(),
               'tipo': $('#tipo_edicion').val(),
                 }
-    var url = "http://localhost:8000/configuracion/gasto/editar/"+$('#id_edicion').val()+""
+    var url = "/configuracion/gasto/editar/"+$('#id_edicion').val()+""
     var token = $('#token_edit').val();
 
     $.ajax({

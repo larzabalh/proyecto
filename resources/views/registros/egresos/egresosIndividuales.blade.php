@@ -110,9 +110,15 @@
                                 <input type="text" class="form-control" id="periodo_pasar_a_pagados" disabled>
                               </div>
                               <div class="col-lg-12" >
-                                <ol id="conceptos_pasar_pagados">
-                                  
-                                </ol>
+                                <table class="table table-hover">
+                                  <thead id="encabezado">
+                                    <!-- el encabezado va por jquery -->
+                                    </tr>
+                                  </thead>
+                                  <tbody id="tablaConceptosPasarPagados">
+                                    <!-- la tabla va por jquery -->
+                                  </tbody>
+                                </table>
                               </div>
                             </div>
                             <div class="modal-footer">
@@ -176,7 +182,12 @@
 <form action="prueba_submit" method="get" accept-charset="utf-8">
  <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_datatable">
 <div class="container box">
-   <h1 align="center">REGISTRACION DE GASTOS</h1><br />   
+   <h1 align="center">REGISTRACION DE GASTOS</h1><br />
+    <input type="hidden" id="route-gastosIndividuales-listar" name="no-use" value="{{ route('gastosIndividuales.listar', ['param' => '&param1','param2' => '&param2','param3' => '&param3']) }}">
+    <input type="hidden" id="route-gastosIndividuales-store" name="no-use" value="{{ route('gastosIndividuales.store') }}">
+    <input type="hidden" id="route-gastosIndividuales-eliminar" name="no-use" value="{{ route('gastosIndividuales.eliminar', ['param' => '&param1']) }}">
+    <input type="hidden" id="route-gastosIndividuales-editar" name="no-use" value="{{ route('gastosIndividuales.editar', ['param' => '&param1']) }}">
+    <input type="hidden" id="route-gastosIndividuales-listar_pasar_pagados" name="no-use" value="{{ route('gastosIndividuales.listar_pasar_pagados',['param' => '&param1','param2' => '&param2']) }}">
    <div class="table-responsive"><br/>
       <div class="row">
         <div class="col-lg-12">

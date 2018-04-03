@@ -148,7 +148,6 @@ class RegistrodeGastosController extends Controller
     public function pasar_pagados(Request $request)
     {
 
-      
       $array = explode('-', $request->fecha);
       $formas = $request->forma_de_pagos_id;
       For($i=0; $i<count($request->forma_de_pagos_id);$i++){

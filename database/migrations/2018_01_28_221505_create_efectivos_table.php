@@ -18,7 +18,7 @@ class CreateEfectivosTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->timestamp('fecha')->nullable();
             $table->string('nombre');
-            $table->float('importe')->unsigned();
+            $table->float('importe')->unsigned()->default(0);
             $table->string('comentario')->nullable();
             $table->string('condicion')->default(1);
             $table->timestamps();

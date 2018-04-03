@@ -60,5 +60,5 @@ Pluggin para recorrer todo los input y mostrarlos en un id- HOME!!!!
 
 
 	
-	
+* En este archivo, la funcion de seleccionar todo, no funcionan cuando distildo alguno!!!! public/js/registros/egresos/egresos.js
 

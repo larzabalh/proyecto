@@ -91,11 +91,10 @@ $('#btnGuardar').on("click", function (e){
   var url = $("#route-cheques-store").val().trim();
 
 
-datos(url);
-
+  datos(url);
 });
 
-  function datos(url,metodo){
+function datos(url,metodo){
 
 
   

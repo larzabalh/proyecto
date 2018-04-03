@@ -22,7 +22,8 @@ var token = $('#token').val();
 
   function init(){
     //Le pongo al select, todas las cuentas de Gastos que tiene en ese periodo
-    var url = '/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+'/'+pagado+''
+    var url = $("#route-gastosIndividuales-listar").val().trim().replace('&param1', periodo).replace('&param2', gasto_filtro).replace('&param3', pagado);
+
     ajax(url, function (err, response) {
           $("#gasto_filtro").empty();
           $('#gasto_filtro').append('<option value=0 selected="selected">TODOS</option>');
@@ -40,6 +41,7 @@ var token = $('#token').val();
 
   function eliminarDuplicados(arrayAnalizar,otro){
   console.log('acae estoy:',arrayAnalizar)
+  console.log('acae otro:',otro)
     var hash = {};
         var nuevo = arrayAnalizar.filter(function(current) {
           var exists = !hash[current[otro]] || false;
@@ -53,8 +55,7 @@ var token = $('#token').val();
 
   function crearDataTable(periodo, gasto_filtro,pagado)
   { 
-
-    var url = '/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+'/'+pagado+''
+    var url = $("#route-gastosIndividuales-listar").val().trim().replace('&param1', periodo).replace('&param2', gasto_filtro).replace('&param3', pagado);
     dataTable = $('#tabla_datos').DataTable({
         "aProcessing": true,//Activamos el procesamiento del datatables
             "aServerSide": true,//Paginación y filtrado realizados por el servidor
@@ -128,7 +129,7 @@ $('#add').click(function(){
 /*2- Aprieto el boton GUARDAR del modal*/
 document.getElementById("btnGuardar").addEventListener("click",function(e){
   e.preventDefault();
-  var url = "/registros/registrodegastos"//con esta ruta entro en el STORE, si es por POST!
+  var url = $("#route-gastosIndividuales-store").val();//con esta ruta entro en el STORE, si es por POST!
   var fecha = $('#fecha_alta').val();
   var gasto_id = $('#selectGasto').val();
   var forma_de_pagos_id = $('#selectBanco').val();
@@ -183,7 +184,7 @@ document.getElementById("form_eliminar").addEventListener("submit",function(e){
   e.preventDefault();
   $('#modalEliminar').modal('hide');
   var data = {'id':$('#id_eliminar').val()};
-  var url = "/registros/registrodegastos/eliminar/"+$('#id_eliminar').val()+""
+  var url = $("#route-gastosIndividuales-eliminar").val().trim().replace('&param1', $('#id_eliminar').val())
 
   $.ajax({
     url: url,
@@ -277,7 +278,7 @@ document.getElementById("btnEditar").addEventListener("click",function(e,data_ed
 /*3- AJAX para editar */
 function update_data(data_edit)
   {
-    var url = "/registros/registrodegastos/editar/"+data_edit.id+""
+    var url = $("#route-gastosIndividuales-editar").val().trim().replace('&param1', data_edit.id)
 
    $.ajax({
     url: url,
@@ -317,29 +318,38 @@ function update_data(data_edit)
   $("#periodo").change(function(e){
     var periodo = document.getElementById("periodo").value;
      $('#gasto_filtro').val(0)
-    var url = 'http://localhost:8000/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+'/'+pagado+''
+    var url = $("#route-gastosIndividuales-listar").val().trim().replace('&param1', periodo).replace('&param2', gasto_filtro).replace('&param3', pagado);
     $("#impagos").prop('checked', 'checked');
     dataTable.destroy()
     crearDataTable(periodo);
 
-      ajax(url, function (err, response) {
-          //Le pongo al select, todas las cuentas de Gastos que tiene en ese periodo
-          $("#gasto_filtro").empty();
-          $('#gasto_filtro').append('<option value=0 selected="selected">TODOS</option>');
+        $.ajax({
+        url: url,
+        method:"get",
+        success:function(data)
+        {
+          console.log('nueva data:', data.data[0])
+            $("#gasto_filtro").empty();
+            $('#gasto_filtro').append('<option value=0 selected="selected">TODOS</option>');
                 
-                var nuevo =eliminarDuplicados(response.data)
+                var nuevo =eliminarDuplicados(data.data,'caja')
+                console.log('nuevo',nuevo)
 
                 $.each(nuevo, function(i, value) {
                     console.log(i)
                       $("#gasto_filtro").append("<option value='"+nuevo[i].forma_de_pagos_id+"'>"+nuevo[i].caja+"</option>");
                 });
-      });
+
+
+        },
+       });
+
 });
 
   $("#gasto_filtro").change(function(e){
     var periodo = document.getElementById("periodo").value;
     var gasto_filtro = document.getElementById("gasto_filtro").value;
-    var url = 'http://localhost:8000/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+'/'+pagado+''
+    var url = $("#route-gastosIndividuales-listar").val().trim().replace('&param1', periodo).replace('&param2', gasto_filtro).replace('&param3', pagado);
     $("#impagos").prop('checked', 'checked');
     dataTable.destroy()
     crearDataTable(periodo,gasto_filtro);
@@ -349,7 +359,7 @@ $("#pagados").change(function(e){
     var periodo = document.getElementById("periodo").value;
      $('#gasto_filtro').val(0)
     pagado =1;
-    var url = 'http://localhost:8000/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+'/'+pagado+''
+    var url = $("#route-gastosIndividuales-listar").val().trim().replace('&param1', periodo).replace('&param2', gasto_filtro).replace('&param3', pagado);
 
     
     dataTable.destroy()
@@ -360,7 +370,7 @@ $("#pagados").change(function(e){
           console.log('pagados:',response)
           $("#gasto_filtro").empty();
           $('#gasto_filtro').append('<option value=0 selected="selected">TODOS</option>');
-                var nuevo =eliminarDuplicados(response.data)
+                var nuevo =eliminarDuplicados(response.data,'caja')
 
                 $.each(nuevo, function(i, value) {
                     console.log(i)
@@ -373,7 +383,7 @@ $("#impagos").change(function(e){
     var periodo = document.getElementById("periodo").value;
      $('#gasto_filtro').val(0)
      pagado =0;
-    var url = 'http://localhost:8000/registros/registrodegastos/listar/'+periodo+'/'+gasto_filtro+'/'+pagado+''
+    var url = $("#route-gastosIndividuales-listar").val().trim().replace('&param1', periodo).replace('&param2', gasto_filtro).replace('&param3', pagado);
 
     
     dataTable.destroy()
@@ -405,7 +415,7 @@ $("#impagos").change(function(e){
           
           $("#gasto_filtro").empty();
           $('#gasto_filtro').append('<option value=0 selected="selected">TODOS</option>');
-                var nuevo =eliminarDuplicados(response.data)
+                var nuevo =eliminarDuplicados(response.data,'caja')
 
                 $.each(nuevo, function(i, value) {
                     console.log(i)
@@ -418,31 +428,65 @@ $("#impagos").change(function(e){
 //PASAR A PAGADOS!!!
 
 $('#btnpagados').on('click',function(){
-  $("#conceptos_pasar_pagados").empty();
+  $("#tablaConceptosPasarPagados").empty();
+  $("#encabezado").empty();
+
   $("#periodo_pasar_a_pagados").val($('#periodo').val());
   periodo = $('#periodo_pasar_a_pagados').val()
-  console.log(periodo)
+          var encabezado="";
+            encabezado +='<tr>';
+              encabezado +='<th scope="col">CLIENTE</th>';
+              encabezado +='<th scope="col">IMPORTE</th>';
+              encabezado +='<th scope="col"><input type="checkbox" id="selectAll" class="selectAll" name="selectAll">TODOS</th>';
+            encabezado +='</tr>';
+          $("#encabezado").append(encabezado)
   
   pagado =0;
-  var url = 'http://localhost:8000/registros/registrodegastos/listar_pasar_pagados/'+periodo+'/'+pagado+''
+  var url = $("#route-gastosIndividuales-listar_pasar_pagados").val().trim().replace('&param1', periodo).replace('&param2', pagado)
 
   ajax(url, function (err, response) {
-          //Le pongo al select, todas las cuentas de Gastos que tiene en ese periodo
-          //
-          console.log(response)
-                $.each(response, function(i, value) {
-                  for (var i = 0; i < value.length; i++) {
-                      $("#conceptos_pasar_pagados").append('<li><input type="checkbox" value="'+response.data[i].forma_de_pagos_id+'" class="seleccionados" name="pasarAPagados"> '+response.data[i].caja+' ' +numeral(response.data[i].importe).format('$0,0.00')+'</li>');
-                  };
-                });
+          
+          $.each(response.data,function(index,concepto){
+      
+            var tabla="";
+            tabla+='<tr>'              
+            tabla+='<td>'+concepto.caja+'</td>'
+            tabla+='<td><input type="text" disabled class="number form-control" min="0" value="'+numeral(concepto.importe).format('$0,0.00')+'" placeholder="$0,00"></td>'
+            tabla+='<td><input type="checkbox" name="" class="seleccionados" value="'+concepto.forma_de_pagos_id+'" id="'+concepto.forma_de_pagos_id+'"></td>'
+            tabla+='</tr>'
+        $("#tablaConceptosPasarPagados").append(tabla)  
+
+    })
 
       });
-
-
-  $('#conceptos_pasar_pagados')
+  $('#selectAll').removeAttr('checked');
+  $('#selectAll').empty();
   $('#ModalPagados').modal('show')
 
 });
+
+
+/*================================================
+=            Check de Pasar a Pagados            =
+================================================*/
+
+  $('body').on('change','.selectAll',function(e){
+
+    $('input[class="seleccionados"]').attr('checked', this.checked);
+     
+  });
+
+  $('body').on('click','.seleccionados',function(e){
+
+    if ($('input[class="seleccionados"]').length == $('input[class="seleccionados"]:checked').length) {
+      $('#selectAll').attr('checked', "cheked");
+    }else{
+      $('#selectAll').removeAttr('checked');
+    }
+  });
+
+/*=====  End of Check de Pasar a Pagados  ======*/
+
 
 $('body').on('click','#btnpasarpagados',function(e){
   e.preventDefault();
@@ -457,7 +501,8 @@ $('body').on('click','#btnpasarpagados',function(e){
                 'fecha':$('#periodo_pasar_a_pagados').val(),
                 'forma_de_pagos_id':seleccionados,
                 };
-  var url = 'http://localhost:8000/registros/registrodegastos/pasar_pagados/'
+
+  var url = '/registros/registrodegastos/pasar_pagados/'
   console.log(data)
   $.ajax({
     url: url,

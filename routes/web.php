@@ -61,14 +61,27 @@ Route::post('/configuracion/registros/CtaCte/efectivo/eliminar/{id}', 'EfectivoC
 Route::resource('/configuracion/registros/CtaCte/efectivo', 'EfectivoController');
 
 
+Route::prefix('/registros/registrodegastos')->group(function () {
+
+	Route::get('/listar/{periodo}/{gasto_filtro}/{pagado}', 'RegistrodeGastosController@listar')->name('gastosIndividuales.listar');
+	Route::get('/listar_pasar_pagados/{periodo}/{pagado}', 'RegistrodeGastosController@listar_pasar_pagados')->name('gastosIndividuales.listar_pasar_pagados');
+	Route::post('/editar/{id}', 'RegistrodeGastosController@editar')->name('gastosIndividuales.editar');
+	Route::post('/pasar_pagados', 'RegistrodeGastosController@pasar_pagados')->name('gastosIndividuales.pasar_pagados');
+	Route::post('/eliminar/{id}', 'RegistrodeGastosController@eliminar')->name('gastosIndividuales.eliminar');
+	Route::post('/store', 'RegistrodeGastosController@store')->name('gastosIndividuales.store');
+	Route::get('/', 'RegistrodeGastosController@index')->name('gastosIndividuales.index');
+  });
+
 
 //Egresos Individuales
-Route::get('/registros/registrodegastos/listar/{periodo}/{gasto_filtro}/{pagado}', 'RegistrodeGastosController@listar');
+/*Route::get('/registros/registrodegastos/listar/{periodo}/{gasto_filtro}/{pagado}', 'RegistrodeGastosController@listar');
 Route::get('/registros/registrodegastos/listar_pasar_pagados/{periodo}/{pagado}', 'RegistrodeGastosController@listar_pasar_pagados');
 Route::post('/registros/registrodegastos/editar/{id}', 'RegistrodeGastosController@editar');
 Route::post('/registros/registrodegastos/pasar_pagados', 'RegistrodeGastosController@pasar_pagados');
 Route::post('/registros/registrodegastos/eliminar/{id}', 'RegistrodeGastosController@eliminar');
-Route::resource('/registros/registrodegastos', 'RegistrodeGastosController');
+Route::resource('/registros/registrodegastos', 'RegistrodeGastosController');*/
+
+
 
 Route::get('/registros/egresos/egresosMasivos/listar', 'egresosMasivosController@listar');
 Route::get('/registros/egresos/egresosMasivos/verificar', 'egresosMasivosController@verificarUnSoloEgresoMasivo');
