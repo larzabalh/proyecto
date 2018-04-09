@@ -44,8 +44,9 @@
             					</ul>
             					<div class="tab-content">
             						<div id="home" class="tab-pane fade in active">
+                                        <button class="btn btn-default" data="tablaClientes" data-export="si">EXPORTAR</button>
             							<h3 id="titulo_ingresos_todos" align="center"></h3>
-                                        <table class="table table-hover">
+                                        <table class="table table-hover" id="tablaClientes">
                                                   <thead>
                                                     <tr>
                                                       <th scope="col">CLIENTE</th>
@@ -61,10 +62,11 @@
             						<div id="menu1" class="tab-pane fade">
                                         <form name="" id="" method="POST">
                                             <button class="btn btn-primary" name="sendEmail" type="submit" id="btnSendEmail"><i class="fab fa-telegram-plane"></i> ENVIAR MAILs</button>
+                                            <button class="btn btn-default" data="tablaClientesImpagos" data-export="si">EXPORTAR</button>
                                             <input type="hidden" id="token" value="{{ csrf_token() }}">
                                                 <div id="alert_message"></div>
                         							<h3 id="titulo_ingresos_impagos" align="center"></h3>
-                                                <table class="table table-hover">
+                                                <table class="table table-hover" id="tablaClientesImpagos">
                                                   <thead>
                                                     <tr>
                                                       <th scope="col">CLIENTE</th>
@@ -79,8 +81,9 @@
                                         </form>
             						</div>
             						<div id="menu2" class="tab-pane fade">
+                                        <button class="btn btn-default" data="tablesaldosBancarios" data-export="si">EXPORTAR</button>
             							<h3 id="titulo_saldosBancarios" align="center"></h3>
-                                        <table class="table table-hover">
+                                        <table class="table table-hover" id="tablesaldosBancarios">
                                           <thead>
                                             <tr>
                                               <th scope="col">CLIENTE</th>
@@ -168,10 +171,11 @@
                                 <div class="tab-content">
                                     <div id="home2" class="tab-pane fade in active">
                                         <button class="btn btn-primary" name="actualizar" type="submit" id="btnActualizar"><i class="fa fa-save"></i> Actualizar</button>
+                                        <button class="btn btn-default" data="tableCajas" data-export="si">EXPORTAR</button>
                                         <form name="" id="" method="POST">
                                             <input type="hidden" id="token" value="{{ csrf_token() }}">
                                             <h3 id="titulo_cajas" align="center"></h3>
-                                            <table class="table table-hover">
+                                            <table class="table table-hover" id="tableCajas">
                                                   <thead>
                                                     <tr>
                                                       <th scope="col">CONCEPTO</th>

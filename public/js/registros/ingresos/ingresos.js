@@ -1,6 +1,12 @@
 var dataTable
 var token = $('#token').val();
 
+/*$(".sumar").mask('99999999,99',
+               { reverse : true, placeholder: "$ 0,00",
+                'translation': {9: {pattern: /[0-9]/} } } )
+                .attr({ maxLength : 12 });*/
+
+
 document.getElementById('fecha').value = new Date().toDateInputValue();
 
   function init(){
@@ -23,9 +29,12 @@ document.getElementById('fecha').value = new Date().toDateInputValue();
 }
 
 
+
 $(".sumar").change(function(e){
      suma()
 });
+
+
 
 function suma() {
       var total = 0;
@@ -34,6 +43,7 @@ function suma() {
               total += Number($(this).val());
           }
       });
+      console.log(total)
         $('#total').html(numeral(total).format('$0,0.00'));
   };
 

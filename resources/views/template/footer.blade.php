@@ -16,6 +16,9 @@
 <script src="/plugins/js/bootstrap.min.js"></script>
 
 
+<script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+
 <!-- AdminLTE App -->
 <script src="/plugins/js/app.min.js"></script>
 

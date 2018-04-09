@@ -61,7 +61,7 @@ var token = $('#token').val();
                   tabla+='<tr>'              
                   tabla+='<td>'+ingreso.cliente+'</td>'
                   tabla+='<td><input type="text" class="number form-control totalIngresos" min="0" value="'+numeral(ingreso.debe).format('$0,0.00')+'" placeholder="$0,00"></td>'
-                  tabla+='<td><input type="hidden" name="" class="check" value="'+ingreso.debe+'" id="'+ingreso.id+'"></td>'
+                  tabla+='<td class="noExcel"><input type="hidden" name="" class="check" value="'+ingreso.debe+'" id="'+ingreso.id+'"></td>'
                   tabla+='</tr>'
               $("#tablaIngresos").append(tabla)
           })
@@ -269,8 +269,24 @@ var token = $('#token').val();
 /*========================================
 =            EXPORTAR A EXCEL            =
 ========================================*/
+$("button").click(function(event){
+    event.preventDefault();
 
-
+  var exportar= $(this).attr('data-export');
+  var tabla= $(this).attr('data');
+  if (exportar=='si') {
+        $('#'+tabla+'').table2excel({
+                    exclude: ".noExcel",
+                    name: "Excel Document Name",
+                    /*filename: tabla + new Date().toISOString().replace(/[\-\:\.]/g, ""),*/
+                    filename: tabla + new Date().toISOString().replace(/[\-\:\.]/g, ""),
+                    fileext: ".xls",
+                    exclude_img: true,
+                    exclude_links: true,
+                    exclude_inputs: true
+                });
+  }
+});
 /*=====  End of EXPORTAR A EXCEL  ======*/
 
 
