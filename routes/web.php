@@ -16,6 +16,15 @@ return $user;
   echo "<pre>{$query->sql}</pre>";
 });*/
 
+Route::prefix('importar')->group(function () {
+
+	Route::post('/liquidador', 'ImportarController@liquidador')->name('importar.liquidador');
+	Route::get('/', 'ImportarController@index')->name('importar.index');
+  });
+
+
+
+
 Route::post('/contactanos/store', 'contactanosController@store')->name('contactanos.store');
 Route::get('/contactanos', 'contactanosController@index');
 
@@ -113,7 +122,6 @@ Route::prefix('/registros/ctacte/cheques')->group(function () {
 	Route::post('/store', 'ChequeController@store')->name('cheques.store');
 	Route::get('/', 'ChequeController@index')->name('cheques.index');
   });
-
 
 
 Route::resource('/ingresos/mensual', 'IngresoMensualController');

@@ -65,6 +65,9 @@
             <a href="{{ route('home')}}">
               <i class="fa fa-tasks"></i> <span>Escritorio</span>
             </a>
+            <a href="{{ route('importar.index')}}">
+              <i class="fa fa-tasks"></i> <span>IMPORTAR</span>
+            </a>
           </li>
           <li class="treeview">
             <a href="#">
