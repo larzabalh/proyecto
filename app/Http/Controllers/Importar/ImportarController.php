@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Storage;
+use App\Medios;
+use App\Http\Controllers\Controller;
+use Excel;
 
 class ImportarController extends Controller
 {
@@ -25,9 +29,39 @@ class ImportarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function liquidador()
+    public function liquidador(Request $request)
     {
-        //
+       $archivo = $request->file('archivo');
+       $nombre_original=$archivo->getClientOriginalName();
+       $extension=$archivo->getClientOriginalExtension();
+       $r1=Storage::disk('archivos')->put($nombre_original,  \File::get($archivo) );
+       $ruta  =  storage_path('archivos') ."/". $nombre_original;
+       
+       if($r1){
+            $ct=0;
+            Excel::selectSheetsByIndex(0)->load($ruta, function($hoja) {
+                
+                $hoja->each(function($fila) {
+                   
+                        $medios=new Medios;
+                        $medios->user_id= 1;
+                        $medios->nombre= $fila->nombre;
+                        $medios->save();
+                    
+             
+                });
+
+            });
+
+            return response()->json(["data"=> $medios->toArray()]);
+        
+       }
+       else
+       {
+            return response()->json(["data"=> 'Error al subir el archivo']);
+            
+       }
+
     }
 
     /**
