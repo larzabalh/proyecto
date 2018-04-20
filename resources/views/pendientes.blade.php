@@ -66,3 +66,13 @@ Pluggin para recorrer todo los input y mostrarlos en un id- HOME!!!!
 * los inputs de ingresos masivos que tengan la mask!!!
 
 * como hago para instalar plugins via composer? cual es el NPM? o bower de laravel?
+
+
+Forge Laravel:
+
+Contraseña de Sudo: pedro16ana
+Contraseña de base de datos: 4T5oUq6bYPfUgxrD7D8d
+
+
+Clave publica
+ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAi9fQ7Jpma/+Nkh2qSLDHk/pHTzRcK4w0hOQy/+CRYlKCryaeVCrlj1N5nQdsVPo3PcvW9ZgNLL8qmMx6akZno9UVV37BcAOU6Hyrr7itdI/44wgaQKwq5jUZUc1QO+zJyhpAGGN49mfPNrW7wCU1eZevbGaTyyfWv0N7Q8gxmFT46dtLl3zdLKYqpVC3339pvElUzWzgyfFKHTNil5/bK18SDfYjCKR9zCAX+fsKLkerQQAt1Hl2o0ce3v3VNaL1EyPYz58lIQYADSoPJF5zOk/+PDXAAICnBW479173OD5CIcd7P8NrmVCWT0MMS9ksBQbqSb5nITjNrR3a3Xop/w== rsa-key-20180420
