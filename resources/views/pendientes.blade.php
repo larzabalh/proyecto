@@ -67,6 +67,7 @@ Pluggin para recorrer todo los input y mostrarlos en un id- HOME!!!!
 
 * como hago para instalar plugins via composer? cual es el NPM? o bower de laravel?
 
+* Servidor de CORREO para mi cuenta de TU CONTADOR PUBLICO.
 
 Forge Laravel:
 Sudo Password: njkslQYZtRq9Ic0CaNSE 
