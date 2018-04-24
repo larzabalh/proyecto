@@ -82,7 +82,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    ORGANIZA TUS CUENTAS!!
+                    ORGANIZA TUS CUENTAS ok!!
                 </div>
 
                 {{-- <div class="links">
