@@ -21,6 +21,17 @@ class CreateLiquidadoresTable extends Migration
             $table->string('condicion')->default(1);
             $table->timestamps();
         });
+
+        DB::table('liquidadores')->insert([
+          ['user_id' => 1, 'liquidador' => 'JOSE LUIS'],
+          ['user_id' => 1, 'liquidador' => 'FLORENCIA'],
+          ['user_id' => 1, 'liquidador' => 'ELIZABET'],
+          ['user_id' => 1, 'liquidador' => 'GRACIELA'],
+          ['user_id' => 1, 'liquidador' => 'BETTY'],
+          ['user_id' => 1, 'liquidador' => 'AGUSTINA'],
+
+        ]);
+
     }
 
     /**

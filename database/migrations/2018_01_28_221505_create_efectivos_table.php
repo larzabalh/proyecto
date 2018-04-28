@@ -23,6 +23,16 @@ class CreateEfectivosTable extends Migration
             $table->string('condicion')->default(1);
             $table->timestamps();
         });
+
+          DB::table('efectivos')->insert([
+           ['nombre' => 'CAJA CASA','user_id' => 1],
+           ['nombre' => 'CAJA OFICINA','user_id' => 1],
+           ['nombre' => 'JAVI ME DEBE','user_id' => 1],
+           ['nombre' => 'GISELA ME DEBE','user_id' => 1],
+           ['nombre' => 'LIA','user_id' => 1],
+           ['nombre' => 'DOLARES CASA','user_id' => 1],
+         ]);
+
     }
 
     /**

@@ -21,6 +21,15 @@ class CreateFacturadoresTable extends Migration
             $table->string('condicion')->default(1);
             $table->timestamps();
         });
+
+        DB::table('facturadores')->insert([
+          ['user_id' => 1, 'facturador' => 'IN TIME SRL'],
+          ['user_id' => 1, 'facturador' => 'TORTORELLI VANESA'],
+          ['user_id' => 1, 'facturador' => 'LARZABAL HERNAN'],
+          ['user_id' => 1, 'facturador' => 'PANZITTA GRACIELA'],
+          ['user_id' => 1, 'facturador' => 'LARZABAL OMAR'],
+
+        ]);
     }
 
     /**
