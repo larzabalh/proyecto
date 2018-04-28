@@ -82,7 +82,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Mis Finanzas
+                    Mis Finanzas 1
                 </div>
 
                 {{-- <div class="links">

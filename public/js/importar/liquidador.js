@@ -73,7 +73,6 @@
 
 $(document).on("submit",".formarchivo",function(e){
 
-     
         e.preventDefault();
         var formu=$(this);
         var nombreform=$(this).attr("id");
