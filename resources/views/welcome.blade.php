@@ -85,13 +85,14 @@
                     Mis Finanzas 1
                 </div>
 
-                {{-- <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div> --}}
+                <div class="links">
+                    <form method="post" action="{{url('/liquidador')}}" enctype="multipart/form-data">
+                        {{csrf_field()}}
+                        <input type="file" name="excel">
+                        <br><br>
+                        <input type="submit" value="Enviar" style="padding: 10px 20px;">
+                    </form>
+                </div>
             </div>
         </div>
     </body>

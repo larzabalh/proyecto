@@ -100,7 +100,13 @@ $(document).on("submit",".formarchivo",function(e){
             },
             //una vez finalizado correctamente
             success: function(data){
-              console.log('success ajax DATA:', data)            
+              console.log('success ajax DATA:', data) 
+                    $('#alert_message').html(
+					        $.DivNotificacion({
+					          texto:'REGISTROS INSERTADOS CORRECTAMENTE!!!',
+					          class: 'alert alert-success'
+					          })
+					        )           
             },
             //si ha ocurrido un error
             error: function(data){

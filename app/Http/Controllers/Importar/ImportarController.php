@@ -40,20 +40,16 @@ class ImportarController extends Controller
        if($r1){
             $ct=0;
             Excel::selectSheetsByIndex(0)->load($ruta, function($hoja) {
-                
                 $hoja->each(function($fila) {
                    
                         $medios=new Medios;
                         $medios->user_id= 1;
                         $medios->nombre= $fila->nombre;
                         $medios->save();
-                    
-             
                 });
-
             });
 
-            return response()->json(["data"=> $medios->toArray()]);
+            return response()->json(["data"=> "TERMINADO"]);
         
        }
        else
