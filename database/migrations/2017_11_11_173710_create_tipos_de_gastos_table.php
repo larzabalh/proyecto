@@ -32,7 +32,7 @@ class CreateTiposDeGastosTable extends Migration
           ['tipo' => 'OBRA CASA','user_id' => 1],
           ['tipo' => 'IN TIME SRL','user_id' => 1],
           ['tipo' => 'GRACIELA','user_id' => 1],
-          ['tipo' => 'OMAR','user_id' => 1],
+          ['tipo' => 'Omar','user_id' => 1],
 
        ]);
 
