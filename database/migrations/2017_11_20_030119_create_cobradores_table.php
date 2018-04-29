@@ -16,7 +16,7 @@ class CreateCobradoresTable extends Migration
         Schema::create('cobradores', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->string('cobrador')->unique();
+            $table->string('cobrador')->nullable();
             $table->string('comentario')->nullable();
             $table->string('condicion')->default(1);
             $table->timestamps();

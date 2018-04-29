@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Storage;
+use DB;
 use App\Medios;
+use App\Cliente;
 use App\Http\Controllers\Controller;
 use Excel;
 
@@ -21,7 +23,16 @@ class ImportarController extends Controller
      */
     public function index()
     {
-        return view('importar.index');
+        
+        $conceptos =DB::table('importar_elementos')
+          ->select('importar_elementos.*')
+            ->where('importar_elementos.condicion','=', 1 )
+            ->orderBy('nombre','ASC')
+            ->get();
+
+
+        return view('importar.index')
+                ->with('conceptos', $conceptos);
     }
 
     /**
@@ -29,7 +40,7 @@ class ImportarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function liquidador(Request $request)
+    public function bancos(Request $request)
     {
        $archivo = $request->file('archivo');
        $nombre_original=$archivo->getClientOriginalName();
@@ -43,9 +54,48 @@ class ImportarController extends Controller
                 $hoja->each(function($fila) {
                    
                         $medios=new Medios;
-                        $medios->user_id= 1;
+                        $medios->user_id= auth()->user()->id;
                         $medios->nombre= $fila->nombre;
                         $medios->save();
+                });
+            });
+
+            return response()->json(["data"=> "TERMINADO"]);
+        
+       }
+       else
+       {
+            return response()->json(["data"=> 'Error al subir el archivo']);
+            
+       }
+
+    }
+
+    public function clientes(Request $request)
+    {
+       $archivo = $request->file('archivo');
+       $nombre_original=$archivo->getClientOriginalName();
+       $extension=$archivo->getClientOriginalExtension();
+       $r1=Storage::disk('archivos')->put($nombre_original,  \File::get($archivo) );
+       $ruta  =  storage_path('archivos') ."/". $nombre_original;
+       
+       if($r1){
+            $ct=0;
+            Excel::selectSheetsByIndex(0)->load($ruta, function($hoja) {
+                $hoja->each(function($fila) {
+                   
+                        $clientes=new Cliente;
+                        $clientes->user_id= auth()->user()->id;
+                        $clientes->cliente= $fila->cliente;
+                        $clientes->honorario= $fila->honorario;
+                        $clientes->email= $fila->email;
+                        $clientes->facturador_id= $fila->facturador_id;
+                        $clientes->liquidador_id    = $fila->liquidador_id  ;
+                        $clientes->cobrador_id= $fila->cobrador_id;
+                        $clientes->disponibilidad_id= $fila->disponibilidad_id;
+                        $clientes->contacto= $fila->contacto;
+                        $clientes->comentario= $fila->comentario;
+                        $clientes->save();
                 });
             });
 

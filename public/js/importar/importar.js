@@ -76,8 +76,10 @@ $(document).on("submit",".formarchivo",function(e){
         e.preventDefault();
         var formu=$(this);
         var nombreform=$(this).attr("id");
-
-        var url = $("#route-importar-liquidador").val().trim()
+        var importar = $('#importar').val();
+        if(importar=="BANCOS"){ var url = $("#route-importar-bancos").val().trim(); }
+        if(importar=="CLIENTES"){ var url = $("#route-importar-clientes").val().trim(); }
+        
         //información del formulario
         var formData = new FormData($("#"+nombreform+"")[0]);
         console.log(formData)

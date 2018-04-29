@@ -18,7 +18,8 @@ return $user;
 
 Route::prefix('importar')->group(function () {
 
-	Route::post('/liquidador', 'ImportarController@liquidador')->name('importar.liquidador');
+	Route::post('/bancos', 'ImportarController@bancos')->name('importar.bancos');
+	Route::post('/clientes', 'ImportarController@clientes')->name('importar.clientes');
 	Route::get('/', 'ImportarController@index')->name('importar.index');
   });
 

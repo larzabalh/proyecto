@@ -16,7 +16,7 @@ class CreateLiquidadoresTable extends Migration
         Schema::create('liquidadores', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->string('liquidador')->unique();
+            $table->string('liquidador')->nullable();
             $table->string('comentario')->nullable();
             $table->string('condicion')->default(1);
             $table->timestamps();
