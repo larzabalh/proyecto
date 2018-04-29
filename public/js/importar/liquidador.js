@@ -103,7 +103,7 @@ $(document).on("submit",".formarchivo",function(e){
               console.log('success ajax DATA:', data) 
                     $('#alert_message').html(
 					        $.DivNotificacion({
-					          texto:'REGISTROS INSERTADOS CORRECTAMENTE!!!',
+					          texto:'Registros Insertados!!!',
 					          class: 'alert alert-success'
 					          })
 					        )           
