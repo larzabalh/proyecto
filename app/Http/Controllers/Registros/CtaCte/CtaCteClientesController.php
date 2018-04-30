@@ -56,7 +56,7 @@ class CtaCteClientesController extends Controller
             ->get();
 
 
-        return view('registros.ctacte.clientes')
+        return view('registros.CtaCte.clientes')
         ->with('clientes', $clientes)
         ->with('cliente_id', $cliente_id)
         ->with('periodos',$periodos)
