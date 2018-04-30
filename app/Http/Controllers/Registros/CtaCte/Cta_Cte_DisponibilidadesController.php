@@ -85,7 +85,7 @@ class Cta_Cte_DisponibilidadesController extends Controller
             ->get();
 
 
-        return view('registros.ctacte.disponibilidades')
+        return view('registros.CtaCte.disponibilidades')
         ->with('disponibilidades', $disponibilidades)
         ->with('cliente_id', $cliente_id)
         ->with('periodos',$periodos)
