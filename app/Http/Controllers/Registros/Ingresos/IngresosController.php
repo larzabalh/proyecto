@@ -60,6 +60,7 @@ class IngresosController extends Controller
 
      public function listar()
     {
+      
       $clientes =DB::table('clientes')
           ->select('clientes.*','facturadores.facturador','liquidadores.liquidador','cobradores.cobrador','disponibilidades.nombre as banco')
           ->leftjoin('facturadores', 'clientes.facturador_id', '=', 'facturadores.id')

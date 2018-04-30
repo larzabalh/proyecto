@@ -82,7 +82,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Mis Finanzas 1
+                    GESTION DE FINANZAS
                 </div>
 
                 <div class="links">
