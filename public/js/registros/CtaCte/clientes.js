@@ -310,7 +310,7 @@ document.getElementById("btnEditar").addEventListener("click",function(e,data_ed
 
   if(fecha != '' && cliente_id != '' && honorario != '' && $("input[name='contabilidad']").is(':checked'))
   {
-      if(contabilidad = 'haber' && disponibilidad_id != '')
+      if(contabilidad = 'haber')
       {
            $.ajax({
                 url:url,
@@ -331,10 +331,6 @@ document.getElementById("btnEditar").addEventListener("click",function(e,data_ed
             $('#alert_message').html('');
             }, 5000);
       }
-      else
-     {
-      $('#alert_modal').html('<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Seleccionar Forma de Pago!!!</strong></div>');
-     }    
   }
    else
    {

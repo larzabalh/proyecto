@@ -18,6 +18,7 @@
                   <div class="form-group col-lg-4 col-md-3 col-sm-3 col-xs-12">
                   TOTAL DE INGRESOS: <h3 id="total"></h3>
                   </div>
+                  <button class="btn btn-primary" type="submit" id="btnBorrar"><i class="fa fa-trash"></i> Borrar</button>
                 </div>
             
                 <div class="row">

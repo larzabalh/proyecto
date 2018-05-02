@@ -69,6 +69,8 @@ Pluggin para recorrer todo los input y mostrarlos en un id- HOME!!!!
 
 * Servidor de CORREO para mi cuenta de TU CONTADOR PUBLICO.
 
+* Cta cte clientes individuales, no puedo editar!!!
+
 Forge Laravel:
 Sudo Password: U0huj2yshPAsfdsM5FBA
 Database Password: mG2ZclQtCvXdEnc4uRlu

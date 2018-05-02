@@ -227,7 +227,7 @@ class CtaCteClientesController extends Controller
 
       $CtaCteCliente->save();
 
-         if (isset($request->disponibilidad_id) and $haber !=0) {
+         if ($request->disponibilidad_id=="" and $debe !=0) {
 
           $CtaCteDisponibilidades = cta_cte_disponibilidades::find($CtaCteCliente->id_cta_cte_disponibilidad);
 

@@ -42,7 +42,9 @@
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 
-
+<!-- ALERTS COPADOS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 
 <!-- LO HAGO PARA DEFINIR LA FECHA ACTUAL A TODOS LOS INPUT DEL TIPO DATE -->
 <script type="text/javascript">

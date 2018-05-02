@@ -10,7 +10,8 @@ var token = $('#token').val();
 document.getElementById('fecha').value = new Date().toDateInputValue();
 
   function init(){
-    listar();      
+    listar();
+    console.log('iniciando');   
   }
 
   function listar()
@@ -65,7 +66,7 @@ document.getElementById("btnAsignar").addEventListener("click",function(e){
           honorarios: honorarios[i],
           comentarios: comentarios[i],
       });
-    } 
+    }
 
   if(fecha != '')
   {
@@ -126,14 +127,18 @@ function grabar_masivo(data,fecha) {
               )
           }
         });
-    setInterval(function(){
-    $('#alert_message').html('');
-    }, 7000);
-  }
-   
-
+      setInterval(function(){
+      $('#alert_message').html('');
+      }, 7000);
+    }
   };
 
+$('#btnBorrar').on("click", function (e){
+  e.preventDefault();
+  console.log('queriendo borrar');
+
+  $("input[name^='honorarios']").each(function() {($(this).val('0'));});
+});
 
 
   init();
