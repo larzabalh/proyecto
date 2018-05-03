@@ -37,7 +37,7 @@
                                 <h3><CENTER id="total_ingresos">INGRESOS</CENTER></h3>
                             </div>
             					<ul class="nav nav-tabs">
-            						<li class="active"><a data-toggle="tab" href="#home">TODOS</a></li>
+            						<li class="active"><a data-toggle="tab" href="#home">CTA CTE</a></li>
             						<li><a data-toggle="tab" href="#menu1">IMPAGOS</a></li>
             						<li><a data-toggle="tab" href="#menu2">BANCOS</a></li>
                                     <li><a data-toggle="tab" href="#menu3">BANCOS PROYECTADOS</a></li>

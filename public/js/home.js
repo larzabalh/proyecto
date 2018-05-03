@@ -53,15 +53,15 @@ var token = $('#token').val();
             console.log(response)
           //INGRESOS
           var ingresos_todos = response.ingresos_todos.reduce(function (accum, current) {
-              return accum + current.debe
+              return accum + current.saldo
             }, 0)
           $('#titulo_ingresos_todos').html('<div><strong>'+numeral(ingresos_todos).format('$0,0.00')+'</strong></div>');
             $.each(response.ingresos_todos,function(index,ingreso){
               var tabla="";
                   tabla+='<tr>'              
                   tabla+='<td>'+ingreso.cliente+'</td>'
-                  tabla+='<td><input type="text" class="number form-control totalIngresos" min="0" value="'+numeral(ingreso.debe).format('$0,0.00')+'" placeholder="$0,00"></td>'
-                  tabla+='<td class="noExcel"><input type="hidden" name="" class="check" value="'+ingreso.debe+'" id="'+ingreso.id+'"></td>'
+                  tabla+='<td><input type="text" class="number form-control totalIngresos" min="0" value="'+numeral(ingreso.saldo).format('$0,0.00')+'" placeholder="$0,00"></td>'
+                  tabla+='<td class="noExcel"><input type="hidden" name="" class="check" value="'+ingreso.saldo+'" id="'+ingreso.id+'"></td>'
                   tabla+='</tr>'
               $("#tablaIngresos").append(tabla)
           })

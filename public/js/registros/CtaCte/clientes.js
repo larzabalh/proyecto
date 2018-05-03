@@ -280,7 +280,6 @@ $(tabla_datos).on("click", "button.editar", function (e){
           $('#btnEditar').show();
           $('#altaModal').modal('show') 
 
-
       },
     error: function(response) {
         $('#error').modal('show');
@@ -288,7 +287,8 @@ $(tabla_datos).on("click", "button.editar", function (e){
             $('#error').modal('hide');
               },1500);
         }
-  });  
+
+  });
 });
 
 /*2- Aprieto el boton editar del formulario modal*/
@@ -310,8 +310,8 @@ document.getElementById("btnEditar").addEventListener("click",function(e,data_ed
 
   if(fecha != '' && cliente_id != '' && honorario != '' && $("input[name='contabilidad']").is(':checked'))
   {
-      if(contabilidad = 'haber')
-      {
+
+        console.log(contabilidad);
            $.ajax({
                 url:url,
                 headers: {'X-CSRF-TOKEN':token},
@@ -330,7 +330,6 @@ document.getElementById("btnEditar").addEventListener("click",function(e,data_ed
             setInterval(function(){
             $('#alert_message').html('');
             }, 5000);
-      }
   }
    else
    {

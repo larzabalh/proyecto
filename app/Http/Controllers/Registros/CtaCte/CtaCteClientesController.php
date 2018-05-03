@@ -205,17 +205,16 @@ class CtaCteClientesController extends Controller
 
     public function editar(Request $request, $id)
     {
-
+      $CtaCteDisponibilidades="";
       $honorario = $request->honorario;
       $debe=0;
       $haber=0;
 
-      if ($request->contabilidad == 'debe') {
+      if ($request->contabilidad === 'debe') {
         $debe = $honorario;
       }else{
         $haber=$honorario;
       }
-
 
       $CtaCteCliente = CtaCteCliente::find($id);
       $CtaCteCliente->fecha =  $request['fecha'];
@@ -227,7 +226,8 @@ class CtaCteClientesController extends Controller
 
       $CtaCteCliente->save();
 
-         if ($request->disponibilidad_id=="" and $debe !=0) {
+
+         if ($request->disponibilidad_id != null and $debe !=0) {
 
           $CtaCteDisponibilidades = cta_cte_disponibilidades::find($CtaCteCliente->id_cta_cte_disponibilidad);
 
