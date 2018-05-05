@@ -7,6 +7,8 @@
 <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_datatable">
 <div class="container box">
    <h1 align="center">IMPORTAR</h1><br />
+   <input type="text" id="route-importar-egresos" name="no-use" value="{{ route('importar.egresos') }}">
+   <input type="text" id="route-importar-gastos" name="no-use" value="{{ route('importar.gastos') }}">
    <input type="text" id="route-importar-bancos" name="no-use" value="{{ route('importar.bancos') }}">
    <input type="text" id="route-importar-clientes" name="no-use" value="{{ route('importar.clientes') }}">
    <div class="table-responsive"><br/>

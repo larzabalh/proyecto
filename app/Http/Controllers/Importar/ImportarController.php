@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Storage;
 use DB;
+use App\Gasto;
+use App\GastosMensuales;
 use App\Medios;
 use App\Cliente;
 use App\Http\Controllers\Controller;
@@ -40,6 +42,74 @@ class ImportarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
+    public function egresos(Request $request)
+    {
+       $archivo = $request->file('archivo');
+       $nombre_original=$archivo->getClientOriginalName();
+       $extension=$archivo->getClientOriginalExtension();
+       $r1=Storage::disk('archivos')->put($nombre_original,  \File::get($archivo) );
+       $ruta  =  storage_path('archivos') ."/". $nombre_original;
+       
+       if($r1){
+            $ct=0;
+            Excel::selectSheetsByIndex(0)->load($ruta, function($hoja) {
+                $hoja->each(function($fila) {
+                   
+                        $medios=new GastosMensuales;
+                        $medios->user_id= auth()->user()->id;
+                        $medios->gasto_id= $fila->gasto_id;
+                        $medios->forma_de_pagos_id= $fila->forma_de_pagos_id;
+                        $medios->importe= $fila->importe;
+                        $medios->save();
+                });
+            });
+
+            return response()->json(["data"=> "TERMINADO"]);
+        
+       }
+       else
+       {
+            return response()->json(["data"=> 'Error al subir el archivo']);
+            
+       }
+
+    }
+
+
+        public function gastos(Request $request)
+    {
+       $archivo = $request->file('archivo');
+       $nombre_original=$archivo->getClientOriginalName();
+       $extension=$archivo->getClientOriginalExtension();
+       $r1=Storage::disk('archivos')->put($nombre_original,  \File::get($archivo) );
+       $ruta  =  storage_path('archivos') ."/". $nombre_original;
+       
+       if($r1){
+            $ct=0;
+            Excel::selectSheetsByIndex(0)->load($ruta, function($hoja) {
+                $hoja->each(function($fila) {
+                   
+                        $medios=new Gasto;
+                        $medios->user_id= auth()->user()->id;
+                        $medios->gasto= $fila->gasto;
+                        $medios->tipo_de_gasto_id= $fila->tipo_de_gasto_id;
+                        $medios->save();
+                });
+            });
+
+            return response()->json(["data"=> "TERMINADO"]);
+        
+       }
+       else
+       {
+            return response()->json(["data"=> 'Error al subir el archivo']);
+            
+       }
+
+    }
+
+
     public function bancos(Request $request)
     {
        $archivo = $request->file('archivo');

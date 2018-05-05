@@ -18,6 +18,8 @@ return $user;
 
 Route::prefix('importar')->group(function () {
 
+	Route::post('egresos', 'ImportarController@egresos')->name('importar.egresos');
+	Route::post('/gastos', 'ImportarController@gastos')->name('importar.gastos');
 	Route::post('/bancos', 'ImportarController@bancos')->name('importar.bancos');
 	Route::post('/clientes', 'ImportarController@clientes')->name('importar.clientes');
 	Route::get('/', 'ImportarController@index')->name('importar.index');

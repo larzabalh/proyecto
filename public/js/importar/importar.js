@@ -77,13 +77,15 @@ $(document).on("submit",".formarchivo",function(e){
         var formu=$(this);
         var nombreform=$(this).attr("id");
         var importar = $('#importar').val();
+        if(importar=="EGRESOS"){ var url = $("#route-importar-egresos").val().trim(); }
+        if(importar=="GASTOS"){ var url = $("#route-importar-gastos").val().trim(); }
         if(importar=="BANCOS"){ var url = $("#route-importar-bancos").val().trim(); }
         if(importar=="CLIENTES"){ var url = $("#route-importar-clientes").val().trim(); }
         
         //información del formulario
         var formData = new FormData($("#"+nombreform+"")[0]);
         console.log(formData)
-
+        console.log(importar)
         //hacemos la petición ajax   
         $.ajax({
             url: url,  
