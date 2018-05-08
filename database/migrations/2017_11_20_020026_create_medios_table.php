@@ -20,6 +20,7 @@ class CreateMediosTable extends Migration
             $table->string('nombre')->unique();
             $table->string('condicion')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
         DB::table('medios')->insert([
           ['user_id' => 1, 'nombre' => 'CAJA'],

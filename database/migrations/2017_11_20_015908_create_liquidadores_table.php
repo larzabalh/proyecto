@@ -20,6 +20,7 @@ class CreateLiquidadoresTable extends Migration
             $table->string('comentario')->nullable();
             $table->string('condicion')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         DB::table('liquidadores')->insert([

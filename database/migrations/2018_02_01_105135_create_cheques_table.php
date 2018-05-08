@@ -29,6 +29,7 @@ class CreateChequesTable extends Migration
             $table->string('destino')->nullable();
             $table->boolean('estado')->nullable();//1 esta cobrado, vacio Pendiente de Cobro
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

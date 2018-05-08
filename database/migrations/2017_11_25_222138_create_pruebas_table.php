@@ -18,6 +18,7 @@ class CreatePruebasTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('genero');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

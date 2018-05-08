@@ -20,6 +20,7 @@ class CreateTiposDeGastosTable extends Migration
           $table->string('tipo');
           $table->string('condicion')->default(1);
           $table->timestamps();
+          $table->softDeletes();
         });
 
         \DB::table('tipos_de_gastos')->insert([

@@ -30,6 +30,7 @@ class CreateCtaCteDisponibilidadesTable extends Migration
             $table->boolean('masivo')->nullable();
             $table->boolean('condicion')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

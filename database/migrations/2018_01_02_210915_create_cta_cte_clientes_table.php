@@ -28,6 +28,7 @@ class CreateCtaCteClientesTable extends Migration
             $table->boolean('pagado')->nullable();//1 esta pago, vacio impago
             $table->boolean('condicion')->default(1);
             $table->timestamps();
+            $table->softDeletes();
 
 
         });

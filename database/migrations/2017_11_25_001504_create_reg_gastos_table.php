@@ -26,6 +26,7 @@ class CreateRegGastosTable extends Migration
             $table->string('comentario')->nullable();
             $table->boolean('masivo')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

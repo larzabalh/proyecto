@@ -19,6 +19,7 @@ class CreateImportarElementosTable extends Migration
           $table->string('nombre');
           $table->string('condicion')->default(1);
           $table->timestamps();
+          $table->softDeletes();
         });
 
         \DB::table('importar_elementos')->insert([

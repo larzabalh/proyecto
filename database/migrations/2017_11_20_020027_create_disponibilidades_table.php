@@ -23,6 +23,7 @@ class CreateDisponibilidadesTable extends Migration
             $table->integer('medio_id')->unsigned()->nullable();
             $table->foreign('medio_id')->references('id')->on('medios')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
 
             DB::table('disponibilidades')->insert([

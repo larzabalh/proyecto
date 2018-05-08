@@ -23,6 +23,7 @@ class CreateGastosMensualesTable extends Migration
             $table->float('importe');
             $table->string('comentario')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
